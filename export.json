@@ -1,0 +1,1356 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.57.1 74a55df1",
+  "osm3s": {
+    "timestamp_osm_base": "2022-03-07T04:32:39Z",
+    "timestamp_areas_base": "2022-03-07T04:31:38Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 1686457158,
+      "lat": 20.6732534,
+      "lon": -103.3653079,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Antena Café"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1696749105,
+      "lat": 20.6625256,
+      "lon": -103.2851837,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Cafe y helados"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2065122403,
+      "lat": 20.6735412,
+      "lon": -103.3689045,
+      "tags": {
+        "addr:street": "Avenida Chapultepec",
+        "amenity": "cafe",
+        "cuisine": "coffee_shop",
+        "internet_access": "wlan",
+        "name": "Starbucks Chapultepec",
+        "name:it": "Starbucks",
+        "wifi": "free"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2338724120,
+      "lat": 20.6915582,
+      "lon": -103.3849381,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Starbucks"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2699277487,
+      "lat": 20.672214,
+      "lon": -103.3626312,
+      "tags": {
+        "addr:housenumber": "1700",
+        "addr:street": "Avenida Libertad",
+        "amenity": "cafe",
+        "name": "La Cafeteria"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2699281334,
+      "lat": 20.6718852,
+      "lon": -103.3626231,
+      "tags": {
+        "addr:housenumber": "1697",
+        "addr:street": "Avenida Libertad",
+        "amenity": "cafe",
+        "name": "La Teteria"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2699294669,
+      "lat": 20.6725974,
+      "lon": -103.3611408,
+      "tags": {
+        "addr:housenumber": "1003",
+        "addr:street": "Argentina",
+        "amenity": "cafe",
+        "name": "Cafeteria La Antigua"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2824953880,
+      "lat": 20.6740151,
+      "lon": -103.3558673,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Churros La Bombilla"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3807960105,
+      "lat": 20.6478951,
+      "lon": -103.3211517,
+      "tags": {
+        "amenity": "cafe",
+        "brand": "Starbucks",
+        "brand:wikidata": "Q37158",
+        "brand:wikipedia": "en:Starbucks",
+        "cuisine": "coffee_shop",
+        "name": "Starbucks",
+        "official_name": "Starbucks Coffee",
+        "takeaway": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3913932760,
+      "lat": 20.6986385,
+      "lon": -103.3489294,
+      "tags": {
+        "amenity": "cafe",
+        "cuisine": "café_y_galletas",
+        "name": "Movil Cafe",
+        "note": "Camion movil con venta de Café prueben el expreso americano",
+        "opening_hours": "08:00-14:00",
+        "smoking": "isolated"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4408841866,
+      "lat": 20.6797248,
+      "lon": -103.3477789,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Helados y paletas \"El Rosario\""
+      }
+    },
+    {
+      "type": "node",
+      "id": 4661077589,
+      "lat": 20.6826989,
+      "lon": -103.348549,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Café Siboney",
+        "name:es": "Café Siboney"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4689047990,
+      "lat": 20.6757231,
+      "lon": -103.3770646,
+      "tags": {
+        "addr:city": "Guadalajara",
+        "addr:housenumber": "2048",
+        "addr:postcode": "44600",
+        "addr:street": "Avenida Morelos",
+        "amenity": "cafe",
+        "internet_access": "wlan",
+        "name": "Café 48",
+        "name:es": "Café 48",
+        "opening_hours": "Mo-Fr 08:00-23:30"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4721338889,
+      "lat": 20.6768734,
+      "lon": -103.3713395,
+      "tags": {
+        "addr:housenumber": "1586",
+        "addr:postcode": "44600",
+        "addr:street": "Avenida Hidalgo",
+        "amenity": "cafe",
+        "cuisine": "coffee_shop",
+        "internet_access": "wlan",
+        "name": "Taller de Espresso",
+        "opening_hours": "Mo-Fr 09:00-14:30, 15:30-19:00; Sa 10:00-14:00",
+        "operator": "Taller de Espresso SA de CV",
+        "phone": "01 3823 3386",
+        "website": "http://tallerdeespresso.com"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4738630848,
+      "lat": 20.6681086,
+      "lon": -103.3699412,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Punta de Cielo"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4749549821,
+      "lat": 20.6743836,
+      "lon": -103.3725753,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Los Arrayanes",
+        "name:es": "Los Arrayanes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4753373558,
+      "lat": 20.6720977,
+      "lon": -103.3706941,
+      "tags": {
+        "addr:city": "Guadalajara",
+        "addr:housenumber": "2121 A",
+        "addr:postcode": "44160",
+        "addr:street": "Avenida de La Paz",
+        "amenity": "cafe",
+        "amenity_1": "teahouse",
+        "cuisine": "tea;coffee_shop",
+        "email": "bromelia.cafe@gmail.com",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "Bromelia Té & Café",
+        "opening_hours": "Mo-Fr 08:15-20:30; Sa-Su 09:45-13:00",
+        "outdoor_seating": "yes",
+        "smoking": "outside",
+        "website": "https://m.facebook.com/Bromelia.Te.Cafe/"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4753524122,
+      "lat": 20.6761732,
+      "lon": -103.3604533,
+      "tags": {
+        "amenity": "cafe",
+        "cuisine": "coffee_shop;international;mexican;pizza;regional;sandwich;tapas;tea",
+        "name": "Negrita Mía Cafe"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4788748523,
+      "lat": 20.6814606,
+      "lon": -103.3723871,
+      "tags": {
+        "addr:housenumber": "1572",
+        "addr:postcode": "44600",
+        "addr:street": "Calle Garibaldi",
+        "amenity": "cafe",
+        "name": "Flor de Luna café y mercado solidario",
+        "name:es": "Flor de Luna café y mercado solidario",
+        "opening_hours": "Mo-Fr 10:00-14:00, 16:00-19:00; Sa 10:00-18:00"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4788806222,
+      "lat": 20.6821076,
+      "lon": -103.3686565,
+      "tags": {
+        "addr:housenumber": "1473",
+        "addr:postcode": "44600",
+        "addr:street": "Joaquín Angulo",
+        "amenity": "cafe",
+        "name": "Café La Querencia",
+        "name:es": "Café La Querencia",
+        "phone": "+523318364333"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4811831523,
+      "lat": 20.6722252,
+      "lon": -103.3695378,
+      "tags": {
+        "amenity": "cafe",
+        "name": "La Flor de Córdoba",
+        "name:es": "La Flor de Córdoba"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4811862223,
+      "lat": 20.6694052,
+      "lon": -103.3661296,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Montenegro",
+        "name:es": "Montenegro"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4866707221,
+      "lat": 20.6761761,
+      "lon": -103.3635168,
+      "tags": {
+        "addr:housenumber": "1196",
+        "addr:street": "Avenida Morelos",
+        "amenity": "cafe",
+        "cuisine": "tea;coffee_shop",
+        "name": "El rincón de los brujos",
+        "name:en": "The Wizard's Den",
+        "name:es": "El rincón de los brujos",
+        "opening_hours": "Mo-Th 18:00-22:00; Fr-Sa 18:00-23:00"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5063080413,
+      "lat": 20.6731109,
+      "lon": -103.3636041,
+      "tags": {
+        "addr:housenumber": "25A",
+        "addr:street": "Calle Bruselas",
+        "amenity": "cafe",
+        "name": "Neretta Café & Gelato"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5063081873,
+      "lat": 20.6734694,
+      "lon": -103.3684534,
+      "tags": {
+        "amenity": "cafe",
+        "name": "The Coffee Legacy"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5063081895,
+      "lat": 20.6740847,
+      "lon": -103.3706471,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Fitzroy Espresso Bar"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5063082158,
+      "lat": 20.6744284,
+      "lon": -103.3704883,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Romerita 28 Cocina Autentica"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5091745363,
+      "lat": 20.6715817,
+      "lon": -103.3610943,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Chamuyo"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5091747386,
+      "lat": 20.6759761,
+      "lon": -103.3666942,
+      "tags": {
+        "addr:housenumber": "1491",
+        "addr:street": "Calle Morelos",
+        "amenity": "cafe",
+        "name": "Darjeeling Tea Room",
+        "opening_hours": "Su 14:30-00:00; Tu-Th 13:30-00:00; Fr 13:30-01:00; Sa 14:30-00:00"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5091749666,
+      "lat": 20.6730047,
+      "lon": -103.3670909,
+      "tags": {
+        "addr:housenumber": "1939",
+        "addr:street": "Avenida Libertad",
+        "amenity": "cafe",
+        "name": "Cafe Libertad"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5091751602,
+      "lat": 20.6726285,
+      "lon": -103.3578134,
+      "tags": {
+        "addr:housenumber": "805",
+        "addr:street": "Calle Camarena",
+        "amenity": "cafe",
+        "name": "Fresh Panini",
+        "opening_hours": "Mo-Sa 08:30-17:00"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5091766300,
+      "lat": 20.6721812,
+      "lon": -103.3584547,
+      "tags": {
+        "amenity": "cafe",
+        "name": "El Mono Cromatico"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5214796921,
+      "lat": 20.6964887,
+      "lon": -103.3817056,
+      "tags": {
+        "addr:housenumber": "2679",
+        "addr:postcode": "44630",
+        "addr:street": "Buenos Aires",
+        "amenity": "cafe",
+        "name": "Matraz",
+        "website": "https://www.facebook.com/matrazcafe"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5237986723,
+      "lat": 20.6733498,
+      "lon": -103.3750012,
+      "tags": {
+        "amenity": "cafe",
+        "name:en": "La Paloma Cafe",
+        "name:it": "La Paloma"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5292506124,
+      "lat": 20.67372,
+      "lon": -103.3882379,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Starbucks Minerva"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5305546321,
+      "lat": 20.6756568,
+      "lon": -103.3594834,
+      "tags": {
+        "amenity": "cafe",
+        "internet_access": "wlan",
+        "name": "Fragola Neveria Cafeteria",
+        "opening_hours": "Mo-Su 10:00-00:00",
+        "phone": "38259720"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5532370921,
+      "lat": 20.686775,
+      "lon": -103.3849,
+      "tags": {
+        "addr:housenumber": "2740-3",
+        "addr:street": "José Bonifacio Andrada",
+        "amenity": "cafe",
+        "cuisine": "tea;coffee_shop",
+        "internet_access": "wlan",
+        "name": "Matcha mío",
+        "opening_hours": "Tu-Sa 09:00-21:00; Su-Mo 09:00-16:00",
+        "phone": "33 2303 8316",
+        "website": "http://matchamio.mx/"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5563143938,
+      "lat": 20.6415879,
+      "lon": -103.3920519,
+      "tags": {
+        "addr:city": "Guadalajara",
+        "addr:housenumber": "2581",
+        "addr:postcode": "44540",
+        "addr:street": "Avenida Lapislazuli",
+        "amenity": "cafe",
+        "cuisine": "burger;coffee_shop",
+        "internet_access": "yes",
+        "internet_access:fee": "no",
+        "name": "Casa Musa",
+        "opening_hours": "Mo-Sa 18:30-23:00"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5651602424,
+      "lat": 20.6558193,
+      "lon": -103.3251811,
+      "tags": {
+        "amenity": "cafe"
+      }
+    },
+    {
+      "type": "node",
+      "id": 5921903085,
+      "lat": 20.6729092,
+      "lon": -103.3688341,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Café Punta del Cielo"
+      }
+    },
+    {
+      "type": "node",
+      "id": 6090443019,
+      "lat": 20.6881817,
+      "lon": -103.2960899,
+      "tags": {
+        "amenity": "cafe",
+        "brand": "Starbucks",
+        "brand:wikidata": "Q37158",
+        "brand:wikipedia": "en:Starbucks",
+        "cuisine": "coffee_shop",
+        "name": "Starbucks",
+        "official_name": "Starbucks Coffee",
+        "takeaway": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 6246552227,
+      "lat": 20.6721561,
+      "lon": -103.3580551,
+      "tags": {
+        "addr:city": "Guadalajara",
+        "addr:country": "MX",
+        "addr:housenumber": "1419",
+        "addr:postcode": "44160",
+        "addr:street": "Miguel Blanco",
+        "amenity": "cafe",
+        "cuisine": "argentinian",
+        "name": "El Rincón del Mate",
+        "outdoor_seating": "yes",
+        "phone": "+52 33 3825 5408"
+      }
+    },
+    {
+      "type": "node",
+      "id": 6448993314,
+      "lat": 20.6725255,
+      "lon": -103.3658814,
+      "tags": {
+        "addr:city": "Guadalajara",
+        "addr:housenumber": "221",
+        "addr:postcode": "44160",
+        "addr:street": "Calle Colonias",
+        "amenity": "cafe",
+        "cuisine": "bakery",
+        "name": "Casaxurro",
+        "opening_hours": "Tu-Sa 14:00-22:30, Su 12:00-19:30",
+        "website": "https://www.facebook.com/casaxurroartesanal/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 6448993315,
+      "lat": 20.6726345,
+      "lon": -103.3657865,
+      "tags": {
+        "addr:city": "Guadalajara",
+        "addr:housenumber": "221",
+        "addr:postcode": "44160",
+        "addr:street": "Calle Colonias",
+        "amenity": "cafe",
+        "cuisine": "donut",
+        "level": "1",
+        "name": "Rösk",
+        "opening_hours": "Tu-Th 14:00-23:00, Fr-Sa 14:00-24:00, Su 12:30-19:00",
+        "payment:american_express": "yes",
+        "payment:cash": "yes",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "phone": "+52-33-38254347",
+        "takeaway": "yes",
+        "website": "https://www.rosk.mx/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 6506500885,
+      "lat": 20.6693778,
+      "lon": -103.3659605,
+      "tags": {
+        "addr:housenumber": "1871",
+        "addr:postcode": "44160",
+        "addr:street": "Calle José Guadalupe Montenegro",
+        "amenity": "cafe",
+        "name": "El terrible juan",
+        "name:en": "El terrible Juan",
+        "name:es": "El terrible Juan",
+        "opening_hours": "Mo-Sa 08:00-22:00",
+        "phone": "+52 33 1524 2116",
+        "website": "https://elterriblejuan.com/"
+      }
+    },
+    {
+      "type": "node",
+      "id": 6949917892,
+      "lat": 20.7034072,
+      "lon": -103.3476202,
+      "tags": {
+        "amenity": "cafe",
+        "brand": "Starbucks",
+        "brand:wikidata": "Q37158",
+        "brand:wikipedia": "en:Starbucks",
+        "cuisine": "coffee_shop",
+        "name": "Starbucks",
+        "official_name": "Starbucks Coffee",
+        "takeaway": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7106006485,
+      "lat": 20.6752383,
+      "lon": -103.3465649,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Café Madrid"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7113286987,
+      "lat": 20.6766019,
+      "lon": -103.3457056,
+      "tags": {
+        "amenity": "cafe",
+        "name": "El Arte"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7317593418,
+      "lat": 20.6765819,
+      "lon": -103.3450688,
+      "tags": {
+        "amenity": "cafe",
+        "brand": "Starbucks",
+        "brand:wikidata": "Q37158",
+        "brand:wikipedia": "en:Starbucks",
+        "cuisine": "coffee_shop",
+        "name": "Starbucks",
+        "official_name": "Starbucks Coffee",
+        "takeaway": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7917645204,
+      "lat": 20.7067303,
+      "lon": -103.4004286,
+      "tags": {
+        "amenity": "cafe",
+        "cuisine": "coffee_shop",
+        "name": "Old Cafeteria"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7917645205,
+      "lat": 20.7060964,
+      "lon": -103.4000944,
+      "tags": {
+        "amenity": "cafe",
+        "cuisine": "coffee_shop",
+        "name": "Café Barra Café"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7975510742,
+      "lat": 20.6767921,
+      "lon": -103.365377,
+      "tags": {
+        "addr:housenumber": "1323",
+        "addr:street": "Avenida Hidalgo",
+        "amenity": "cafe",
+        "name": "La Borra del Café"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8402658617,
+      "lat": 20.6730296,
+      "lon": -103.3612573,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Amablecafé"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8402683617,
+      "lat": 20.6685434,
+      "lon": -103.3660903,
+      "tags": {
+        "amenity": "cafe",
+        "name": "RoArt Cafe"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8403125517,
+      "lat": 20.6745159,
+      "lon": -103.3742626,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Uno:16 Cafeteros"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8403125518,
+      "lat": 20.6731358,
+      "lon": -103.3775491,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Labranza Coffee Roasters"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8403125617,
+      "lat": 20.6731346,
+      "lon": -103.379901,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Café palReal"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8403224217,
+      "lat": 20.6768458,
+      "lon": -103.3651815,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Pigmento"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410172017,
+      "lat": 20.6737319,
+      "lon": -103.3652224,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Nohm Cha"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410564117,
+      "lat": 20.6586193,
+      "lon": -103.3330993,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Bendita Vida Cafe"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410566617,
+      "lat": 20.6593227,
+      "lon": -103.3533457,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Carajillo Café Guadalajara"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410569718,
+      "lat": 20.6585874,
+      "lon": -103.3748116,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Yapa's Coffee"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410569719,
+      "lat": 20.6725967,
+      "lon": -103.365937,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Palreal - Palrealito"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410572019,
+      "lat": 20.6805784,
+      "lon": -103.3951831,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Amorosocafé"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410572322,
+      "lat": 20.6820053,
+      "lon": -103.3918125,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Punto Trópico"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410585117,
+      "lat": 20.6951154,
+      "lon": -103.3834298,
+      "tags": {
+        "amenity": "cafe",
+        "name": "El Terrible Juan Café Providencia"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410585119,
+      "lat": 20.6725763,
+      "lon": -103.3608109,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Manila"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410592717,
+      "lat": 20.6773137,
+      "lon": -103.3971451,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Matraz Tostador"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410594418,
+      "lat": 20.6787027,
+      "lon": -103.3626636,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Chocolate Garage"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410612318,
+      "lat": 20.6757495,
+      "lon": -103.3788933,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Tokki"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410615618,
+      "lat": 20.6703358,
+      "lon": -103.3730415,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Macondo Café"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410615619,
+      "lat": 20.6703596,
+      "lon": -103.3713368,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Vago Imperial Café"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410615620,
+      "lat": 20.6675412,
+      "lon": -103.3682419,
+      "tags": {
+        "amenity": "cafe",
+        "name": "La Dosis Diaria Cafe - Brew Bar"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410617217,
+      "lat": 20.6763108,
+      "lon": -103.3707356,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Comala barra de Café"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410621217,
+      "lat": 20.6715227,
+      "lon": -103.3721025,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Peligro al Fondo"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8410625517,
+      "lat": 20.6708447,
+      "lon": -103.3668161,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Zuno Cafe"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8435496517,
+      "lat": 20.6720607,
+      "lon": -103.3624365,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Gabinete"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8438944417,
+      "lat": 20.6754343,
+      "lon": -103.3614872,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Acá en Tetapán"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8439225517,
+      "lat": 20.6737573,
+      "lon": -103.3609781,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Endémico Vivero - Café"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8441121517,
+      "lat": 20.6738183,
+      "lon": -103.3621237,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Singular Cafe de Especialidad"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8441138818,
+      "lat": 20.6761367,
+      "lon": -103.3663817,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Picchio Verde"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8441263117,
+      "lat": 20.6760436,
+      "lon": -103.3650125,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Romea"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8643123817,
+      "lat": 20.6761948,
+      "lon": -103.3604201,
+      "tags": {
+        "addr:housenumber": "1049",
+        "addr:street": "Calle Morelos",
+        "amenity": "cafe",
+        "name": "Xofía Chocolate Artesanal",
+        "opening_hours": "Mo-Sa 10:00-20:00",
+        "website": "https://facebook.com/xofiachocolate/"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8695505709,
+      "lat": 20.6792822,
+      "lon": -103.3996086,
+      "tags": {
+        "amenity": "cafe",
+        "brand": "Starbucks",
+        "brand:wikidata": "Q37158",
+        "brand:wikipedia": "en:Starbucks",
+        "cuisine": "coffee_shop",
+        "name": "Starbucks",
+        "official_name": "Starbucks Coffee",
+        "takeaway": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8833813222,
+      "lat": 20.6696264,
+      "lon": -103.3616674,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Pastes Hopkins - feuilletés et café"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9360660917,
+      "lat": 20.6881631,
+      "lon": -103.3573029,
+      "tags": {
+        "addr:street": "Calle Cruz Verde",
+        "amenity": "cafe",
+        "cuisine": "coffee_shop",
+        "internet_access": "wlan",
+        "name": "La Flor de Córdoba",
+        "opening_hours": "Mo-Su 07:00-22:00"
+      }
+    },
+    {
+      "type": "way",
+      "id": 263646016,
+      "nodes": [
+        2692706959,
+        2692706961,
+        2692706963,
+        2692706964,
+        2692706959
+      ],
+      "tags": {
+        "addr:city": "Guadalajara",
+        "addr:housenumber": "175",
+        "addr:street": "Juan Manuel",
+        "amenity": "cafe",
+        "building": "yes",
+        "internet_access": "yes",
+        "name": "Centro Cultural André Breton"
+      }
+    },
+    {
+      "type": "way",
+      "id": 309948692,
+      "nodes": [
+        3152828086,
+        3152828087,
+        3152828088,
+        3152828089,
+        3152828086
+      ],
+      "tags": {
+        "amenity": "cafe",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 309963905,
+      "nodes": [
+        3153116722,
+        3153116723,
+        3153116724,
+        3153116725,
+        3153116722
+      ],
+      "tags": {
+        "amenity": "cafe",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 412460392,
+      "nodes": [
+        4138816373,
+        4138816374,
+        4138816375,
+        4138816376,
+        4138816377,
+        4138816359,
+        4138816360,
+        4138816361,
+        4138816362,
+        4138816367,
+        4138816368,
+        4138816369,
+        4138816370,
+        4138816371,
+        4138816372,
+        4138816363,
+        4138816364,
+        4138816365,
+        4138816366,
+        4138816373
+      ],
+      "tags": {
+        "amenity": "cafe",
+        "building": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 589057178,
+      "nodes": [
+        5625105599,
+        5625105600,
+        5625105601,
+        5625105602,
+        5625105599
+      ],
+      "tags": {
+        "amenity": "cafe",
+        "building": "yes",
+        "cuisine": "international",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3153116722,
+      "lat": 20.6574508,
+      "lon": -103.3249631
+    },
+    {
+      "type": "node",
+      "id": 3153116723,
+      "lat": 20.6574056,
+      "lon": -103.3249594
+    },
+    {
+      "type": "node",
+      "id": 3153116724,
+      "lat": 20.6574132,
+      "lon": -103.3248596
+    },
+    {
+      "type": "node",
+      "id": 3153116725,
+      "lat": 20.6574588,
+      "lon": -103.3248619
+    },
+    {
+      "type": "node",
+      "id": 5625105599,
+      "lat": 20.6562308,
+      "lon": -103.3263347
+    },
+    {
+      "type": "node",
+      "id": 5625105600,
+      "lat": 20.6562343,
+      "lon": -103.3262654
+    },
+    {
+      "type": "node",
+      "id": 5625105601,
+      "lat": 20.656284,
+      "lon": -103.3262691
+    },
+    {
+      "type": "node",
+      "id": 5625105602,
+      "lat": 20.6562794,
+      "lon": -103.3263375
+    },
+    {
+      "type": "node",
+      "id": 2692706959,
+      "lat": 20.6789066,
+      "lon": -103.3438743
+    },
+    {
+      "type": "node",
+      "id": 2692706961,
+      "lat": 20.6789126,
+      "lon": -103.3437808
+    },
+    {
+      "type": "node",
+      "id": 2692706963,
+      "lat": 20.6785819,
+      "lon": -103.3437693
+    },
+    {
+      "type": "node",
+      "id": 2692706964,
+      "lat": 20.6785759,
+      "lon": -103.3438704
+    },
+    {
+      "type": "node",
+      "id": 4138816359,
+      "lat": 20.7123625,
+      "lon": -103.3727016
+    },
+    {
+      "type": "node",
+      "id": 4138816360,
+      "lat": 20.7123813,
+      "lon": -103.3726543
+    },
+    {
+      "type": "node",
+      "id": 4138816361,
+      "lat": 20.7123852,
+      "lon": -103.372603
+    },
+    {
+      "type": "node",
+      "id": 4138816362,
+      "lat": 20.7123739,
+      "lon": -103.372553
+    },
+    {
+      "type": "node",
+      "id": 4138816363,
+      "lat": 20.7121021,
+      "lon": -103.3725364
+    },
+    {
+      "type": "node",
+      "id": 4138816364,
+      "lat": 20.7120849,
+      "lon": -103.3725886
+    },
+    {
+      "type": "node",
+      "id": 4138816365,
+      "lat": 20.7120851,
+      "lon": -103.372644
+    },
+    {
+      "type": "node",
+      "id": 4138816366,
+      "lat": 20.7121028,
+      "lon": -103.372696
+    },
+    {
+      "type": "node",
+      "id": 4138816367,
+      "lat": 20.7123485,
+      "lon": -103.3725093
+    },
+    {
+      "type": "node",
+      "id": 4138816368,
+      "lat": 20.7123115,
+      "lon": -103.3724764
+    },
+    {
+      "type": "node",
+      "id": 4138816369,
+      "lat": 20.7122667,
+      "lon": -103.3724575
+    },
+    {
+      "type": "node",
+      "id": 4138816370,
+      "lat": 20.7122187,
+      "lon": -103.3724545
+    },
+    {
+      "type": "node",
+      "id": 4138816371,
+      "lat": 20.7121722,
+      "lon": -103.3724679
+    },
+    {
+      "type": "node",
+      "id": 4138816372,
+      "lat": 20.712132,
+      "lon": -103.3724961
+    },
+    {
+      "type": "node",
+      "id": 4138816373,
+      "lat": 20.7121358,
+      "lon": -103.3727386
+    },
+    {
+      "type": "node",
+      "id": 4138816374,
+      "lat": 20.7121803,
+      "lon": -103.3727669
+    },
+    {
+      "type": "node",
+      "id": 4138816375,
+      "lat": 20.7122312,
+      "lon": -103.3727775
+    },
+    {
+      "type": "node",
+      "id": 4138816376,
+      "lat": 20.7122823,
+      "lon": -103.3727691
+    },
+    {
+      "type": "node",
+      "id": 4138816377,
+      "lat": 20.7123279,
+      "lon": -103.3727428
+    },
+    {
+      "type": "node",
+      "id": 3152828086,
+      "lat": 20.7396332,
+      "lon": -103.3117614
+    },
+    {
+      "type": "node",
+      "id": 3152828087,
+      "lat": 20.7395469,
+      "lon": -103.311787
+    },
+    {
+      "type": "node",
+      "id": 3152828088,
+      "lat": 20.7395251,
+      "lon": -103.311703
+    },
+    {
+      "type": "node",
+      "id": 3152828089,
+      "lat": 20.7396114,
+      "lon": -103.3116774
+    }
+  ]
+}
