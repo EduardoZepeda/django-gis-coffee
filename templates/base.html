@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+
+<head>
+    <title>{% block title %}{{ site.name }}{% endblock %}</title>
+    <link rel="stylesheet" href="{%  static  'css/style.css'  %}">
+
+    {% block meta %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="{{ site.name }}">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200&display=swap" rel="stylesheet">
+    {% endblock meta %}
+
+    {% block stylesheet %}
+    {% endblock stylesheet %}
+
+    {% block meta_tags %}
+    {% endblock meta_tags %}
+
+    {% block javascript %}
+    {% endblock javascript %}
+
+</head>
+
+<body>
+    {% block header %}
+    <nav>
+        <div class="logo"><a href="{% url 'home' %}">Coffee club</a></div>
+        <div class="navbar">
+            <ol class="menu">
+                <ul><a href="{% url 'about' %}">About me</a></ul>
+                <ul><a href="{% url 'newest_coffee_shops' %}">New cafes</a></ul>
+            </ol>
+        </div>
+    </nav>
+    {% endblock %}
+
+    <main class="container">
+        {% block content %}
+        {% endblock content %}
+    </main>
+    {% block aftercontent %}
+    {% endblock aftercontent %}
+
+    {% block footer %}
+    <footer>
+        <div class="social-media">social</div>
+        <div class="links">
+            <i class="fa-solid fa-cutlery"></i>
+            <i class="fa-solid fa-utensils"></i>
+            <i class="fas fa-utensils"></i>
+        </div>
+    </footer>
+    {% endblock %}
+
+    {% block footer_scripts %}
+    {% endblock footer_scripts %}
+</body>
+
+</html>

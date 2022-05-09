@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load leaflet_tags %}
+{% block title %}{% if shop %}{{ shop.name }}{% endif %}{% endblock %}
+{% block javascript %}
+{% leaflet_js plugins="forms" %}
+{{ geoform.media }}
+{% endblock javascript %}
+
+{% block stylesheet %}
+{% leaflet_css plugins="forms" %}
+{% endblock stylesheet %}
+
+{% block content %}
+{% if shop %}
+<h1>{{ shop.name }}</h1>
+{% leaflet_map "detail" %}
+{% endif %}
+{% endblock %}
+
+{% block footer_scripts %}
+<script>
+    window.addEventListener("map:init", function (e) {
+        var detail = e.detail;
+        L.marker([{{ shop.location.1 }}, {{ shop.location.0 }}]).addTo(detail.map);
+    }, false);
+</script>
+{% endblock %}

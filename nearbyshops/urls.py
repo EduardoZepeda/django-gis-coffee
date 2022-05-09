@@ -16,9 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from shops import views
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", views.Home.as_view()),
-    path("geo/", views.Geo.as_view()),
-]
+    path("", views.Geo.as_view(), name="home"),
+    path("new-cafes/", views.Home.as_view(), name="newest_coffee_shops"),
+    path("shops/<int:pk>", views.ShopDetail.as_view(), name="shop_detail"),
+    path("about/", TemplateView.as_view(template_name="about.html"), name="about"),
+    path("api/v1/shops/@<latitude>,<longitude>", views.NearbyShops.as_view()),
+] 
+
+if settings.DEBUG:
+    urlpatterns+= static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

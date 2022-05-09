@@ -1,6 +1,10 @@
 from django.shortcuts import render
+from django.core.serializers import serialize
 from django.contrib.gis import forms
+from leaflet.forms.widgets import LeafletWidget
 from django.views import generic
+from django.views.generic.detail import DetailView
+from django.http import HttpResponse
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
 from .models import Shop
@@ -13,13 +17,7 @@ user_location = Point(longitude, latitude, srid=4326)
 
 class MyGeoForm(forms.Form):
     point = forms.PointField(
-        widget=forms.OSMWidget(attrs={
-            "map_width": 800, 
-            "map_height": 500, 
-            'default_lat': 20.659698,
-            'default_lon': -103.349609,
-            "default_zoom": 12,
-        })
+        widget=LeafletWidget()
     )
 
 class Home(generic.ListView):
@@ -32,22 +30,23 @@ class Home(generic.ListView):
 
 
 class Geo(generic.View):
-    form_class = MyGeoForm
-    template_name = "shops/geo.html"
-    success_url = "/geo/"
-
     def get(self, request):
         form = MyGeoForm()
         return render(request, "shops/geo.html", {"form": form})
 
-
-    def post(self, request):
-        form = MyGeoForm(request.POST)
-        if form.is_valid():
-            nearby_shops = Shop.objects.annotate(
-                distance=Distance("location", form.cleaned_data["point"])
+class NearbyShops(generic.View):
+    def get(self, request, latitude, longitude):
+        coordenates = Point(float(longitude), float(latitude), srid=4326)
+        nearby_shops = Shop.objects.annotate(
+                distance=Distance("location", coordenates)
             ).order_by("distance")[0:6]
-            form = MyGeoForm()
-            return render(request, "shops/geo.html", {"form": form, "shops": nearby_shops})
-        return render(request, "shops/geo.html", {"form": form })
+        # geojson deals with point fields
+        data = serialize('geojson', nearby_shops,
+          geometry_field='location',
+          fields=('name', ))
+        return HttpResponse(data, content_type="application/json")
 
+class ShopDetail(generic.DetailView):
+    model = Shop
+    template_name = "shops/detail.html"
+    context_object_name = "shop"

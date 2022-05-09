@@ -1,0 +1,82 @@
+html,
+body {
+    min-height: 100vh;
+}
+
+body {
+    background-color: #FFF;
+    color: #181818;
+    font-family: 'Mukta', sans-serif;
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    height: 30px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 3px 0px;
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem;
+    height: 30px;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: #181818;
+}
+
+p {
+    line-height: 2rem;
+}
+
+.menu {
+    display: inline-flex;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.page-content {
+    max-width: 64ch;
+    align-self: center;
+}
+
+.leaflet-container {
+    /* all maps */
+    height: 800px;
+}
+
+.shop-tag {
+    color: #2b82cb;
+    font-weight: bold;
+    width: 100px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 4px;
+    background-color: #FFF;
+    border: 1px solid #2b82cb;
+}
+
+.new-cafe-list {
+    list-style: none;
+}
+
+.new-cafe-list li {
+    margin: 1rem 0;
+}

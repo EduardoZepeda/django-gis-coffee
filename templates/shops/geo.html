@@ -1,40 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <title>Nearby Shops</title>
-    <link href="/static/gis/css/ol3.css" type="text/css" media="all" rel="stylesheet" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.js"></script>
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css">
-    <script type="text/javascript" src="/static/gis/js/OLMapWidget.js"></script>
-    {{ geoform.media }}
-</head>
+{% load leaflet_tags %}
+{% block title %}Coffee club{% endblock %}
+{% block javascript %}
+{% leaflet_js plugins="forms" %}
+{{ geoform.media }}
+{% endblock javascript %}
 
-<body>
-    <h1>Nearby Shops</h1>
-    <div>
-        <form enctype="multipart/form-data" method="post" action="">
-            {% csrf_token %}
-            <ul>
-                {{ form.as_ul }}
-            </ul>
-            <input type="submit" value="Submit" />
-        </form>
-    </div>
-    {% if shops %}
-    <h2>Nearby coffee shops</h2>
-    <div>
-        <ul>
-            {% for shop in shops %}
-            <li>
-                {{ shop.name }}: {{shop.distance}}
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
-</body>
+{% block stylesheet %}
+{% leaflet_css plugins="forms" %}
+{% endblock stylesheet %}
 
-</html>
+{% block content %}
+<h1>Nearby Coffee Shops</h1>
+<p>Let us find your favorite speciality coffee shops in Guadalajara</p>
+{% leaflet_map "guadalajara" %}
+{% endblock content %}
+{% block footer_scripts %}
+<script>
+    window.addEventListener("map:init", function (e) {
+        var detail = e.detail;
+        let map = detail.map
+        L.control.scale().addTo(map);
+        let location
+        // keep a record of fetched data
+        let items = []
+        // keep a record of map's markers
+        let markers = []
+
+        function renderMarkers() {
+            items.forEach((item, i) => {
+                var LamMarker = new L.marker([items[i].lat, items[i].lng], {
+                    icon: new L.DivIcon({
+                        className: 'marker-icon',
+                        html: '<img src="/static/leaflet/images/marker-icon.png" class="leaflet-marker-icon" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; z-index: 318; outline: currentcolor none medium;">' +
+                            `<span class="shop-tag">${items[i].name}</span>`
+                    })
+                });
+                markers.push(LamMarker);
+                map.addLayer(markers[i]);
+            })
+        }
+
+        function removeMarkersFromMap() {
+            markers.forEach((marker, i) => {
+                map.removeLayer(markers[i]);
+            })
+        }
+
+        function fetchDataAndRender(e) {
+            // Return click event listener
+            setTimeout(function () {
+                map.on('click', listenToClickOnMap);
+            }, 10);
+            const LatLng = location.getLatLng()
+
+            fetch(`/api/v1/shops/@${LatLng.lat},${LatLng.lng}`).then(response => response.json()).then(response => {
+                removeMarkersFromMap()
+                markers = []
+                items = response.features.map(function (item) {
+                    return {
+                        "name": item.properties.name,
+                        "lat": item.geometry.coordinates[1],
+                        "lng": item.geometry.coordinates[0],
+                    }
+                })
+                renderMarkers()
+                map.flyTo([LatLng.lat, LatLng.lng], 15)
+            })
+        }
+
+        function listenToClickOnMap(e) {
+            if (location) {
+                // guarantees that only one marker exists at a time
+                map.removeLayer(location)
+            }
+            removeMarkersFromMap()
+            location = new L.Marker(e.latlng, { draggable: true });
+            map.addLayer(location);
+            fetchDataAndRender()
+            location.bindPopup("<b>Your location</b><br />Drag me").openPopup();
+            location.addEventListener('dragstart', function (e) {
+                // Remove click event listener when drag start
+                map.off('click', listenToClickOnMap);
+            });
+            location.addEventListener('dragend', fetchDataAndRender);
+            location.addTo(map);
+        }
+        map.on("click", listenToClickOnMap);
+    }, false);
+</script>
+{% endblock footer_scripts %}

@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <title>Nearby Shops</title>
-</head>
-
-<body>
-    <h1>Nearby Coffee Shops</h1>
-    {% if shops %}
-    <ul>
+{% block content %}
+{% if shops %}
+<div class="new-cafes-container">
+    <h1>New additions</h1>
+    <ul class="new-cafe-list">
         {% for shop in shops %}
         <li>
-            {{ shop.name }}: {{shop.distance}}
+            <a href="{% url 'shop_detail' shop.pk %}">{{ shop.name }}</a>
         </li>
         {% endfor %}
     </ul>
-    {% endif %}
-</body>
-
-</html>
+</div>
+{% endif %}
+{% endblock %}
