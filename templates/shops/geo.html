@@ -17,6 +17,7 @@
 {% leaflet_map "guadalajara" %}
 {% endblock content %}
 {% block footer_scripts %}
+
 <script>
     window.addEventListener("map:init", function (e) {
         var detail = e.detail;
@@ -34,7 +35,7 @@
                     icon: new L.DivIcon({
                         className: 'marker-icon',
                         html: '<img src="/static/leaflet/images/marker-icon.png" class="leaflet-marker-icon" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; z-index: 318; outline: currentcolor none medium;">' +
-                            `<span class="shop-tag">${items[i].name}</span>`
+                            `<span class="shop-tag"><a href="/shops/${items[i].id}">${items[i].name}</a></span>`
                     })
                 });
                 markers.push(LamMarker);
@@ -60,6 +61,7 @@
                 markers = []
                 items = response.features.map(function (item) {
                     return {
+                        "id": item.properties.pk,
                         "name": item.properties.name,
                         "lat": item.geometry.coordinates[1],
                         "lng": item.geometry.coordinates[0],
