@@ -4,23 +4,37 @@
 <head>
     <meta charset="utf-8">
     <title>Nearby Shops</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.css" type="text/css" media="all"
-        rel="stylesheet" />
     <link href="/static/gis/css/ol3.css" type="text/css" media="all" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.js"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css">
     <script type="text/javascript" src="/static/gis/js/OLMapWidget.js"></script>
-    {{ geoform.media }
+    {{ geoform.media }}
 </head>
 
 <body>
     <h1>Nearby Shops</h1>
-    <form enctype="multipart/form-data" method="post" action="">
-        {% csrf_token %}
+    <div>
+        <form enctype="multipart/form-data" method="post" action="">
+            {% csrf_token %}
+            <ul>
+                {{ form.as_ul }}
+            </ul>
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+    {% if shops %}
+    <h2>Nearby coffee shops</h2>
+    <div>
         <ul>
-            {{ form.as_ul }}
+            {% for shop in shops %}
+            <li>
+                {{ shop.name }}: {{shop.distance}}
+            </li>
+            {% endfor %}
         </ul>
-        <input type="submit" value="Submit" />
-    </form>
+        {% endif %}
+    </div>
 </body>
 
 </html>
