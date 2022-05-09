@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hn^p!eew(q963wp4i9^)dm1lklqh5zkq14i8e%7%k-d(da*7$j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -131,9 +131,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# django_heroku.settings(locals())
-
-# DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+if not DEBUG:
+    django_heroku.settings(locals())
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 if DEBUG:
     DATABASES = {
