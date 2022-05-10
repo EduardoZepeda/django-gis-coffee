@@ -1,12 +1,15 @@
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 
 <head>
     <title>{% block title %}{{ site.name }}{% endblock %}</title>
-    <link rel="stylesheet" href="{%  static  'css/style.css'  %}">
-
+    <link async rel="stylesheet" href="{%  static  'css/style.css'  %}">
+    <link defer rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/brands.min.css" integrity="sha512-OivR4OdSsE1onDm/i3J3Hpsm5GmOVvr9r49K3jJ0dnsxVzZgaOJ5MfxEAxCyGrzWozL9uJGKz6un3A7L+redIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
     {% block meta %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +17,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="{{ site.name }}">
     <meta property="og:type" content="website">
+    <meta property="og:description" content="The best speciality coffee shops or Cafes in Guadalajara, Jalisco, México">
+    <meta name="description" content="The best speciality coffee shops or Cafes in Guadalajara, Jalisco, México">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200&display=swap" rel="stylesheet">
@@ -35,10 +40,10 @@
     <nav>
         <div class="logo"><a href="{% url 'home' %}">Coffee club</a></div>
         <div class="navbar">
-            <ol class="menu">
-                <ul><a href="{% url 'about' %}">About me</a></ul>
-                <ul><a href="{% url 'newest_coffee_shops' %}">New cafes</a></ul>
-            </ol>
+            <ul class="menu">
+                <li><a href="{% url 'about' %}">About me</a></li>
+                <li><a href="{% url 'newest_coffee_shops' %}">New cafes</a></li>
+            </ul>
         </div>
     </nav>
     {% endblock %}
@@ -53,9 +58,16 @@
     {% block footer %}
     <footer>
         <div class="links">
-            <div class="social-media">social</div>
-            <div class="legal">hola
-            </div>
+            <section class="social-media">
+                <ul class="social-icons">
+                    <li><a href="https://facebook.com/latteporlaciudad/"><i class="fa-brands fa-facebook fa-2x"></i></a></li>
+                    <li><a href="https://www.instagram.com/latte.porlaciudad/"><i class="fa-brands fa-instagram fa-2x"></i></a></li>
+                    <li><a href="https://twitter.com/sui_azanza/"><i class="fa-brands fa-twitter fa-2x"></i></a></li>
+                </ul>
+            </section>
+            <section class="legal">
+                <p><a href="{% url 'legal' %}">Legal</a></p>
+            </section>
         </div>
         <div class="credits"><small>Coded with ☕ in latam by <a href="https://***REMOVED***zepeda.dev">Eduardo
                     Zepeda.</a></small>

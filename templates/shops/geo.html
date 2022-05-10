@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% load leaflet_tags %}
 {% block title %}Coffee club{% endblock %}
@@ -14,7 +15,9 @@
 {% block content %}
 <h1>Nearby Coffee Shops</h1>
 <p>Let us find your favorite speciality coffee shops in Guadalajara</p>
+<section id="map">
 {% leaflet_map "guadalajara" %}
+</section>
 {% endblock content %}
 {% block footer_scripts %}
 
@@ -34,62 +37,62 @@
                 var LamMarker = new L.marker([items[i].lat, items[i].lng], {
                     icon: new L.DivIcon({
                         className: 'marker-icon',
-                        html: '<img src="/static/leaflet/images/marker-icon.png" class="leaflet-marker-icon" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; z-index: 318; outline: currentcolor none medium;">' +
-                            `<span class="shop-tag"><a href="/shops/${items[i].id}">${items[i].name}</a></span>`
+                        html: '<img src="{% static "leaflet/images/marker-icon.png" %}" class= "leaflet-marker-icon" alt = "" tabindex = "0" style = "margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; z-index: 318; outline: currentcolor none medium;" > ' +
+                    `<span class="shop-tag"><a href="/shops/${items[i].id}">${items[i].name}</a></span>`
                     })
-                });
-                markers.push(LamMarker);
-                map.addLayer(markers[i]);
-            })
-        }
-
-        function removeMarkersFromMap() {
-            markers.forEach((marker, i) => {
-                map.removeLayer(markers[i]);
-            })
-        }
-
-        function fetchDataAndRender(e) {
-            // Return click event listener
-            setTimeout(function () {
-                map.on('click', listenToClickOnMap);
-            }, 10);
-            const LatLng = location.getLatLng()
-
-            fetch(`/api/v1/shops/@${LatLng.lat},${LatLng.lng}`).then(response => response.json()).then(response => {
-                removeMarkersFromMap()
-                markers = []
-                items = response.features.map(function (item) {
-                    return {
-                        "id": item.properties.pk,
-                        "name": item.properties.name,
-                        "lat": item.geometry.coordinates[1],
-                        "lng": item.geometry.coordinates[0],
-                    }
-                })
-                renderMarkers()
-                map.flyTo([LatLng.lat, LatLng.lng], 15)
-            })
-        }
-
-        function listenToClickOnMap(e) {
-            if (location) {
-                // guarantees that only one marker exists at a time
-                map.removeLayer(location)
-            }
-            removeMarkersFromMap()
-            location = new L.Marker(e.latlng, { draggable: true });
-            map.addLayer(location);
-            fetchDataAndRender()
-            location.bindPopup("<b>Your location</b><br />Drag me").openPopup();
-            location.addEventListener('dragstart', function (e) {
-                // Remove click event listener when drag start
-                map.off('click', listenToClickOnMap);
             });
-            location.addEventListener('dragend', fetchDataAndRender);
-            location.addTo(map);
+            markers.push(LamMarker);
+            map.addLayer(markers[i]);
+        })
         }
-        map.on("click", listenToClickOnMap);
+
+    function removeMarkersFromMap() {
+        markers.forEach((marker, i) => {
+            map.removeLayer(markers[i]);
+        })
+    }
+
+    function fetchDataAndRender(e) {
+        // Return click event listener
+        setTimeout(function () {
+            map.on('click', listenToClickOnMap);
+        }, 10);
+        const LatLng = location.getLatLng()
+
+        fetch(`/api/v1/shops/@${LatLng.lat},${LatLng.lng}`).then(response => response.json()).then(response => {
+            removeMarkersFromMap()
+            markers = []
+            items = response.features.map(function (item) {
+                return {
+                    "id": item.properties.pk,
+                    "name": item.properties.name,
+                    "lat": item.geometry.coordinates[1],
+                    "lng": item.geometry.coordinates[0],
+                }
+            })
+            renderMarkers()
+            map.flyTo([LatLng.lat, LatLng.lng], 15)
+        })
+    }
+
+    function listenToClickOnMap(e) {
+        if (location) {
+            // guarantees that only one marker exists at a time
+            map.removeLayer(location)
+        }
+        removeMarkersFromMap()
+        location = new L.Marker(e.latlng, { draggable: true });
+        map.addLayer(location);
+        fetchDataAndRender()
+        location.bindPopup("<b>Your location</b><br />Drag me").openPopup();
+        location.addEventListener('dragstart', function (e) {
+            // Remove click event listener when drag start
+            map.off('click', listenToClickOnMap);
+        });
+        location.addEventListener('dragend', fetchDataAndRender);
+        location.addTo(map);
+    }
+    map.on("click", listenToClickOnMap);
     }, false);
 </script>
 {% endblock footer_scripts %}
