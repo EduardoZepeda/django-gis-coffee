@@ -26,6 +26,7 @@ urlpatterns = [
     path("new-cafes/", views.Home.as_view(), name="newest_coffee_shops"),
     path("shops/<int:pk>", views.ShopDetail.as_view(), name="shop_detail"),
     path("about/", TemplateView.as_view(template_name="about.html"), name="about"),
+    path("legal/", TemplateView.as_view(template_name="legal.html"), name="legal"),
     path("api/v1/shops/@<latitude>,<longitude>", views.NearbyShops.as_view()),
 ] 
 
