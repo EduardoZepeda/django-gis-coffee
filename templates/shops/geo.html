@@ -2,7 +2,7 @@
 {% load static %}
 
 {% load leaflet_tags %}
-{% block title %}Coffee club{% endblock %}
+{% block title %}Tamper{% endblock %}
 {% block javascript %}
 {% leaflet_js plugins="forms" %}
 {{ geoform.media }}
@@ -13,8 +13,9 @@
 {% endblock stylesheet %}
 
 {% block content %}
-<h1>Nearby Coffee Shops</h1>
-<p>Let us find your favorite speciality coffee shops in Guadalajara</p>
+<h1>Tamper</h1>
+<h2>Nearby Coffee Shops</h2>
+<p>Let us find your favorite speciality coffee shop in Guadalajara</p>
 <section id="map">
 {% leaflet_map "guadalajara" %}
 </section>
