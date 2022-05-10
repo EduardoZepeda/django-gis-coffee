@@ -37,7 +37,7 @@
                 var LamMarker = new L.marker([items[i].lat, items[i].lng], {
                     icon: new L.DivIcon({
                         className: 'marker-icon',
-                        html: '<img src="{% static "leaflet/images/marker-icon.png" %}" class= "leaflet-marker-icon" alt = "" tabindex = "0" style = "margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; z-index: 318; outline: currentcolor none medium;" > ' +
+                        html: `<img src="{% static 'leaflet/images/marker-icon.png' %}" class="leaflet-marker-icon" alt="" tabindex="0" style="margin-left:-12px; margin-top:-41px; width:25px; height:41px; z-index:318; outline:currentcolor none medium;" >` +
                     `<span class="shop-tag"><a href="/shops/${items[i].id}">${items[i].name}</a></span>`
                     })
             });
