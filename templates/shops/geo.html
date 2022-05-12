@@ -27,6 +27,9 @@
         var detail = e.detail;
         let map = detail.map
         L.control.scale().addTo(map);
+        // Detect first interaction
+        let firstClick = true
+        let currentPosition
         let location
         // keep a record of fetched data
         let items = []
@@ -53,7 +56,7 @@
         })
     }
 
-    function fetchDataAndRender(e) {
+    function fetchDataAndRender() {
         // Return click event listener
         setTimeout(function () {
             map.on('click', listenToClickOnMap);
@@ -76,13 +79,10 @@
         })
     }
 
-    function listenToClickOnMap(e) {
-        if (location) {
-            // guarantees that only one marker exists at a time
-            map.removeLayer(location)
-        }
+
+    function setClickedLocation(latlng){
         removeMarkersFromMap()
-        location = new L.Marker(e.latlng, { draggable: true });
+        location = new L.Marker(latlng, { draggable: true });
         map.addLayer(location);
         fetchDataAndRender()
         location.bindPopup("<b>Your location</b><br />Drag me").openPopup();
@@ -92,6 +92,28 @@
         });
         location.addEventListener('dragend', fetchDataAndRender);
         location.addTo(map);
+    }
+
+    function setUserGeolocation(pos) {
+        let crd = pos.coords
+        // changeCurrentPosition to user location
+        currentPosition = {"lat": crd.latitude, "lng": crd.longitude }
+        setClickedLocation(currentPosition)
+    }
+
+
+    function listenToClickOnMap(e) {
+        // default current position is where clicked was captured
+        if(firstClick) {
+            navigator.geolocation.getCurrentPosition(setUserGeolocation, function () {setClickedLocation(e.latlng)})
+            firstClick = false
+            return
+        } 
+        if(location) {
+            // guarantees that only one marker exists at a time
+            map.removeLayer(location)
+        }
+        setClickedLocation(e.latlng)
     }
     map.on("click", listenToClickOnMap);
     }, false);
