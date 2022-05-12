@@ -13,7 +13,18 @@
 
 {% block content %}
 {% if shop %}
-<h1>{{ shop.name }}</h1>
+<h1 class="shop-name">{{ shop.name }}</h1>
+{% if shop.roaster %}<p>Tostador</p>{% endif %}
+{% if shop.product.all %}
+<h2>Variedades</h2>
+{% for bag in shop.product.all %}
+<div class="coffee-product">
+    <h3>{{ bag.brand }}</h3>
+    <p>{{ bag.get_species_display }}</p>
+    <p>{{ bag.get_origin_display }}</p>
+</div>
+{% endfor %}
+{% endif %}
 {% leaflet_map "detail" %}
 {% endif %}
 {% endblock %}
