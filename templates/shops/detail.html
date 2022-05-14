@@ -14,25 +14,29 @@
 
 {% block content %}
 {% if shop %}
-<h1 class="shop-name">{{ shop.name }}</h1>
-{% render_stars shop.rating %}
-{% if shop.address %}<p>{{ shop.address }}</p>{% endif %}
-{% if shop.roaster %}<p>Tostador</p>{% endif %}
-{% if shop.product.all %}
-<h2>Variedades</h2>
-{% for bag in shop.product.all %}
-<div class="coffee-product">
-    <h3>{{ bag.brand }}</h3>
-    <p>{{ bag.get_species_display }}</p>
-    <p>{{ bag.get_origin_display }}</p>
-</div>
+<article>
+    <h1 class="shop-name">{{ shop.name }}</h1>
+    {% render_stars shop.rating %}
+    {% if shop.address %}<p>{{ shop.address }}</p>{% endif %}
+    {% if shop.roaster %}<p>Tostador</p>{% endif %}
+    {% if shop.product.all %}
+    <h2>Variedades</h2>
+    {% for bag in shop.product.all %}
+    <div class="coffee-product">
+        <h3>{{ bag.brand }}</h3>
+        <p>{{ bag.get_species_display }}</p>
+        <p>{{ bag.get_origin_display }}</p>
+    </div>
 
-{% endfor %}
-{% endif %}
-{% if shop.content %}
-{{ shop.content }}
-{% endif %}
-{% leaflet_map "detail" %}
+    {% endfor %}
+    {% endif %}
+    {% if shop.content %}
+    {{ shop.content }}
+    {% endif %}
+</article>
+<section class="shop-map">
+    {% leaflet_map "detail" %}
+</section>
 {% endif %}
 {% endblock %}
 
