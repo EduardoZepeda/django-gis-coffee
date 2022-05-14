@@ -50,7 +50,7 @@ class Shop(models.Model):
     roaster = models.BooleanField(default=False)
 
     def __str__(self):
-        return "{}: {}, {}".format(self.name, self.location[0], self.location[1])
+        return "{}".format(self.name)
 
 class CoffeeBag(models.Model):
     brand = models.CharField(max_length=200)
@@ -58,3 +58,5 @@ class CoffeeBag(models.Model):
     origin = models.CharField(choices=STATE_CHOICES, blank=True, null=True, max_length=2)
     coffee_shop = models.ManyToManyField(Shop, related_name="product")
 
+    def __str__(self):
+        return "{} {}".format(self.brand, self.get_origin_display())
