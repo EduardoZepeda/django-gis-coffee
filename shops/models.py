@@ -78,6 +78,7 @@ class Shop(models.Model):
     rating = models.DecimalField(default=UNRATED, max_digits=2, decimal_places=1, choices=RATING_CHOICES)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
+    content = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return "{}".format(self.name)

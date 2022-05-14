@@ -137,6 +137,13 @@ ul {
     gap: 2rem;
 }
 
+.recent-addition {
+    background-color: #2383ff;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    padding: 0 0.1rem;
+    color: white;
+}
 
 /* Firefox reports excessive amount of will-change memory usage, caused by a leaflet version */
 /* Since this is just a demo project I leave it as is for now

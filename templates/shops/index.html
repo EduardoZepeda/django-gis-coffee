@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load newest_shops %}
 {% block content %}
 {% if shops %}
 <div class="new-cafes-container">
@@ -8,6 +8,9 @@
         {% for shop in shops %}
         <li>
             <a href="{% url 'shop_detail' shop.pk %}">{{ shop.name }}</a>
+            {% if shop.created_date|days_ago:15 %}
+                <span class="recent-addition">new</span>
+            {% endif %}
         </li>
         {% endfor %}
     </ul>

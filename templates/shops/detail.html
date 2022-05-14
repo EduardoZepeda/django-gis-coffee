@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load leaflet_tags %}
+{% load render_stars %}
 {% block title %}{% if shop %}{{ shop.name }}{% endif %}{% endblock %}
 {% block javascript %}
 {% leaflet_js plugins="forms" %}
@@ -14,6 +15,7 @@
 {% block content %}
 {% if shop %}
 <h1 class="shop-name">{{ shop.name }}</h1>
+{% render_stars shop.rating %}
 {% if shop.address %}<p>{{ shop.address }}</p>{% endif %}
 {% if shop.roaster %}<p>Tostador</p>{% endif %}
 {% if shop.product.all %}
@@ -24,7 +26,11 @@
     <p>{{ bag.get_species_display }}</p>
     <p>{{ bag.get_origin_display }}</p>
 </div>
+
 {% endfor %}
+{% endif %}
+{% if shop.content %}
+{{ shop.content }}
 {% endif %}
 {% leaflet_map "detail" %}
 {% endif %}
