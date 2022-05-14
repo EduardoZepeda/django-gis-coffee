@@ -1,4 +1,5 @@
 from django.contrib.gis.db import models
+from decimal import Decimal
 
 STATE_CHOICES = (
     ("26", "Sonora"),
@@ -42,12 +43,41 @@ COFFEE_SPECIES = (
     ("Ex", "Excelsa"),
 )
 
+UNRATED = Decimal("0")
+HALF_A_STAR = Decimal("0.5")
+ONE_STAR = Decimal("1")
+ONE_AND_HALF_A_STARS = Decimal("1.5")
+TWO_STARS = Decimal("2")
+TWO_AND_HALF_STARS = Decimal("2.5")
+THREE_STARS = Decimal("3.0")
+THREE_AND_HALF_STARS = Decimal("3.5")
+FOUR_STARS = Decimal("4")
+FOUR_AND_HALF_STARS = Decimal("4.5")
+FIVE_STARS = Decimal("5")
+
+RATING_CHOICES = (
+    (UNRATED, "0"),
+    (HALF_A_STAR, "0.5"),
+    (ONE_STAR, "1"),
+    (ONE_AND_HALF_A_STARS, "1.5"),
+    (TWO_STARS, "2"),
+    (TWO_AND_HALF_STARS, "2.5"),
+    (THREE_STARS, "3"),
+    (THREE_AND_HALF_STARS, "3.5"),
+    (FOUR_STARS, "4"),
+    (FOUR_AND_HALF_STARS, "4.5"),
+    (FIVE_STARS, "5"),
+)
+
 class Shop(models.Model):
     name = models.CharField(max_length=100)
     location = models.PointField()
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     roaster = models.BooleanField(default=False)
+    rating = models.DecimalField(default=UNRATED, max_digits=2, decimal_places=1, choices=RATING_CHOICES)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return "{}".format(self.name)

@@ -23,9 +23,7 @@ class MyGeoForm(forms.Form):
 class Home(generic.ListView):
     model = Shop
     context_object_name = "shops"
-    queryset = Shop.objects.annotate(
-        distance=Distance("location", user_location)
-    ).order_by("distance")[0:6]
+    queryset = Shop.objects.order_by("-created_date")[0:6]
     template_name = "shops/index.html"
 
 
@@ -43,7 +41,7 @@ class NearbyShops(generic.View):
         # geojson deals with point fields
         data = serialize('geojson', nearby_shops,
           geometry_field='location',
-          fields=('name', 'pk', 'address'))
+          fields=('name', 'pk', 'address', 'rating'))
         return HttpResponse(data, content_type="application/json")
 
 class ShopDetail(generic.DetailView):
