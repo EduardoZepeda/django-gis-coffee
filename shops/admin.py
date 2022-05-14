@@ -8,6 +8,10 @@ from .models import Shop, CoffeeBag
 class ShopAdmin(GISModelAdmin):
     list_display = ("name", "location")
     search_fields = ("name", "address")
+    gis_widget_kwargs = {
+        "attrs": { "default_lon" : -103.349609, "default_lat" : 20.659698 }
+    }
+
 
 class CoffeeBagAdmin(admin.ModelAdmin):
     search_fields = ("brand", "origin")
