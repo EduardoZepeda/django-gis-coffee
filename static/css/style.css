@@ -36,15 +36,22 @@ footer {
 
 h1,
 h2 {
-    margin: 0;
+    margin: 2rem 0;
     padding: 0;
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     font-family: 'Comfortaa', cursive;
 }
 
+.site-title {
+    font-size: 4rem;
+}
+
+.site-subtitle {
+    margin: 0;
+}
 
 .responsive-img {
     border-radius: 6px;
@@ -109,10 +116,6 @@ ul {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-}
-
-.shop-name {
-    margin: 1rem 0;
 }
 
 .links {

@@ -43,7 +43,7 @@ class NearbyShops(generic.View):
         # geojson deals with point fields
         data = serialize('geojson', nearby_shops,
           geometry_field='location',
-          fields=('name', 'pk'))
+          fields=('name', 'pk', 'address'))
         return HttpResponse(data, content_type="application/json")
 
 class ShopDetail(generic.DetailView):

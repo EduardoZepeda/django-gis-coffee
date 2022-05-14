@@ -14,6 +14,7 @@
 {% block content %}
 {% if shop %}
 <h1 class="shop-name">{{ shop.name }}</h1>
+{% if shop.address %}<p>{{ shop.address }}</p>{% endif %}
 {% if shop.roaster %}<p>Tostador</p>{% endif %}
 {% if shop.product.all %}
 <h2>Variedades</h2>
