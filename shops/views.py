@@ -16,9 +16,8 @@ user_location = Point(longitude, latitude, srid=4326)
 
 
 class MyGeoForm(forms.Form):
-    point = forms.PointField(
-        widget=LeafletWidget()
-    )
+    point = forms.PointField(widget=LeafletWidget())
+
 
 class Home(generic.ListView):
     model = Shop
@@ -32,19 +31,34 @@ class Geo(generic.View):
         form = MyGeoForm()
         return render(request, "shops/geo.html", {"form": form})
 
+
 class NearbyShops(generic.View):
     def get(self, request, latitude, longitude):
         coordenates = Point(float(longitude), float(latitude), srid=4326)
         nearby_shops = Shop.objects.annotate(
-                distance=Distance("location", coordenates)
-            ).order_by("distance")[0:6]
+            distance=Distance("location", coordenates)
+        ).order_by("distance")[0:6]
         # geojson deals with point fields
-        data = serialize('geojson', nearby_shops,
-          geometry_field='location',
-          fields=('name', 'pk', 'address', 'rating'))
+        data = serialize(
+            "geojson",
+            nearby_shops,
+            geometry_field="location",
+            fields=("name", "pk", "address", "rating"),
+        )
         return HttpResponse(data, content_type="application/json")
+
 
 class ShopDetail(generic.DetailView):
     model = Shop
     template_name = "shops/detail.html"
     context_object_name = "shop"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        shop_coords = context["object"].location.coords
+        # Update DEFAULT_ZOOM for Shop detail view
+        context["settings_overrides"] = {
+            "DEFAULT_ZOOM": 15,
+            "DEFAULT_CENTER": (shop_coords[1], shop_coords[0]),
+        }
+        return context

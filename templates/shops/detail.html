@@ -16,26 +16,34 @@
 {% if shop %}
 <article>
     <h1 class="shop-name">{{ shop.name }}</h1>
+    {% if request.user.is_staff %}<p><a href="{% url 'admin:shops_shop_change' shop.id %}">Editar <span><i class="fa-solid fa-pencil"></i></span></a></p>{% endif %}
     {% render_stars shop.rating %}
-    {% if shop.address %}<p>{{ shop.address }}</p>{% endif %}
-    {% if shop.roaster %}<p>Tostador</p>{% endif %}
+    {% if shop.address %}
+    <p><i class="fa-solid fa-store"></i><span> {{ shop.address }}</span></p>
+    {% endif %}
+    {% if shop.roaster %}
+    <i class="fa-solid fa-fire"></i><span> Tostador</span>
+    {% endif %}
     {% if shop.product.all %}
     <h2>Variedades</h2>
     {% for bag in shop.product.all %}
     <div class="coffee-product">
         <h3>{{ bag.brand }}</h3>
-        <p>{{ bag.get_species_display }}</p>
-        <p>{{ bag.get_origin_display }}</p>
+        <p><span><i class="fa-solid fa-seedling"></i></span> {{ bag.get_species_display }}</p>
+        <p><span><i class="fa-solid fa-earth-americas"></i></span> {{ bag.get_origin_display }}</p>
     </div>
-
     {% endfor %}
     {% endif %}
     {% if shop.content %}
-    {{ shop.content }}
+    <div class="review-content">
+        <h2>Opinión</h2>
+        {{ shop.content|safe }}
+    </div>
     {% endif %}
 </article>
 <section class="shop-map">
-    {% leaflet_map "detail" %}
+    <h2>Ubicación</h2>
+    {% leaflet_map "detail-map" settings_overrides=settings_overrides %}
 </section>
 {% endif %}
 {% endblock %}
