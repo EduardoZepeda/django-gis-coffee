@@ -11,6 +11,7 @@ body {
     margin: 0;
     padding: 0;
     display: grid;
+    position: relative;
     grid-template-rows: auto 1fr auto;
 }
 
@@ -63,6 +64,7 @@ a,
 a:visited {
     text-decoration: none;
     color: #181818;
+    padding: 0.5rem;
 }
 
 ul {
@@ -75,8 +77,48 @@ ul {
     display: inline-flex;
 }
 
+.menu-bars {
+    display: none;
+    padding: 0 0.5rem;
+}
+
 .menu li {
     margin: 0 1rem;
+}
+
+.sidebar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #181818f2;
+    /* Leaflet map uses z-index 1000 by default */
+    z-index: 1001;
+}
+
+.sidebar-menu {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    gap: 3rem;
+    height: 100vh;
+}
+
+.close {
+    color: #FFF;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2rem;
+}
+
+.sidebar-menu a {
+    color: #FFF;
+    font-weight: bold;
+    font-size: 1.4rem;
 }
 
 .container {
@@ -112,12 +154,17 @@ ul {
 }
 
 .review-content {
-    width: 64ch;
+    max-width: 64ch;
     line-height: 2.5rem;
 }
 
+.review-content a {
+    /* remove default padding to content anchors */
+    padding: 0;
+}
+
 #detail-map {
-    width: 400px;
+    max-width: 400px;
     height: 400px;
 }
 
@@ -144,7 +191,7 @@ ul {
 .social-icons {
     display: inline-flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .recent-addition {
@@ -154,6 +201,31 @@ ul {
     padding: 0 0.1rem;
     color: white;
 }
+
+.hidden {
+    display: none;
+}
+
+.blurry {
+    filter: blur(8px);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        display: none;
+    }
+
+    .menu-bars {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
+
 
 /* Firefox reports excessive amount of will-change memory usage, caused by a leaflet version */
 /* Since this is just a demo project I leave it as is for now

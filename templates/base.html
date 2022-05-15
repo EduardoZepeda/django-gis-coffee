@@ -51,6 +51,17 @@
                 <li><a href="{% url 'newest_coffee_shops' %}">New cafes</a></li>
             </ul>
         </div>
+        <div id="menu-bars" class="menu-bars">
+            <i class="fa-solid fa-bars"></i>
+        </div>        
+        <div id="sidebar" class="sidebar hidden">
+            <div id="close" class="close"><i class="fa-solid fa-xmark"></i></div>
+            <ul class="sidebar-menu">
+                {% if request.user.is_staff %}<li><a href="{% url 'admin:index' %}">Admin</a></li>{% endif %}
+                <li><a href="{% url 'about' %}">About me</a></li>
+                <li><a href="{% url 'newest_coffee_shops' %}">New cafes</a></li>
+            </ul>
+        </div>
     </nav>
     {% endblock %}
 
@@ -85,6 +96,25 @@
 
     {% block footer_scripts %}
     {% endblock footer_scripts %}
+    <script>
+        window.onload = function() {
+            let sidebarClose = true
+            const close = document.getElementById("close")
+            const bars = document.getElementById("menu-bars")
+            const sidebar = document.getElementById("sidebar")
+            function toggleSidebar(){
+                console.log("toggled")
+                if(sidebarClose){
+                    sidebar.classList.remove("hidden")
+                } else {
+                    sidebar.classList.add("hidden")
+                }
+                sidebarClose = !sidebarClose
+            }
+            close.addEventListener("click", toggleSidebar)
+            bars.addEventListener("click", toggleSidebar)
+        };
+    </script>
 </body>
 
 </html>
