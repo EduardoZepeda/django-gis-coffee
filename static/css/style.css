@@ -111,6 +111,16 @@ ul {
     border: 1px solid #2b82cb;
 }
 
+.review-content {
+    width: 64ch;
+    line-height: 2.5rem;
+}
+
+#detail-map {
+    width: 400px;
+    height: 400px;
+}
+
 .new-cafe-list {
     list-style: none;
     display: flex;
