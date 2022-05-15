@@ -46,6 +46,7 @@
         <div class="logo"><a href="{% url 'home' %}">Tamper</a></div>
         <div class="navbar">
             <ul class="menu">
+                {% if request.user.is_staff %}<li><a href="{% url 'admin:index' %}">Admin</a></li>{% endif %}
                 <li><a href="{% url 'about' %}">About me</a></li>
                 <li><a href="{% url 'newest_coffee_shops' %}">New cafes</a></li>
             </ul>
