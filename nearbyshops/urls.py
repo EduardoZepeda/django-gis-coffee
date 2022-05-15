@@ -21,14 +21,14 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls, name="admin"),
     path("", views.Geo.as_view(), name="home"),
     path("new-cafes/", views.Home.as_view(), name="newest_coffee_shops"),
     path("shops/<int:pk>", views.ShopDetail.as_view(), name="shop_detail"),
     path("about/", TemplateView.as_view(template_name="about.html"), name="about"),
     path("legal/", TemplateView.as_view(template_name="legal.html"), name="legal"),
     path("api/v1/shops/@<latitude>,<longitude>", views.NearbyShops.as_view()),
-] 
+]
 
 if settings.DEBUG:
-    urlpatterns+= static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

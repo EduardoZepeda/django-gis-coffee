@@ -6,13 +6,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shops', '0006_shop_rating'),
+        ("shops", "0006_shop_rating"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='shop',
-            name='rating',
-            field=models.DecimalField(choices=[(0, '0'), (0.5, '0.5'), (1, '1'), (1.5, '1.5'), (2, '2'), (2.5, '2.5'), (3.0, '3'), (3.5, '3.5'), (4, '4'), (4.5, '4.5'), (5, '5')], decimal_places=1, default=0, max_digits=1),
+            model_name="shop",
+            name="rating",
+            field=models.DecimalField(
+                choices=[
+                    (0, "0"),
+                    (0.5, "0.5"),
+                    (1, "1"),
+                    (1.5, "1.5"),
+                    (2, "2"),
+                    (2.5, "2.5"),
+                    (3.0, "3"),
+                    (3.5, "3.5"),
+                    (4, "4"),
+                    (4.5, "4.5"),
+                    (5, "5"),
+                ],
+                decimal_places=1,
+                default=0,
+                max_digits=1,
+            ),
         ),
     ]
