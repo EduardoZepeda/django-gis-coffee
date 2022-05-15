@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from decimal import Decimal
+from ckeditor.fields import RichTextField
 
 STATE_CHOICES = (
     ("26", "Sonora"),
@@ -69,24 +70,30 @@ RATING_CHOICES = (
     (FIVE_STARS, "5"),
 )
 
+
 class Shop(models.Model):
     name = models.CharField(max_length=100)
     location = models.PointField()
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     roaster = models.BooleanField(default=False)
-    rating = models.DecimalField(default=UNRATED, max_digits=2, decimal_places=1, choices=RATING_CHOICES)
+    rating = models.DecimalField(
+        default=UNRATED, max_digits=2, decimal_places=1, choices=RATING_CHOICES
+    )
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
-    content = models.TextField(blank=True, null=True)
+    content = RichTextField(blank=True, null=True)
 
     def __str__(self):
         return "{}".format(self.name)
 
+
 class CoffeeBag(models.Model):
     brand = models.CharField(max_length=200)
     species = models.CharField(choices=COFFEE_SPECIES, default="Ar", max_length=2)
-    origin = models.CharField(choices=STATE_CHOICES, blank=True, null=True, max_length=2)
+    origin = models.CharField(
+        choices=STATE_CHOICES, blank=True, null=True, max_length=2
+    )
     coffee_shop = models.ManyToManyField(Shop, related_name="product")
 
     def __str__(self):
