@@ -109,8 +109,7 @@
     <script>
         function handleSearchSubmit(event){
                 event.preventDefault()
-                let query = document.getElementById('search')
-                window.location.href = '/shops/search/' + query.value
+                window.location.href = '/shops/search/' + event.target.firstElementChild.value
             }
         window.onload = function() {
             let sidebarClose = true
