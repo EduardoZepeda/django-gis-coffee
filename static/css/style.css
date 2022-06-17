@@ -215,9 +215,10 @@ ul {
     width: 100px;
 }
 
-#search {
+.search {
     border-radius: 2px;
     border: 1px solid #181818;
+    padding: 6px;
 }
 
 .btn {
