@@ -216,7 +216,17 @@ ul {
 }
 
 #search {
-    margin-right: 5px;
+    border-radius: 2px;
+    border: 1px solid #181818;
+}
+
+.btn {
+    background-color: #794028;
+    border: 1px solid #794028;
+    color: white;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 2px;
 }
 
 @media (max-width: 768px) {
