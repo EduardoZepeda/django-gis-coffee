@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load newest_shops %}
+{% block content %}
+{% if shops %}
+<div class="new-cafes-container">
+    <h1>Cafeterías que coinciden con: {{ query }}</h1>
+    <ul class="new-cafe-list">
+        {% for shop in shops %}
+        <li>
+            <a href="{% url 'shop_detail' shop.pk %}">{{ shop.name }}</a>
+            {% if shop.created_date|days_ago:15 %}
+                <span class="recent-addition">new</span>
+            {% endif %}
+            <small>{{ shop.address }} </small>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endblock %}

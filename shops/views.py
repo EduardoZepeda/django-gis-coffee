@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.postgres.search import SearchVector
 from django.core.serializers import serialize
 from django.contrib.gis import forms
 from leaflet.forms.widgets import LeafletWidget
@@ -8,6 +9,7 @@ from django.http import HttpResponse
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
 from .models import Shop
+from .forms import SearchForm
 
 longitude = -103.349609
 latitude = 20.659698
@@ -62,3 +64,17 @@ class ShopDetail(generic.DetailView):
             "DEFAULT_CENTER": (shop_coords[1], shop_coords[0]),
         }
         return context
+
+
+class SearchShops(generic.View):
+    def get(self, request, query):
+        f = SearchForm({"query": query})
+        if f.is_valid():
+            shops = Shop.objects.annotate(
+                search=SearchVector("name", "content", config="spanish")
+            ).filter(search=query)
+            return render(
+                request, "shops/search.html", {"shops": shops, "query": query}
+            )
+        shops = {}
+        return render(request, "shops/search.html", {"shops": shops, "query": query})
