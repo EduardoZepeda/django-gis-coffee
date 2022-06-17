@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 {% load newest_shops %}
 {% block content %}
-{% if shops %}
 <div class="new-cafes-container">
-    <h1>Cafeterías que coinciden con: {{ query }}</h1>
+    <h1>Buscaste: {{ query }}</h1>
+    {% for shop in shops %}
     <ul class="new-cafe-list">
-        {% for shop in shops %}
         <li>
             <a href="{% url 'shop_detail' shop.pk %}">{{ shop.name }}</a>
             {% if shop.created_date|days_ago:15 %}
@@ -13,8 +12,11 @@
             {% endif %}
             <small>{{ shop.address }} </small>
         </li>
-        {% endfor %}
     </ul>
+    {% empty %}
+    <p>Lo siento, no encontramos ninguna cafetería, ten una taza de café virtual en su lugar ☕</p>
+    <p>¿Por qué no visitas las cafeterías nuevas?</p>
+    <a href={% url 'newest_coffee_shops' %}><button class="btn">Ir a cafeterías nuevas</button></a>
+    {% endfor %}
 </div>
-{% endif %}
 {% endblock %}
