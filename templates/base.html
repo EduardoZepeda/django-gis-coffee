@@ -48,7 +48,7 @@
             <ul class="menu">
                 <li>
                     <form id="searchForm">
-                        <input pattern="^[A-zÀ-ú\s]*$" id="search" type="search" name="search" placeholder="Buscar">
+                        <input pattern="^[A-zÀ-ú\s]*$" id="search" class="search" type="search" name="search" placeholder="Buscar">
                     </form>
                 </li>
                 {% if request.user.is_staff %}<li><a href="{% url 'admin:index' %}">Admin</a></li>{% endif %}
@@ -64,7 +64,7 @@
             <ul class="sidebar-menu">
                 <li>
                     <form id="searchFormSidebar">
-                        <input id="search" type="search" name="search" placeholder="Buscar">
+                        <input pattern="^[A-zÀ-ú\s]*$" id="search" type="search" name="search" class="search" placeholder="Buscar">
                     </form>
                 </li>
                 {% if request.user.is_staff %}<li><a href="{% url 'admin:index' %}">Admin</a></li>{% endif %}

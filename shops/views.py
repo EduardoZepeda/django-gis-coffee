@@ -78,3 +78,4 @@ class SearchShops(generic.View):
             )
         shops = {}
         return render(request, "shops/search.html", {"shops": shops, "query": query})
+
