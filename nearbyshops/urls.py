@@ -28,6 +28,7 @@ urlpatterns = [
     path("about/", TemplateView.as_view(template_name="about.html"), name="about"),
     path("legal/", TemplateView.as_view(template_name="legal.html"), name="legal"),
     path("api/v1/shops/@<latitude>,<longitude>", views.NearbyShops.as_view()),
+    path("shops/search/<str:query>", views.SearchShops.as_view(), name="search_shop"),
 ]
 
 if settings.DEBUG:

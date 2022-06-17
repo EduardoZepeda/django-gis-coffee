@@ -210,6 +210,15 @@ ul {
     filter: blur(8px);
 }
 
+.search-wrapper {
+    position: relative;
+    width: 100px;
+}
+
+#search {
+    margin-right: 5px;
+}
+
 @media (max-width: 768px) {
     .navbar {
         display: none;

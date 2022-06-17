@@ -46,6 +46,11 @@
         <div class="logo"><a href="{% url 'home' %}">Tamper</a></div>
         <div class="navbar">
             <ul class="menu">
+                <li>
+                    <form id="searchForm">
+                        <input pattern="^[A-zÀ-ú\s]*$" id="search" type="search" name="search" placeholder="Buscar">
+                    </form>
+                </li>
                 {% if request.user.is_staff %}<li><a href="{% url 'admin:index' %}">Admin</a></li>{% endif %}
                 <li><a href="{% url 'about' %}">About me</a></li>
                 <li><a href="{% url 'newest_coffee_shops' %}">New cafes</a></li>
@@ -57,6 +62,11 @@
         <div id="sidebar" class="sidebar hidden">
             <div id="close" class="close"><i class="fa-solid fa-xmark"></i></div>
             <ul class="sidebar-menu">
+                <li>
+                    <form id="searchFormSidebar">
+                        <input id="search" type="search" name="search" placeholder="Buscar">
+                    </form>
+                </li>
                 {% if request.user.is_staff %}<li><a href="{% url 'admin:index' %}">Admin</a></li>{% endif %}
                 <li><a href="{% url 'about' %}">About me</a></li>
                 <li><a href="{% url 'newest_coffee_shops' %}">New cafes</a></li>
@@ -97,13 +107,18 @@
     {% block footer_scripts %}
     {% endblock footer_scripts %}
     <script>
+        function handleSearchSubmit(event){
+                event.preventDefault()
+                let query = document.getElementById('search')
+                window.location.href = '/shops/search/' + query.value
+            }
         window.onload = function() {
             let sidebarClose = true
+            let searchInputClosed = true
             const close = document.getElementById("close")
             const bars = document.getElementById("menu-bars")
             const sidebar = document.getElementById("sidebar")
             function toggleSidebar(){
-                console.log("toggled")
                 if(sidebarClose){
                     sidebar.classList.remove("hidden")
                 } else {
@@ -113,7 +128,9 @@
             }
             close.addEventListener("click", toggleSidebar)
             bars.addEventListener("click", toggleSidebar)
-        };
+            document.getElementById("searchForm").addEventListener("submit", handleSearchSubmit)
+            document.getElementById("searchFormSidebar").addEventListener("submit", handleSearchSubmit)
+        }
     </script>
 </body>
 
