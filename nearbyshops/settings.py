@@ -2,6 +2,12 @@ from .base_settings import *
 
 DEBUG = False
 
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev']
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
