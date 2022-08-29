@@ -1,10 +1,10 @@
 # Tamper
 
-This serves as a [demo project](https://django-gis-coffee.fly.dev/) that looks for speciality coffee nearby user's location, the scope of this project is limited to Guadalajara, México.
+This project serves as a [demo project](https://django-gis-coffee.fly.dev/) that looks for speciality coffee nearby user's location, the scope of this project is limited to Guadalajara, México.
 
 ## Coffee shops nearby Guadalajara
 
-This project uses postgres gis extension to calculate closest coffee shops using user's coordinates. 
+Tamper uses postgres gis extension to calculate closest coffee shops using user's coordinates. 
 
 The user location is obtained from the geolocation API in the browser.
 
@@ -12,7 +12,7 @@ The user location is obtained from the geolocation API in the browser.
 
 ### Install dependencies
 
-First install the basic dependencies
+To start developing, first install the basic dependencies
 
 ```bash
 sudo apt install gdal-bin libgdal-dev python3-gdal
@@ -39,11 +39,11 @@ DATABASE=database_name
 
 ## Django's GiS Usage
 
-An external database available is required
+An external database available is required and is taken for granted. The required postgres' documentation is out of the scope of this readme.
 
 ### Install django GIS
 
-Remember to add the gis package from django to installed apps
+First of all, remember to add the gis package from django to installed apps.
 
 ```python
 INSTALLED_APPS = [
@@ -73,10 +73,10 @@ The model must be registered in the admin if you wish to save a model's location
 
 ```python
 from django.contrib.gis.admin import OSMGeoAdmin
-from .models import Shop
+from .models import CoffeeShop
 
-@admin.register(Shop)
-class ShopAdmin(OSMGeoAdmin):
+@admin.register(CoffeeShop)
+class CoffeeShopAdmin(OSMGeoAdmin):
     list_display = ('name', 'location')
 ```
 
