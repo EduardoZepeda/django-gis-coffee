@@ -17,6 +17,12 @@
 <h2 class="site-subtitle">Nearby Coffee Shops</h2>
 <p>Let us find your favorite speciality coffee shop in Guadalajara</p>
 <section id="map">
+    <div>
+        <label for="distance">5 km</label>
+        <input id="distance" type="range" min="0" max="50" step="5" value="5"/>
+        <label for="">30 km</label>
+        <div>Distance: <span id="distanceValue">5</span> km</div>
+    </div>
     {% leaflet_map "guadalajara" %}
 </section>
 {% endblock content %}
@@ -36,6 +42,13 @@
         let items = []
         // keep a record of map's markers
         let markers = []
+        let distanceInput = document.getElementById('distance')
+        let distanceValue = document.getElementById('distanceValue')
+        distanceInput.addEventListener('change', handleDistanceValue)
+
+        function handleDistanceValue(event) {
+            distanceValue.innerText = distanceInput.value
+        }
 
         function generateFontAwesomestars(rating) {
             const fullStars = `<i class="fa-solid fa-star"></i>`.repeat(~~rating)
@@ -73,7 +86,7 @@
             }, 10);
             const LatLng = location.getLatLng()
 
-            fetch(`/api/v1/shops/@${LatLng.lat},${LatLng.lng}`).then(response => response.json()).then(response => {
+            fetch(`/api/v1/shops/@${LatLng.lat},${LatLng.lng},${distanceInput.value}`).then(response => response.json()).then(response => {
                 removeMarkersFromMap()
                 markers = []
                 items = response.features.map(function (item) {

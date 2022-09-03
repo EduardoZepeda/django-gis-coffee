@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.postgres.search import SearchVector
 from django.core.serializers import serialize
+from django.contrib.gis.measure import D
 from django.contrib.gis import forms
 from leaflet.forms.widgets import LeafletWidget
 from django.views import generic
@@ -35,11 +36,16 @@ class Geo(generic.View):
 
 
 class NearbyShops(generic.View):
-    def get(self, request, latitude, longitude):
+    def get(self, request, latitude, longitude, radius):
+        # set radius limit between 0 and 50
+        radius = int(radius)
+        distance_in_km = radius if radius < 50 and radius >= 0 else 5
+        # Many options if distance is shorter otherwise less options
+        available_options = 15 if distance_in_km < 10 else 6
         coordenates = Point(float(longitude), float(latitude), srid=4326)
         nearby_shops = Shop.objects.annotate(
             distance=Distance("location", coordenates)
-        ).order_by("distance")[0:6]
+        ).filter(distance__lte=D(km=radius)).order_by("distance")[0:available_options]
         # geojson deals with point fields
         data = serialize(
             "geojson",
