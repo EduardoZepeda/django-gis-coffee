@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load newest_shops %}
 {% block content %}
 <div class="new-cafes-container">
-    <h1>Buscaste: {{ query }}</h1>
+    <h1>{% trans "Looking for: " %} {{ query }}</h1>
     {% for shop in shops %}
     <ul class="new-cafe-list">
         <li>
@@ -14,9 +15,9 @@
         </li>
     </ul>
     {% empty %}
-    <p>Lo siento, no encontramos ninguna cafetería, ten una taza de café virtual en su lugar ☕</p>
-    <p>¿Por qué no visitas las cafeterías nuevas?</p>
-    <a href={% url 'newest_coffee_shops' %}><button class="btn">Ir a cafeterías nuevas</button></a>
+    <p>{% trans "I'm sorry, we found no coffee shop, here have a cup of virtual coffee instead" %} ☕</p>
+    <p>{% trans "Why don't you visit a new coffee shop?" %}</p>
+    <a href={% url 'newest_coffee_shops' %}><button class="btn">{% trans "See new coffee shops" %}</button></a>
     {% endfor %}
 </div>
 {% endblock %}

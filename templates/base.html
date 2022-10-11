@@ -51,9 +51,7 @@
                         <input pattern="^[A-zÀ-ú\s]*$" id="search" class="search" type="search" name="search" placeholder="Buscar">
                     </form>
                 </li>
-                {% if request.user.is_staff %}<li><a href="{% url 'admin:index' %}">Admin</a></li>{% endif %}
-                <li><a href="{% url 'about' %}">About me</a></li>
-                <li><a href="{% url 'newest_coffee_shops' %}">New cafes</a></li>
+                {% include 'menu.html' %}
             </ul>
         </div>
         <div id="menu-bars" class="menu-bars">
@@ -67,9 +65,7 @@
                         <input pattern="^[A-zÀ-ú\s]*$" id="search" type="search" name="search" class="search" placeholder="Buscar">
                     </form>
                 </li>
-                {% if request.user.is_staff %}<li><a href="{% url 'admin:index' %}">Admin</a></li>{% endif %}
-                <li><a href="{% url 'about' %}">About me</a></li>
-                <li><a href="{% url 'newest_coffee_shops' %}">New cafes</a></li>
+                {% include 'menu.html' %}
             </ul>
         </div>
     </nav>

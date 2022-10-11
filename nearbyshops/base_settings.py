@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
+    "accounts",
     "ckeditor",
     "leaflet",
     "shops",
@@ -144,3 +145,7 @@ LEAFLET_CONFIG = {
 }
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+AUTH_USER_MODEL = "accounts.User"
+
+LOGOUT_REDIRECT_URL = "/"
