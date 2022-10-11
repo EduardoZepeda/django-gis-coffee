@@ -1,13 +1,13 @@
 from django.contrib.auth import get_user_model
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import DetailView, RedirectView
+from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 from django.contrib.auth.views import PasswordChangeView
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import DetailView, RedirectView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
 from .forms import CustomUserCreationForm
 
 # Allow us to use a custom user model

@@ -1,6 +1,7 @@
-from django.contrib.gis.db import models
 from decimal import Decimal
+
 from ckeditor.fields import RichTextField
+from django.contrib.gis.db import models
 
 STATE_CHOICES = (
     ("26", "Sonora"),
@@ -80,6 +81,7 @@ class Shop(models.Model):
     rating = models.DecimalField(
         default=UNRATED, max_digits=2, decimal_places=1, choices=RATING_CHOICES
     )
+    likes = models.ManyToManyField("accounts.User")
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
     content = RichTextField(blank=True, null=True)
