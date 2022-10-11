@@ -1,9 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load newest_shops %}
 {% block content %}
-{% if shops %}
 <div class="new-cafes-container">
-    <h1>New additions</h1>
+    <h1>{% trans "New additions" %}</h1>
     <ul class="new-cafe-list">
         {% for shop in shops %}
         <li>
@@ -12,8 +12,9 @@
                 <span class="recent-addition">new</span>
             {% endif %}
         </li>
+            {% empty %}
+                <p>{% trans "We're working hard to provide with the latest coffee shops." %}</p>
         {% endfor %}
     </ul>
 </div>
-{% endif %}
 {% endblock %}
