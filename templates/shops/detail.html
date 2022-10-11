@@ -22,7 +22,8 @@
     {% if request.user.is_anonymous %}
         <p>{% trans "Please log in to like this coffee shop" %}</p>
     {% else %}
-        <div id="liked" liked="{{shop.liked}}" class="liked">{% if shop.liked %}<i class="fa-solid fa-heart"></i>{% else %}<i class="fa-regular fa-heart"></i>{% endif %}</div>
+    {% csrf_token %}
+        <div id="liked" shop-id="{{shop.pk}}" liked="{{shop.liked}}" class="liked">{% if shop.liked %}<i class="fa-solid fa-heart"></i>{% else %}<i class="fa-regular fa-heart"></i>{% endif %}</div>
     {% endif %}
     {% if shop.address %}
     <p><i class="fa-solid fa-store"></i><span> {{ shop.address }}</span></p>
@@ -57,13 +58,44 @@
 
 {% block footer_scripts %}
 <script>
-    window.addEventListener("map:init", function (e) {
+    function getLikedValue(){
+        let liked = document.getElementById('liked').getAttribute('liked')
+        return liked === 'True' ? true : false
+    }
+
+    function getShopId(){
+        let id = document.getElementById('liked').getAttribute('shop-id')
+        return parseInt(id)
+    }
+
+    function toggleLikedValue(){
+        let liked = document.getElementById('liked').getAttribute('liked')
+        document.getElementById('liked').setAttribute(liked==='True'?'False':'True')
+    }
+
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    window.addEventListener('map:init', function (e) {
         var detail = e.detail;
         L.marker([{{ shop.location.1 }}, {{ shop.location.0 }}]).addTo(detail.map);
     }, false);
-    let liked = document.getElementById("liked")
-    liked.onclick = () => {
-
+    let url = '{% url "shops:like_shop" %}'
+    liked.onclick = async () => {
+        let request = new Request(
+        url,
+        {
+            method: 'POST',
+            headers: {'X-CSRFToken': csrftoken},
+            mode: 'same-origin',
+            body: JSON.stringify({liked: getLikedValue(), id: getShopId()})
+        }
+    )
+        try {
+            const response = await fetch(request)
+            const data = await response.json()
+            console.log(data)
+        } catch(err){
+            console.error(err)
+        }
     }
 </script>
 {% endblock %}

@@ -1,16 +1,20 @@
-from django.shortcuts import render
-from django.contrib.postgres.search import SearchVector
-from django.core.serializers import serialize
-from django.contrib.gis.measure import D
+import json
+from django.contrib.auth.decorators import login_required
 from django.contrib.gis import forms
-from leaflet.forms.widgets import LeafletWidget
-from django.views import generic
-from django.views.generic.detail import DetailView
-from django.http import HttpResponse
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
-from .models import Shop
+from django.contrib.gis.measure import D
+from django.contrib.postgres.search import SearchVector
+from django.core.serializers import serialize
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views import generic
+from django.views.generic.detail import DetailView
+from leaflet.forms.widgets import LeafletWidget
+
 from .forms import SearchForm
+from .models import Shop
 
 longitude = -103.349609
 latitude = 20.659698
@@ -69,6 +73,8 @@ class ShopDetail(generic.DetailView):
             "DEFAULT_ZOOM": 15,
             "DEFAULT_CENTER": (shop_coords[1], shop_coords[0]),
         }
+        # Retrieve whether the current users likes or not the current coffee shop
+        context["object"].liked = self.request.user in Shop.objects.get(pk=self.kwargs.get('pk')).likes.all()
         return context
 
 
@@ -84,4 +90,13 @@ class SearchShops(generic.View):
             )
         shops = {}
         return render(request, "shops/search.html", {"shops": shops, "query": query})
+
+class LikeCoffeeShop(generic.View):
+    def post(self, request):
+        data = json.loads(request.body)
+        if data.get("liked"):
+            Shop.objects.get(pk=data.get("id")).likes.remove(request.user)
+        else:
+            Shop.objects.get(pk=data.get("id")).likes.add(request.user)
+        return JsonResponse({"message": "ok"})
 
