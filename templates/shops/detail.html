@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% load leaflet_tags %}
+{% load static %}
 {% load render_stars %}
+{% load i18n %}
 {% block title %}{% if shop %}{{ shop.name }}{% endif %}{% endblock %}
 {% block javascript %}
 {% leaflet_js plugins="forms" %}
@@ -17,10 +19,15 @@
 <article>
     <h1 class="shop-name">{{ shop.name }}</h1>
     {% if request.user.is_staff %}<p><a href="{% url 'admin:shops_shop_change' shop.id %}">Editar <span><i class="fa-solid fa-pencil"></i></span></a></p>{% endif %}
-    {% render_stars shop.rating %}
+    {% if request.user.is_anonymous %}
+        <p>{% trans "Please log in to like this coffee shop" %}</p>
+    {% else %}
+        <div id="liked" liked="{{shop.liked}}" class="liked">{% if shop.liked %}<i class="fa-solid fa-heart"></i>{% else %}<i class="fa-regular fa-heart"></i>{% endif %}</div>
+    {% endif %}
     {% if shop.address %}
     <p><i class="fa-solid fa-store"></i><span> {{ shop.address }}</span></p>
     {% endif %}
+    {% render_stars shop.rating %}
     {% if shop.roaster %}
     <i class="fa-solid fa-fire"></i><span> Tostador</span>
     {% endif %}
@@ -54,5 +61,9 @@
         var detail = e.detail;
         L.marker([{{ shop.location.1 }}, {{ shop.location.0 }}]).addTo(detail.map);
     }, false);
+    let liked = document.getElementById("liked")
+    liked.onclick = () => {
+
+    }
 </script>
 {% endblock %}
