@@ -86,7 +86,7 @@
             }, 10);
             const LatLng = location.getLatLng()
 
-            fetch(`/api/v1/shops/@${LatLng.lat},${LatLng.lng},${distanceInput.value}`).then(response => response.json()).then(response => {
+            fetch(`shops/@${LatLng.lat},${LatLng.lng},${distanceInput.value}/`).then(response => response.json()).then(response => {
                 removeMarkersFromMap()
                 markers = []
                 items = response.features.map(function (item) {
