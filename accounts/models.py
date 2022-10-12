@@ -22,4 +22,4 @@ class User(AbstractUser):
     following = models.ManyToManyField('self', through=Contact, related_name='followers', symmetrical=False)
 
     def get_absolute_url(self):
-        return reverse("accounts:user_profile")
+        return reverse("accounts:user_profile", args=[self.slug])

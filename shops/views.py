@@ -93,10 +93,12 @@ class SearchShops(generic.View):
 
 class LikeCoffeeShop(generic.View):
     def post(self, request):
+        # Receive JSON request from template
         data = json.loads(request.body)
+        # data.liked can be either true or false
         if data.get("liked"):
             Shop.objects.get(pk=data.get("id")).likes.remove(request.user)
-        else:
-            Shop.objects.get(pk=data.get("id")).likes.add(request.user)
-        return JsonResponse({"message": "ok"})
+            return JsonResponse({"message": "ok", "liked": False})
+        Shop.objects.get(pk=data.get("id")).likes.add(request.user)
+        return JsonResponse({"message": "ok", "liked": True})
 

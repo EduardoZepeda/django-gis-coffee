@@ -18,22 +18,27 @@
 {% if shop %}
 <article>
     <h1 class="shop-name">{{ shop.name }}</h1>
-    {% if request.user.is_staff %}<p><a href="{% url 'admin:shops_shop_change' shop.id %}">Editar <span><i class="fa-solid fa-pencil"></i></span></a></p>{% endif %}
+    {% if request.user.is_staff %}<p><a href="{% url 'admin:shops_shop_change' shop.id %}">{% trans "Edit" %} <span><i
+                    class="fa-solid fa-pencil"></i></span></a></p>{% endif %} 
     {% if request.user.is_anonymous %}
-        <p>{% trans "Please log in to like this coffee shop" %}</p>
+    <p>{% trans "Please log in to like this coffee shop" %}</p>
     {% else %}
     {% csrf_token %}
-        <div id="liked" shop-id="{{shop.pk}}" liked="{{shop.liked}}" class="liked">{% if shop.liked %}<i class="fa-solid fa-heart"></i>{% else %}<i class="fa-regular fa-heart"></i>{% endif %}</div>
+    <div id="liked" shop-id="{{shop.pk}}" liked="{{shop.liked | lower}}" class="liked">
+        {% if shop.liked %}
+            <i id="like-icon" class="fa-solid fa-heart"></i>
+        {% else %}
+            <i id="like-icon" class="fa-regular fa-heart"></i>
+        {% endif %}
+    </div>
     {% endif %}
-    {% if shop.address %}
-    <p><i class="fa-solid fa-store"></i><span> {{ shop.address }}</span></p>
-    {% endif %}
+    <h2>{% trans "Expert barista score:" %}</h2>
     {% render_stars shop.rating %}
     {% if shop.roaster %}
     <i class="fa-solid fa-fire"></i><span> Tostador</span>
     {% endif %}
     {% if shop.product.all %}
-    <h2>Variedades</h2>
+    <h2>{% trans "Products" %}</h2>
     {% for bag in shop.product.all %}
     <div class="coffee-product">
         <h3>{{ bag.brand }}</h3>
@@ -44,13 +49,16 @@
     {% endif %}
     {% if shop.content %}
     <div class="review-content">
-        <h2>Opinión</h2>
+        <h2>{% trans "Opinion" %}</h2>
         {{ shop.content|safe }}
     </div>
     {% endif %}
 </article>
 <section class="shop-map">
-    <h2>Ubicación</h2>
+    <h2>{% trans "Location" %}</h2>
+    {% if shop.address %}
+    <p><i class="fa-solid fa-store"></i><span> {{ shop.address }}</span></p>
+    {% endif %}
     {% leaflet_map "detail-map" settings_overrides=settings_overrides %}
 </section>
 {% endif %}
@@ -58,19 +66,22 @@
 
 {% block footer_scripts %}
 <script>
-    function getLikedValue(){
+    function getLikedValue() {
         let liked = document.getElementById('liked').getAttribute('liked')
-        return liked === 'True' ? true : false
+        return liked === 'true' ? true : false
     }
 
-    function getShopId(){
+    function getShopId() {
         let id = document.getElementById('liked').getAttribute('shop-id')
         return parseInt(id)
     }
 
-    function toggleLikedValue(){
-        let liked = document.getElementById('liked').getAttribute('liked')
-        document.getElementById('liked').setAttribute(liked==='True'?'False':'True')
+    function setLikedValue(value) {
+        document.getElementById('liked').setAttribute('liked', value)
+    }
+
+    function toggleHeartIcon(){
+        document.getElementById('like-icon').setAttribute('data-prefix', getLikedValue()?'fas':'far')
     }
 
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -80,20 +91,23 @@
     }, false);
     let url = '{% url "shops:like_shop" %}'
     liked.onclick = async () => {
+        let setLike = getLikedValue()
+        let shopId = getShopId()
         let request = new Request(
-        url,
-        {
-            method: 'POST',
-            headers: {'X-CSRFToken': csrftoken},
-            mode: 'same-origin',
-            body: JSON.stringify({liked: getLikedValue(), id: getShopId()})
-        }
-    )
+            url,
+            {
+                method: 'POST',
+                headers: { 'X-CSRFToken': csrftoken },
+                mode: 'same-origin',
+                body: JSON.stringify({ liked: setLike, id: shopId })
+            }
+        )
         try {
             const response = await fetch(request)
             const data = await response.json()
-            console.log(data)
-        } catch(err){
+            setLikedValue(data.liked)
+            toggleHeartIcon()
+        } catch (err) {
             console.error(err)
         }
     }

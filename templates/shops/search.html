@@ -7,7 +7,7 @@
     {% for shop in shops %}
     <ul class="new-cafe-list">
         <li>
-            <a href="{% url 'shop_detail' shop.pk %}">{{ shop.name }}</a>
+            <a href="{% url 'shops:shop_detail' shop.pk %}">{{ shop.name }}</a>
             {% if shop.created_date|days_ago:15 %}
                 <span class="recent-addition">new</span>
             {% endif %}

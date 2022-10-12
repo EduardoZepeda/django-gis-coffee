@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from ckeditor.fields import RichTextField
 from django.contrib.gis.db import models
+from django.urls import reverse
 
 STATE_CHOICES = (
     ("26", "Sonora"),
@@ -81,13 +82,18 @@ class Shop(models.Model):
     rating = models.DecimalField(
         default=UNRATED, max_digits=2, decimal_places=1, choices=RATING_CHOICES
     )
-    likes = models.ManyToManyField("accounts.User")
+    likes = models.ManyToManyField("accounts.User", related_name="likes", blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
     content = RichTextField(blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse("shops:shop_detail", args=[self.pk])
+
     def __str__(self):
         return "{}".format(self.name)
+
+
 
 
 class CoffeeBag(models.Model):
