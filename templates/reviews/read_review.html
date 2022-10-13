@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div>
+    <h2>{{review.shop}}</h2>
+    <h3>{{review.user}} {% trans "says:" %} </h3>
+    <p>{{review.content}}</p>
+    <small>{{review.created}}</small>
+    <p>{% if review.recommended%}
+        <i class="fa-solid fa-thumbs-up"></i> {% trans "Recommended" %}
+        {% else %}
+        <i class="fa-solid fa-thumbs-down"></i> {% trans "Not recommended" %}
+        {% endif %}
+    </p>
+</div>
+{% endblock %}
