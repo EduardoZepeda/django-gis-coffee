@@ -22,7 +22,9 @@ from .models import Shop
 longitude = -103.349609
 latitude = 20.659698
 
-user_location = Point(longitude, latitude, srid=4326) #srid is a standar, please don't change it
+user_location = Point(
+    longitude, latitude, srid=4326
+)  # srid is a standar, please don't change it
 
 
 class MyGeoForm(forms.Form):
@@ -50,9 +52,11 @@ class NearbyShops(generic.View):
         # Many options if distance is shorter otherwise less options
         available_options = 15 if distance_in_km < 10 else 6
         coordenates = Point(float(longitude), float(latitude), srid=4326)
-        nearby_shops = Shop.objects.annotate(
-            distance=Distance("location", coordenates)
-        ).filter(distance__lte=D(km=radius)).order_by("distance")[0:available_options]
+        nearby_shops = (
+            Shop.objects.annotate(distance=Distance("location", coordenates))
+            .filter(distance__lte=D(km=radius))
+            .order_by("distance")[0:available_options]
+        )
         # geojson deals with point fields
         data = serialize(
             "geojson",
@@ -70,7 +74,7 @@ class ShopDetail(generic.DetailView):
 
     def get_queryset(self):
         queryset = super(ShopDetail, self).get_queryset()
-        return queryset.annotate(likes_count=Count('likes'))
+        return queryset.annotate(likes_count=Count("likes"))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -81,7 +85,9 @@ class ShopDetail(generic.DetailView):
             "DEFAULT_CENTER": (shop_coords[1], shop_coords[0]),
         }
         # Retrieve whether the current users likes or not the current coffee shop
-        context["object"].liked = self.request.user in Shop.objects.get(pk=self.kwargs.get('pk')).likes.all()
+        context["object"].liked = (
+            self.request.user in Shop.objects.get(pk=self.kwargs.get("pk")).likes.all()
+        )
         return context
 
 
@@ -98,11 +104,15 @@ class SearchShops(generic.View):
         shops = {}
         return render(request, "shops/search.html", {"shops": shops, "query": query})
 
-@method_decorator(login_required, name='dispatch')
+
+@method_decorator(login_required, name="dispatch")
 class LikeCoffeeShop(generic.View):
     def post(self, request):
         data = json.loads(request.body)
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest' and type(data.get("id"))==int:
+        if (
+            request.headers.get("x-requested-with") == "XMLHttpRequest"
+            and type(data.get("id")) == int
+        ):
             # Receive JSON request from template frontend
             shop = get_object_or_404(Shop, pk=data.get("id"))
             # data.liked can be either true or false
@@ -111,5 +121,7 @@ class LikeCoffeeShop(generic.View):
                 return JsonResponse({"message": "ok", "liked": False})
             shop.likes.add(request.user)
             return JsonResponse({"message": "ok", "liked": True})
-        return JsonResponse({"error": "Data should contain a JSON object with an id and a liked keys"}, status=400)
-
+        return JsonResponse(
+            {"error": "Data should contain a JSON object with an id and a liked keys"},
+            status=400,
+        )

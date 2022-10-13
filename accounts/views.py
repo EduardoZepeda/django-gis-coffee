@@ -20,12 +20,14 @@ from .decorators import anonymous_required
 # Allow us to use a custom user model
 User = get_user_model()
 
+
 @method_decorator(anonymous_required("accounts:profile"), name="dispatch")
 class RegisterUser(CreateView):
     # New custom UseCreationForm is required for setting custom user model
     # Otherwise passwords won"t be hashed
     form_class = CustomUserCreationForm
     template_name = "accounts/register.html"
+
 
 @method_decorator(login_required, name="dispatch")
 class UpdateUser(UpdateView):
@@ -37,8 +39,9 @@ class UpdateUser(UpdateView):
         return reverse("accounts:profile")
 
     def get_object(self):
-        # Users can only update their own accounts 
+        # Users can only update their own accounts
         return self.request.user
+
 
 @method_decorator(login_required, name="dispatch")
 class DeleteUser(DeleteView):
@@ -47,8 +50,9 @@ class DeleteUser(DeleteView):
     success_url = reverse_lazy("accounts:successful_deleted_account")
 
     def get_object(self):
-        # Users can only delete their own accounts 
+        # Users can only delete their own accounts
         return self.request.user
+
 
 @method_decorator(login_required, name="dispatch")
 class Profile(DetailView):
@@ -62,7 +66,8 @@ class Profile(DetailView):
         context = super(Profile, self).get_context_data(**kwargs)
         # Add shops that the user has liked to context data
         context["likes"] = Shop.objects.filter(likes=self.object)
-        return context        
+        return context
+
 
 @method_decorator(login_required, name="dispatch")
 class UserProfile(DetailView):
@@ -76,7 +81,10 @@ class UserProfile(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["object"].following_user = self.request.user in User.objects.get(pk=self.kwargs.get("pk")).following.all()
+        context["object"].following_user = (
+            self.request.user
+            in User.objects.get(pk=self.kwargs.get("pk")).following.all()
+        )
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -84,30 +92,42 @@ class UserProfile(DetailView):
             return redirect("accounts:profile")
         return super().dispatch(request, *args, **kwargs)
 
+
 @method_decorator(login_required, name="dispatch")
 class ChangePassword(PasswordChangeView):
     form_class = PasswordChangeForm
     success_url = reverse_lazy("accounts:password_changed")
     template_name = "accounts/change-password.html"
 
+
 @method_decorator(login_required, name="dispatch")
 class PasswordChanged(RedirectView):
     pattern_name = "accounts:profile"
+
 
 @method_decorator(login_required, name="dispatch")
 class FollowUser(generic.View):
     def post(self, request):
         data = json.loads(request.body)
-        if request.headers.get("x-requested-with") == "XMLHttpRequest" and type(data.get("id"))==int:
+        if (
+            request.headers.get("x-requested-with") == "XMLHttpRequest"
+            and type(data.get("id")) == int
+        ):
             # Receive JSON request from template frontend
             user = get_object_or_404(User, pk=data.get("id"))
             if request.user == user:
-                    return JsonResponse({"error": "You can't follow your own account."}, status=400)
+                return JsonResponse(
+                    {"error": "You can't follow your own account."}, status=400
+                )
             # data.liked can be either true or false
-            if data.get("action")=="unfollow":
+            if data.get("action") == "unfollow":
                 user.following.remove(request.user)
                 return JsonResponse({"message": "ok", "action": "follow"})
             user.following.add(request.user)
             return JsonResponse({"message": "ok", "action": "unfollow"})
-        return JsonResponse({"error": "Data should contain a JSON object with an id and an action keys. "}, status=400)
-
+        return JsonResponse(
+            {
+                "error": "Data should contain a JSON object with an id and an action keys. "
+            },
+            status=400,
+        )
