@@ -42,10 +42,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
-    "accounts",
+    "crispy_forms",
     "ckeditor",
     "leaflet",
     "shops",
+    "accounts",
 ]
 
 MIDDLEWARE = [

@@ -15,10 +15,12 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from shops.models import Shop
 
 from .forms import CustomUserCreationForm
+from .decorators import anonymous_required
 
 # Allow us to use a custom user model
 User = get_user_model()
 
+@method_decorator(anonymous_required("accounts:profile"), name="dispatch")
 class RegisterUser(CreateView):
     # New custom UseCreationForm is required for setting custom user model
     # Otherwise passwords won"t be hashed
