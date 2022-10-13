@@ -22,8 +22,8 @@ urlpatterns = [
     path("profile/", Profile.as_view(), name="profile"),
     path("follow/", FollowUser.as_view(), name="follow"),
     path("profile/<int:pk>/", UserProfile.as_view(), name="user_profile"),
-    path("register/", RegisterUser.as_view(), name="register_user"),
-    path("update/<int:pk>/", UpdateUser.as_view(), name="update_user"),
+    path("register/", RegisterUser.as_view(), name="register"),
+    path("update/<int:pk>/", UpdateUser.as_view(), name="update"),
     path("change-password/", ChangePassword.as_view(), name="change_password"),
     path("password-changed/", PasswordChanged.as_view(), name="password_changed"),
 ]

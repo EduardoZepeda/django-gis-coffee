@@ -110,7 +110,7 @@
         L.marker([{{ shop.location.1 }}, {{ shop.location.0 }}]).addTo(detail.map);
     }, false);
     // Url is generated using django template system
-    let url = '{% url "shops:like_shop" %}'
+    let url = '{% url "shops:like" %}'
     liked.onclick = async () => {
         let setLike = getLikedValue()
         let shopId = getShopId()
