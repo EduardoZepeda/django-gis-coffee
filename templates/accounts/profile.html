@@ -5,7 +5,7 @@
 <div class="social-card">
     <h2>{{user}}</h2>
     <p>{{user.first_name}} {{user.last_name}}</p>
-    <a href='{% url "accounts:update_user" request.user.pk %}'><button class="btn">{% trans "Update profile" %}</button></a>
+    <a href='{% url "accounts:update" request.user.pk %}'><button class="btn">{% trans "Update profile" %}</button></a>
     <h2>{% trans "Your likes" %}</h2>
 </div>
 {% if likes %}

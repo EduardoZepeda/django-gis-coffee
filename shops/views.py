@@ -53,7 +53,7 @@ class NearbyShops(generic.View):
         # Many options if distance is shorter otherwise less options
         available_options = 15 if distance_in_km < 10 else 6
         coordenates = Point(float(longitude), float(latitude), srid=4326)
-        nearby_shops = (
+        nearby = (
             Shop.objects.annotate(distance=Distance("location", coordenates))
             .filter(distance__lte=D(km=radius))
             .order_by("distance")[0:available_options]
@@ -61,7 +61,7 @@ class NearbyShops(generic.View):
         # geojson deals with point fields
         data = serialize(
             "geojson",
-            nearby_shops,
+            nearby,
             geometry_field="location",
             fields=("name", "pk", "address", "rating"),
         )

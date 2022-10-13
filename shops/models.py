@@ -88,7 +88,7 @@ class Shop(models.Model):
     content = RichTextField(blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse("shops:shop_detail", args=[self.pk])
+        return reverse("shops:detail", args=[self.pk])
 
     def __str__(self):
         return "{}".format(self.name)
