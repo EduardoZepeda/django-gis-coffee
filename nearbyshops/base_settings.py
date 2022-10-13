@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "leaflet",
     "shops",
     "accounts",
+    "reviews",
 ]
 
 MIDDLEWARE = [

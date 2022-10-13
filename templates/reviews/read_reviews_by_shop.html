@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div>
+    <h2>{{ shop }}</h2>
+    {% for review in reviews %}
+        <h3>{{review.user}} {% trans " says:" %}</h3>
+        <p>{{review.content}}</p>
+        <small>{{review.created}}</small>
+        <p>{% if review.recommended%}
+            <i class="fa-solid fa-thumbs-up"></i> {% trans "Recommended" %}
+            {% else %}
+            <i class="fa-solid fa-thumbs-down"></i> {% trans "Not recommended" %}
+            {% endif %}
+        </p>
+    {% endfor %}
+</div>
+
+<div class='pagination'>
+    {% if page_obj.has_previous %}
+    <a class="pagination-link" href='{% url "reviews:list" %}?page={{ page_obj.previous_page_number }}'>{% trans "Previous" %} </a>
+    {% endif %}
+    <span class='pagination-info'>
+        {% blocktrans with number=page_obj.number num_pages=page_obj.paginator.num_pages %} 
+            Page {{ number }} of {{ num_pages }}
+        {% endblocktrans %}
+    </span>
+    {% if page_obj.has_next %}
+    <a class="pagination-link" href='{% url "reviews:list" %}?page={{ page_obj.next_page_number }}' > {% trans "Next" %}</a>
+    {% endif %}
+</div>
+{% endblock %}
