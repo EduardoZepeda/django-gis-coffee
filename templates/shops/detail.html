@@ -16,7 +16,7 @@
 
 {% block content %}
 {% if shop %}
-<article>
+<article class="article-content">
     <h1 class="shop-name">{{ shop.name }}</h1>
     {% if request.user.is_staff %}<p><a href="{% url 'admin:shops_shop_change' shop.id %}">{% trans "Edit" %} <span><i
                     class="fa-solid fa-pencil"></i></span></a></p>{% endif %} 
@@ -32,12 +32,22 @@
         <span id="likes-count">{{shop.likes_count}}</span>
     </div>
     {% endif %}
+    {% if shop.content or shop.rating %}
+        <h2>{% trans "Our expert barista insights"%}</h2>
+    {% endif %}
+    {% if shop.content %}
+    <div class="review-content">
+        <h3>{% trans "Opinion" %}</h3>
+        {{ shop.content|safe }}
+    </div>
+    {% endif %}
     {% if shop.rating %}
-    <h2>{% trans "Expert barista score:" %}</h2>
+    <h3>{% trans "Score:" %}</h3>
     {% render_stars shop.rating %}
     {% endif %}
     {% if shop.roaster %}
-    <i class="fa-solid fa-fire"></i><span> Tostador</span>
+    <h2>{%  trans "Additional services" %}</h2>
+    <div class="roaster"><i class="fa-solid fa-fire"></i><span> Tostador</span></div>
     {% endif %}
     {% if shop.product.all %}
     <h2>{% trans "Products" %}</h2>
@@ -49,20 +59,14 @@
     </div>
     {% endfor %}
     {% endif %}
-    {% if shop.content %}
-    <div class="review-content">
-        <h2>{% trans "Opinion" %}</h2>
-        {{ shop.content|safe }}
-    </div>
-    {% endif %}
+    <section class="shop-map">
+        <h2>{% trans "Location" %}</h2>
+        {% if shop.address %}
+        <p><i class="fa-solid fa-store"></i><span> {{ shop.address }}</span></p>
+        {% endif %}
+        {% leaflet_map "detail-map" settings_overrides=settings_overrides %}
+    </section>
 </article>
-<section class="shop-map">
-    <h2>{% trans "Location" %}</h2>
-    {% if shop.address %}
-    <p><i class="fa-solid fa-store"></i><span> {{ shop.address }}</span></p>
-    {% endif %}
-    {% leaflet_map "detail-map" settings_overrides=settings_overrides %}
-</section>
 {% endif %}
 <form>
     {% csrf_token %}

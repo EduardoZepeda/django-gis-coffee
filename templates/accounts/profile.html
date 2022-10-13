@@ -2,15 +2,19 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
-<h2>{% trans "Profile" %}</h2>
-<p>{{request.user}}</p>
-<p>{{request.user.first_name}}</p>
-<p>{{request.user.last_name}}</p>
-<a href="{% url "accounts:update_user" request.user.pk %}"><button class="btn">{% trans "Update profile" %}</button></a>
-<h2>{% trans "Your likes" %}</h2>
-{% for shop in likes %}
-<a href="{{ shop.get_absolute_url }}">{{shop.name}}</a>
-{% empty %}
-{% trans "This account has not liked any coffee shop" %}
-{% endfor %}
+<div class="social-card">
+    <h2>{{user}}</h2>
+    <p>{{user.first_name}} {{user.last_name}}</p>
+    <a href='{% url "accounts:update_user" request.user.pk %}'><button class="btn">{% trans "Update profile" %}</button></a>
+    <h2>{% trans "Your likes" %}</h2>
+</div>
+{% if likes %}
+<ul class="likes-list">
+    {% for shop in likes %}
+        <li class="liked-coffee-shop"><a href="{{ shop.get_absolute_url }}">{{shop.name}}</a></li>
+    {% endfor %}
+    {% else %}
+        {% trans "This account has not liked any coffee shop" %}
+    {% endif %}
+</ul>
 {% endblock %}
