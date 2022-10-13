@@ -94,8 +94,6 @@ class Shop(models.Model):
         return "{}".format(self.name)
 
 
-
-
 class CoffeeBag(models.Model):
     brand = models.CharField(max_length=200)
     species = models.CharField(choices=COFFEE_SPECIES, default="Ar", max_length=2)

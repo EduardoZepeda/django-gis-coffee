@@ -6,5 +6,9 @@ urlpatterns = [
     path("like/", LikeCoffeeShop.as_view(), name="like_shop"),
     path("search/<str:query>/", SearchShops.as_view(), name="search_shop"),
     path("new/", Home.as_view(), name="newest_coffee_shops"),
-    path("@<latitude>,<longitude>,<int:radius>/", NearbyShops.as_view(), name="nearby_shops"),
+    path(
+        "@<latitude>,<longitude>,<int:radius>/",
+        NearbyShops.as_view(),
+        name="nearby_shops",
+    ),
 ]
