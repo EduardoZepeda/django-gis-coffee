@@ -21,19 +21,21 @@
     {% if request.user.is_staff %}<p><a href="{% url 'admin:shops_shop_change' shop.id %}">{% trans "Edit" %} <span><i
                     class="fa-solid fa-pencil"></i></span></a></p>{% endif %} 
     {% if request.user.is_anonymous %}
-    <p>{% trans "Please log in to like this coffee shop" %}</p>
+    <a href="{% url 'accounts:login' %}"><p>{% trans "Please log in to like this coffee shop" %}</p></a>
     {% else %}
-    {% csrf_token %}
     <div id="liked" shop-id="{{shop.pk}}" liked="{{shop.liked | lower}}" class="liked">
         {% if shop.liked %}
-            <i id="like-icon" class="fa-solid fa-heart"></i>
+            <i id="like-icon" class="fa-solid fa-heart fa-xl"></i>
         {% else %}
-            <i id="like-icon" class="fa-regular fa-heart"></i>
+            <i id="like-icon" class="fa-regular fa-heart fa-xl"></i>
         {% endif %}
+        <span id="likes-count">{{shop.likes_count}}</span>
     </div>
     {% endif %}
+    {% if shop.rating %}
     <h2>{% trans "Expert barista score:" %}</h2>
     {% render_stars shop.rating %}
+    {% endif %}
     {% if shop.roaster %}
     <i class="fa-solid fa-fire"></i><span> Tostador</span>
     {% endif %}
@@ -62,6 +64,9 @@
     {% leaflet_map "detail-map" settings_overrides=settings_overrides %}
 </section>
 {% endif %}
+<form>
+    {% csrf_token %}
+</form>
 {% endblock %}
 
 {% block footer_scripts %}
@@ -81,14 +86,24 @@
     }
 
     function toggleHeartIcon(){
+        // Toggles the solid color and the empty color heart version 
         document.getElementById('like-icon').setAttribute('data-prefix', getLikedValue()?'fas':'far')
     }
 
+    function increaseOrDecreaseCounter(liked){
+        let likesCounter = document.getElementById('likes-count')
+        let numberOfLikes = parseInt(likesCounter.textContent)
+        likesCounter.textContent = numberOfLikes + (liked ? 1 : -1)
+    }
+
+    // csrf is provided by Django backend
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
     window.addEventListener('map:init', function (e) {
         var detail = e.detail;
         L.marker([{{ shop.location.1 }}, {{ shop.location.0 }}]).addTo(detail.map);
     }, false);
+    // Url is generated using django template system
     let url = '{% url "shops:like_shop" %}'
     liked.onclick = async () => {
         let setLike = getLikedValue()
@@ -97,7 +112,11 @@
             url,
             {
                 method: 'POST',
-                headers: { 'X-CSRFToken': csrftoken },
+                headers: { 
+                    'X-CSRFToken': csrftoken,
+                    // Backend requires the HTTP request to be made asynchronously
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
                 mode: 'same-origin',
                 body: JSON.stringify({ liked: setLike, id: shopId })
             }
@@ -107,6 +126,7 @@
             const data = await response.json()
             setLikedValue(data.liked)
             toggleHeartIcon()
+            increaseOrDecreaseCounter(data.liked)
         } catch (err) {
             console.error(err)
         }

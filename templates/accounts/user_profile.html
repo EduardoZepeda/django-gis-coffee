@@ -2,8 +2,70 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
-<h2>{{user}} {% trans "Profile" %}</h2>
+<h2>{% trans "Profile" %}</h2>
 <p>{{user}}</p>
 <p>{{user.first_name}}</p>
 <p>{{user.last_name}}</p>
+<button id="follow" user-id='{{user.id}}' action='{% if user.following_user %}unfollow{% else %}follow{% endif %}'>
+    {% if user.following_user %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
+</button>
+<form>
+    {% csrf_token %}
+</form>
+{% endblock %}
+
+{% block footer_scripts %}
+<script>
+    function getAction() {
+        return document.getElementById('follow').getAttribute('action')
+    }
+
+    function getUserId() {
+        let id = document.getElementById('follow').getAttribute('user-id')
+        return parseInt(id)
+    }
+
+    function setActionValue(action) {
+        document.getElementById('follow').setAttribute('action', action)
+    }
+
+    function toggleFollowButton(action){
+        // Toggles the solid color and the empty color heart version 
+        document.getElementById('follow').textContent = action
+        document.getElementById('follow').classList.toggle('followed')
+    }
+
+    // csrf is provided by Django backend
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    let url = '{% url "accounts:follow" %}'
+    
+    let followingButton = document.getElementById('follow')
+
+    followingButton.onclick = async () => {
+        let action = getAction()
+        let userId = getUserId()
+        let request = new Request(
+            url,
+            {
+                method: 'POST',
+                headers: { 
+                    'X-CSRFToken': csrftoken,
+                    // Backend requires the HTTP request to be made asynchronously
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                mode: 'same-origin',
+                body: JSON.stringify({ "action": action, "id": userId })
+            }
+        )
+        try {
+            const response = await fetch(request)
+            const data = await response.json()
+            setActionValue(data.action)
+            toggleFollowButton(data.action)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+</script>
 {% endblock %}

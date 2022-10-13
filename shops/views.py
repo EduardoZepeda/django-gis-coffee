@@ -1,4 +1,5 @@
 import json
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.gis import forms
 from django.contrib.gis.db.models.functions import Distance
@@ -6,8 +7,9 @@ from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
 from django.contrib.postgres.search import SearchVector
 from django.core.serializers import serialize
+from django.db.models import Count
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.generic.detail import DetailView
@@ -16,10 +18,11 @@ from leaflet.forms.widgets import LeafletWidget
 from .forms import SearchForm
 from .models import Shop
 
+# These longitude and latitude correspond to Guadalajara's downtown
 longitude = -103.349609
 latitude = 20.659698
 
-user_location = Point(longitude, latitude, srid=4326)
+user_location = Point(longitude, latitude, srid=4326) #srid is a standar, please don't change it
 
 
 class MyGeoForm(forms.Form):
@@ -65,6 +68,10 @@ class ShopDetail(generic.DetailView):
     template_name = "shops/detail.html"
     context_object_name = "shop"
 
+    def get_queryset(self):
+        queryset = super(ShopDetail, self).get_queryset()
+        return queryset.annotate(likes_count=Count('likes'))
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         shop_coords = context["object"].location.coords
@@ -91,14 +98,18 @@ class SearchShops(generic.View):
         shops = {}
         return render(request, "shops/search.html", {"shops": shops, "query": query})
 
+@method_decorator(login_required, name='dispatch')
 class LikeCoffeeShop(generic.View):
     def post(self, request):
-        # Receive JSON request from template
         data = json.loads(request.body)
-        # data.liked can be either true or false
-        if data.get("liked"):
-            Shop.objects.get(pk=data.get("id")).likes.remove(request.user)
-            return JsonResponse({"message": "ok", "liked": False})
-        Shop.objects.get(pk=data.get("id")).likes.add(request.user)
-        return JsonResponse({"message": "ok", "liked": True})
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' and type(data.get("id"))==int:
+            # Receive JSON request from template frontend
+            shop = get_object_or_404(Shop, pk=data.get("id"))
+            # data.liked can be either true or false
+            if data.get("liked"):
+                shop.likes.remove(request.user)
+                return JsonResponse({"message": "ok", "liked": False})
+            shop.likes.add(request.user)
+            return JsonResponse({"message": "ok", "liked": True})
+        return JsonResponse({"error": "Data should contain a JSON object with an id and a liked keys"}, status=400)
 
