@@ -7,7 +7,7 @@
 <p>{{request.user.first_name}}</p>
 <p>{{request.user.last_name}}</p>
 <a href="{% url "accounts:update_user" request.user.pk %}"><button class="btn">{% trans "Update profile" %}</button></a>
-<h2>{% trans "Likes" %}</h2>
+<h2>{% trans "Your likes" %}</h2>
 {% for shop in likes %}
 <a href="{{ shop.get_absolute_url }}">{{shop.name}}</a>
 {% empty %}
