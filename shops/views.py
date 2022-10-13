@@ -34,8 +34,9 @@ class MyGeoForm(forms.Form):
 class Home(generic.ListView):
     model = Shop
     context_object_name = "shops"
-    queryset = Shop.objects.order_by("-created_date")[0:6]
+    queryset = Shop.objects.order_by("-created_date")
     template_name = "shops/index.html"
+    paginate_by = 5
 
 
 class Geo(generic.View):
@@ -91,19 +92,26 @@ class ShopDetail(generic.DetailView):
         return context
 
 
-class SearchShops(generic.View):
-    def get(self, request, query):
+class SearchShops(generic.ListView):
+    model = Shop
+    template_name = "shops/search.html"
+    paginate_by = 5
+    context_object_name = "shops"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["query"] = self.kwargs["query"]
+        return context
+
+    def get_queryset(self):
+        query = self.kwargs["query"]
         f = SearchForm({"query": query})
         if f.is_valid():
             shops = Shop.objects.annotate(
                 search=SearchVector("name", "content", config="spanish")
             ).filter(search=query)
-            return render(
-                request, "shops/search.html", {"shops": shops, "query": query}
-            )
-        shops = {}
-        return render(request, "shops/search.html", {"shops": shops, "query": query})
-
+            return shops
+        return Shop.objects.none()
 
 @method_decorator(login_required, name="dispatch")
 class LikeCoffeeShop(generic.View):

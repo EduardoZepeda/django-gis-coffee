@@ -178,11 +178,15 @@ ul {
     min-width: 400px;
 }
 
-.new-cafe-list {
+.coffee-list {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
+}
+
+.coffee-list-item {
+    margin: 1rem;
 }
 
 .links {
@@ -266,6 +270,20 @@ ul {
 
 .liked-coffee-shop{
     margin: 1rem 0;
+}
+
+.pagination {
+    margin: 2rem 1rem;
+}
+
+.pagination-link {
+    color: #363636;
+    border: 1px solid #363636;
+    padding: 0.5rem 1rem;
+}
+
+.pagination-info {
+    margin: 0rem 1rem;
 }
 
 @media (max-width: 768px) {

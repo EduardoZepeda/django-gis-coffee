@@ -5,8 +5,8 @@
 <div class="new-cafes-container">
     <h1>{% trans "Looking for: " %} {{ query }}</h1>
     {% for shop in shops %}
-    <ul class="new-cafe-list">
-        <li>
+    <ul class="coffee-list">
+        <li class="coffee-list-item">
             <a href="{% url 'shops:shop_detail' shop.pk %}">{{ shop.name }}</a>
             {% if shop.created_date|days_ago:15 %}
                 <span class="recent-addition">new</span>
@@ -17,7 +17,22 @@
     {% empty %}
     <p>{% trans "I'm sorry, we found no coffee shop, here have a cup of virtual coffee instead" %} ☕</p>
     <p>{% trans "Why don't you visit a new coffee shop?" %}</p>
-    <a href={% url "shops:newest_coffee_shops" %}><button class="btn">{% trans "See new coffee shops" %}</button></a>
+    <a href='{% url "shops:newest_coffee_shops" %}'><button class="btn">{% trans "See new coffee shops" %}</button></a>
     {% endfor %}
+    {% if shops %}
+    <div class='pagination'>
+        {% if page_obj.has_previous %}
+        <a class="pagination-link" href='{% url "shops:search_shop" query %}?page={{ page_obj.previous_page_number }}'>{% trans "Previous" %} </a>
+        {% endif %}
+        <span class='pagination-info'>
+            {% blocktrans with number=page_obj.number num_pages=page_obj.paginator.num_pages %} 
+                Page {{ number }} of {{ num_pages }}
+            {% endblocktrans %}
+        </span>
+        {% if page_obj.has_next %}
+        <a class="pagination-link" href='{% url "shops:search_shop" query %}?page={{ page_obj.next_page_number }}' > {% trans "Next" %}</a>
+        {% endif %}
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

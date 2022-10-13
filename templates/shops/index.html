@@ -4,9 +4,9 @@
 {% block content %}
 <div class="new-cafes-container">
     <h1>{% trans "New additions" %}</h1>
-    <ul class="new-cafe-list">
+    <ul class="coffee-list">
         {% for shop in shops %}
-        <li>
+        <li class="coffee-list-item">
             <a href="{% url 'shops:shop_detail' shop.pk %}">{{ shop.name }}</a>
             {% if shop.created_date|days_ago:15 %}
                 <span class="recent-addition">new</span>
@@ -16,5 +16,18 @@
                 <p>{% trans "We're working hard to provide with the latest coffee shops." %}</p>
         {% endfor %}
     </ul>
+</div>
+<div class='pagination'>
+    {% if page_obj.has_previous %}
+    <a class="pagination-link" href='{% url "shops:newest_coffee_shops" %}?page={{ page_obj.previous_page_number }}'>{% trans "Previous" %} </a>
+    {% endif %}
+    <span class='pagination-info'>
+        {% blocktrans with number=page_obj.number num_pages=page_obj.paginator.num_pages %} 
+            Page {{ number }} of {{ num_pages }}
+        {% endblocktrans %}
+    </span>
+    {% if page_obj.has_next %}
+    <a class="pagination-link" href='{% url "shops:newest_coffee_shops" %}?page={{ page_obj.next_page_number }}' > {% trans "Next" %}</a>
+    {% endif %}
 </div>
 {% endblock %}
