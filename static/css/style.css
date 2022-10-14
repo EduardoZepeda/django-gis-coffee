@@ -307,6 +307,10 @@ ul {
     border-radius: 50%;
 }
 
+.social-card-info {
+    padding: 1rem;
+}
+
 @media (max-width: 768px) {
     .navbar {
         display: none;
