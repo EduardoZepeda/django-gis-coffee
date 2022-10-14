@@ -16,5 +16,6 @@
     {% else %}
         {% trans "This account has not liked any coffee shop" %}
     {% endif %}
+    <a href='{% url "shops:likes" %}'><button class="btn">{% trans "See all your likes" %}</button></a>
 </ul>
 {% endblock %}

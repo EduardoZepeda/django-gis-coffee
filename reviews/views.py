@@ -6,6 +6,7 @@ from shops.models import Shop
 from django.utils.decorators import method_decorator
 
 from .models import Review
+from feeds.utils import create_action
 
 @method_decorator(login_required, name="dispatch")
 class CreateCoffeeShopReview(CreateView):
@@ -16,8 +17,10 @@ class CreateCoffeeShopReview(CreateView):
     def form_valid(self, form):
         review = form.save(commit=False)
         review.user = self.request.user
-        review.shop = get_object_or_404(Shop, pk=self.kwargs["coffee_shop_id"])
+        shop = get_object_or_404(Shop, pk=self.kwargs["coffee_shop_id"])
+        review.shop = shop
         review.save()
+        create_action(self.request.user, "reviewed", shop)
         return super().form_valid(form)
 
 @method_decorator(login_required, name="dispatch")
