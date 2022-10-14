@@ -288,6 +288,23 @@ ul {
 
 .feed-item {
     padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    width: 150px;
+}
+
+.feed-item-picture-container {
+    display: inherit;
+}
+
+.feed-item-picture {
+    width: 40px;
+    border-radius: 50%;
 }
 
 @media (max-width: 768px) {

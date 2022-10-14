@@ -18,3 +18,7 @@ DATABASES = {
         "PORT": os.environ.get("DB_PORT"),
     },
 }
+
+# MEDIA_ROOT is obtained from fly volumes
+MEDIA_ROOT = '/data/'
+MEDIA_URL = '/media/'
