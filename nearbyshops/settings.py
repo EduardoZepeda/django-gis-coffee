@@ -20,5 +20,5 @@ DATABASES = {
 }
 
 # MEDIA_ROOT is obtained from fly volumes
-MEDIA_ROOT = '/app/public'
+MEDIA_ROOT = '/app/media'
 MEDIA_URL = '/media/'
