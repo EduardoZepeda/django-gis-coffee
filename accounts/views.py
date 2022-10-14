@@ -35,7 +35,7 @@ class RegisterUser(CreateView):
 class UpdateUser(UpdateView):
     model = User
     template_name = "accounts/update.html"
-    fields = ["username", "first_name", "last_name"]
+    fields = ["username", "first_name", "last_name", "profile_picture"]
 
     def get_success_url(self):
         return reverse("accounts:profile")

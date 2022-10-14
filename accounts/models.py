@@ -3,7 +3,9 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django_resized import ResizedImageField
 
+from .utils import user_directory_path
 
 class Contact(models.Model):
     """A model for tracking user followers and following relationships"""
@@ -27,6 +29,7 @@ class User(AbstractUser):
     following = models.ManyToManyField(
         "self", through=Contact, related_name="followers", symmetrical=False
     )
-
+    profile_picture = ResizedImageField(size=[500, 500], upload_to=user_directory_path, null=True, blank=True)
+    
     def get_absolute_url(self):
         return reverse("accounts:user_profile", args=[self.pk])

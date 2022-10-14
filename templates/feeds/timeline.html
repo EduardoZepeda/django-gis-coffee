@@ -1,12 +1,18 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
+{% load static %}
 
 <h2>{% trans "Your feed" %}</h2>
 <div>
 {% for action in feed %}
     <div class="feed-item">
-        <p><a href="{{action.user.get_absolute_url}}">{{action.user}}</a> {{action.action}} <a href="{{action.target.get_absolute_url}}">{{action.target}}</a></p>
+            <div class="feed-item-picture-container">
+                <img class="feed-item-picture" src='{% if action.user.profile_picture %}{{action.user.profile_picture.url}}{% else %}{% static "images/no-profile-picture.jpg" %}{% endif %}'>
+            </div>
+            <div>
+                <a href="{{action.user.get_absolute_url}}">{{action.user}}</a> {{action.action}} <a href="{{action.target.get_absolute_url}}">{{action.target}}</a>
+            </div>
     </div>
 {% empty %}
     <h3>{% trans "No new activity so far, why don't you follow some users" %}</h3>
