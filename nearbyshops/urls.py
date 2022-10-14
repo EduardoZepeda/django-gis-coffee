@@ -25,6 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls, name="admin"),
     path("accounts/", include(("accounts.urls", "accounts"), namespace="accounts")),
     path("reviews/", include(("reviews.urls", "reviews"), namespace="reviews")),
+    path("feed/", include(("feeds.urls", "feeds"), namespace="feeds")),
     path("shops/", include(("shops.urls", "shops"), namespace="shops")),
     path("about/", TemplateView.as_view(template_name="about.html"), name="about"),
     path("legal/", TemplateView.as_view(template_name="legal.html"), name="legal"),

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<h2>{% trans "Your likes" %}</h2>
+<div>
+{% for shop in shops %}
+    <div class="like-item">
+        <p><a href="{{ shop.get_absolute_url }}">{{ shop }}</a></p>
+    </div>
+{% empty %}
+    <h3>{% trans "You haven't liked any coffee shop. Go to see our newests coffee shops" %}</h3>
+    <a href='{% url "shop:newest" %}'></a><button class="btn"></button>
+{% endfor %}
+</div>
+<div class='pagination'>
+    {% if page_obj.has_previous %}
+    <a class="pagination-link" href='{% url "shops:likes" %}?page={{ page_obj.previous_page_number }}'>{% trans "Previous" %} </a>
+    {% endif %}
+    <span class='pagination-info'>
+        {% blocktrans with number=page_obj.number num_pages=page_obj.paginator.num_pages %} 
+            Page {{ number }} of {{ num_pages }}
+        {% endblocktrans %}
+    </span>
+    {% if page_obj.has_next %}
+    <a class="pagination-link" href='{% url "shops:likes" %}?page={{ page_obj.next_page_number }}' > {% trans "Next" %}</a>
+    {% endif %}
+</div>
+{% endblock %}

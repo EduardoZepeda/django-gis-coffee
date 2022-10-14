@@ -29,4 +29,4 @@ class User(AbstractUser):
     )
 
     def get_absolute_url(self):
-        return reverse("accounts:user_profile", args=[self.slug])
+        return reverse("accounts:user_profile", args=[self.pk])

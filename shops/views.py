@@ -17,6 +17,7 @@ from leaflet.forms.widgets import LeafletWidget
 
 from .forms import SearchForm
 from .models import Shop
+from feeds.utils import create_action
 
 # These longitude and latitude correspond to Guadalajara's downtown
 longitude = -103.349609
@@ -128,8 +129,20 @@ class LikeCoffeeShop(generic.View):
                 shop.likes.remove(request.user)
                 return JsonResponse({"message": "ok", "liked": False})
             shop.likes.add(request.user)
+            create_action(self.request.user, "liked", shop)
             return JsonResponse({"message": "ok", "liked": True})
         return JsonResponse(
             {"error": "Data should contain a JSON object with an id and a liked keys"},
             status=400,
         )
+
+@method_decorator(login_required, name="dispatch")
+class LikesByUser(generic.ListView):
+    model = Shop
+    context_object_name = "shops"
+    template_name = "shops/likes.html"
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(likes=self.request.user).order_by("-created_date")

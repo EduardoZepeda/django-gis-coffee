@@ -13,9 +13,11 @@ from django.views import generic
 from django.views.generic import DetailView, RedirectView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from shops.models import Shop
+from feeds.models import Action
 
 from .forms import CustomUserCreationForm
 from .decorators import anonymous_required
+from feeds.utils import create_action
 
 # Allow us to use a custom user model
 User = get_user_model()
@@ -124,6 +126,7 @@ class FollowUser(generic.View):
                 user.following.remove(request.user)
                 return JsonResponse({"message": "ok", "action": "follow"})
             user.following.add(request.user)
+            create_action(self.request.user, "followed", user)
             return JsonResponse({"message": "ok", "action": "unfollow"})
         return JsonResponse(
             {
@@ -131,3 +134,6 @@ class FollowUser(generic.View):
             },
             status=400,
         )
+
+
+
