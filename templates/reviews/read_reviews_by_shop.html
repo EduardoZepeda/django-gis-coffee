@@ -14,20 +14,9 @@
             <i class="fa-solid fa-thumbs-down"></i> {% trans "Not recommended" %}
             {% endif %}
         </p>
+        {% empty %}
+        <p>{% trans "Be the first in leaving a review" %}</p>
+        <a href='{% url "reviews:create" shop.id %}'><button class="btn">{% trans "Leave a review"%}</button></a>
     {% endfor %}
-</div>
-
-<div class='pagination'>
-    {% if page_obj.has_previous %}
-    <a class="pagination-link" href='{% url "reviews:list" %}?page={{ page_obj.previous_page_number }}'>{% trans "Previous" %} </a>
-    {% endif %}
-    <span class='pagination-info'>
-        {% blocktrans with number=page_obj.number num_pages=page_obj.paginator.num_pages %} 
-            Page {{ number }} of {{ num_pages }}
-        {% endblocktrans %}
-    </span>
-    {% if page_obj.has_next %}
-    <a class="pagination-link" href='{% url "reviews:list" %}?page={{ page_obj.next_page_number }}' > {% trans "Next" %}</a>
-    {% endif %}
 </div>
 {% endblock %}
