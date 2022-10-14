@@ -1,5 +1,12 @@
 from django.urls import path
-from .views import NearbyShops, SearchShops, Home, ShopDetail, LikeCoffeeShop, LikesByUser
+from .views import (
+    NearbyShops,
+    SearchShops,
+    Home,
+    ShopDetail,
+    LikeCoffeeShop,
+    LikesByUser,
+)
 
 urlpatterns = [
     path("<int:pk>/", ShopDetail.as_view(), name="detail"),

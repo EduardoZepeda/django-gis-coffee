@@ -134,6 +134,3 @@ class FollowUser(generic.View):
             },
             status=400,
         )
-
-
-

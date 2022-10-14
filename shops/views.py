@@ -114,6 +114,7 @@ class SearchShops(generic.ListView):
             return shops
         return Shop.objects.none()
 
+
 @method_decorator(login_required, name="dispatch")
 class LikeCoffeeShop(generic.View):
     def post(self, request):
@@ -135,6 +136,7 @@ class LikeCoffeeShop(generic.View):
             {"error": "Data should contain a JSON object with an id and a liked keys"},
             status=400,
         )
+
 
 @method_decorator(login_required, name="dispatch")
 class LikesByUser(generic.ListView):
