@@ -45,6 +45,7 @@ processes = []
   guest_path = "/app/public"
   url_prefix = "/static/"
 
-[mounts]
-  source="django_gis_coffee_data"
-  destination="/data"
+[[statics]]
+  guest_path = "/app/media"
+  url_prefix = "/media/"
+
