@@ -8,6 +8,7 @@ from django.utils.decorators import method_decorator
 from .models import Review
 from feeds.utils import create_action
 
+
 @method_decorator(login_required, name="dispatch")
 class CreateCoffeeShopReview(CreateView):
     model = Review
@@ -23,6 +24,7 @@ class CreateCoffeeShopReview(CreateView):
         create_action(self.request.user, "reviewed", shop)
         return super().form_valid(form)
 
+
 @method_decorator(login_required, name="dispatch")
 class ReadCoffeeShopReview(DetailView):
     model = Review
@@ -33,6 +35,7 @@ class ReadCoffeeShopReview(DetailView):
         queryset = super().get_queryset()
         return queryset.select_related("shop")
 
+
 @method_decorator(login_required, name="dispatch")
 class ReadCoffeeShopReviewList(ListView):
     model = Review
@@ -42,7 +45,11 @@ class ReadCoffeeShopReviewList(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.select_related("shop").select_related("user")
+        return (
+            queryset.filter(shop_id=self.kwargs["coffee_shop_id"])
+            .select_related("shop")
+            .select_related("user")
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
