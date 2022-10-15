@@ -18,10 +18,12 @@
 {% if shop %}
 <article class="article-content">
     <h1 class="shop-name">{{ shop.name }}</h1>
-    {% if request.user.is_staff %}<p><a href="{% url 'admin:shops_shop_change' shop.id %}">{% trans "Edit" %} <span><i
+    {% if request.user.is_staff %}<p><a class="link edit-link" href="{% url 'admin:shops_shop_change' shop.id %}">{% trans "Edit" %} <span><i
                     class="fa-solid fa-pencil"></i></span></a></p>{% endif %} 
     {% if request.user.is_anonymous %}
-    <a href="{% url 'accounts:login' %}"><p>{% trans "Please log in to like this coffee shop" %}</p></a>
+    <div>
+        <a class="link secondary-link" href="{% url 'accounts:login' %}">{% trans "Please log in to like this coffee shop" %}</a>
+    </div>
     {% else %}
     <div id="liked" shop-id="{{shop.pk}}" liked="{{shop.liked | lower}}" class="liked">
         {% if shop.liked %}
@@ -30,21 +32,25 @@
             <i id="like-icon" class="fa-regular fa-heart fa-xl"></i>
         {% endif %}
         <span id="likes-count">{{shop.likes_count}}</span>
-        <p><a href='{% url "reviews:list" shop.pk %}'>{% trans " Read other people's reviews" %}</a></p>
-        {% if not shop.review %}
-            <p><a href='{% url "reviews:create" shop.pk %}'>{% trans " Review coffee shop" %}</a></p>
-        {% else %}
-            <h3>{% trans "Your opinion" %}</h3>
-            <p><a href='{% url "reviews:list" shop.pk %}'>{{ shop.review.content }}</a></p>
-            <p>{% if shop.review.recommended%}
-                <i class="fa-solid fa-thumbs-up"></i> {% trans "Recommended" %}
-                {% else %}
-                <i class="fa-solid fa-thumbs-down"></i> {% trans "Not recommended" %}
-                {% endif %}
-            </p>
-        {% endif %}
     </div>
+    <div class="reviews">
+        <a class="link secondary-link" href='{% url "reviews:list" shop.pk %}'>{% trans " Read other people's reviews" %}</a>
+    {% if not shop.review %}
+            <a class="link secondary-link" href='{% url "reviews:create" shop.pk %}'>{% trans " Review coffee shop" %}</a>
+    {% else %}
+        <h3>{% trans "Your opinion" %}</h3>
+        <div>
+            <p><a class="link review-content" href='{% url "reviews:list" shop.pk %}'>{{ shop.review.content }}</a></p>
+        </div>
+        <div class="thumbs-icon">{% if shop.review.recommended %}
+            <i class="fa-solid fa-thumbs-up"></i> {% trans "Recommended" %}
+            {% else %}
+            <i class="fa-solid fa-thumbs-down"></i> {% trans "Not recommended" %}
+            {% endif %}
+        </div>
     {% endif %}
+    {% endif %}
+    </div>
     {% if shop.content or shop.rating %}
         <h2>{% trans "Our expert barista insights"%}</h2>
     {% endif %}

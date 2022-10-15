@@ -1,0 +1,27 @@
+<nav>
+    <div class="logo"><a class="link logo-link" href="{% url 'home' %}">Tamper</a></div>
+    <div class="navbar">
+        <ul class="list menu">
+            <li class="item">
+                <form id="searchForm">
+                    <input pattern="^[A-zÀ-ú\s]*$" id="search" class="search" type="search" name="search" placeholder="Buscar">
+                </form>
+            </li>
+            {% include 'partials/menu.html' %}
+        </ul>
+    </div>
+    <div id="menu-bars" class="menu-bars">
+        <i class="fa-solid fa-bars"></i>
+    </div>        
+    <div id="sidebar" class="sidebar hidden">
+        <div id="close" class="close"><i class="fa-solid fa-xmark"></i></div>
+        <ul class="list sidebar-menu">
+            <li class="item">
+                <form id="searchFormSidebar">
+                    <input pattern="^[A-zÀ-ú\s]*$" id="search" type="search" name="search" class="search" placeholder="Buscar">
+                </form>
+            </li>
+            {% include 'partials/menu.html' %}
+        </ul>
+    </div>
+</nav>

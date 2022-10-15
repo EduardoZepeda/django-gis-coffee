@@ -1,15 +1,15 @@
 {% load i18n %}
 
 {% if request.user.is_staff %}
-    <li><a href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
+    <li class="item"><a class="link menu-link" href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
 {% endif %}
-    <li><a href="{% url 'about' %}">{% trans "About" %}</a></li>
-    <li><a href="{% url 'shops:newest' %}">{% trans "New coffee shops" %}</a></li>
+    <li class="item"><a class="link menu-link" href="{% url 'about' %}">{% trans "About" %}</a></li>
+    <li class="item"><a class="link menu-link" href="{% url 'shops:newest' %}">{% trans "New coffee shops" %}</a></li>
 {% if request.user.is_authenticated %}
-    <li><a href="{% url 'feeds:list' %}">{% trans "Feed" %}</a></li>
-    <li><a href="{% url 'accounts:profile' %}">{% trans "Profile" %}</a></li>
-    <li><a href="{% url 'accounts:logout' %}">{% trans "Logout" %}</a></li>
+    <li class="item"><a class="link menu-link" href="{% url 'feeds:list' %}">{% trans "Feed" %}</a></li>
+    <li class="item"><a class="link menu-link" href="{% url 'accounts:profile' %}">{% trans "Profile" %}</a></li>
+    <li class="item"><a class="link menu-link" href="{% url 'accounts:logout' %}">{% trans "Logout" %}</a></li>
 {% else %}
-    <li><a href="{% url 'accounts:register' %}">{% trans "Register" %}</a></li>
-    <li><a href="{% url 'accounts:login' %}">{% trans "Login" %}</a></li>
+    <li class="item"><a class="link menu-link" href="{% url 'accounts:register' %}">{% trans "Register" %}</a></li>
+    <li class="item"><a class="link menu-link" href="{% url 'accounts:login' %}">{% trans "Login" %}</a></li>
 {% endif %}
