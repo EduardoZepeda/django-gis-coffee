@@ -19,6 +19,8 @@ DATABASES = {
     },
 }
 
-# MEDIA_ROOT is obtained from fly volumes
-MEDIA_ROOT = '/app/media'
+# The order is important, if placed last, won't override collect static default's behavior
+INSTALLED_APPS += ['cloudinary_storage', 'cloudinary',]
+
 MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
