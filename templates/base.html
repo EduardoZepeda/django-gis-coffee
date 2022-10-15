@@ -42,33 +42,7 @@
 
 <body>
     {% block header %}
-    <nav>
-        <div class="logo"><a href="{% url 'home' %}">Tamper</a></div>
-        <div class="navbar">
-            <ul class="menu">
-                <li>
-                    <form id="searchForm">
-                        <input pattern="^[A-zÀ-ú\s]*$" id="search" class="search" type="search" name="search" placeholder="Buscar">
-                    </form>
-                </li>
-                {% include 'partials/menu.html' %}
-            </ul>
-        </div>
-        <div id="menu-bars" class="menu-bars">
-            <i class="fa-solid fa-bars"></i>
-        </div>        
-        <div id="sidebar" class="sidebar hidden">
-            <div id="close" class="close"><i class="fa-solid fa-xmark"></i></div>
-            <ul class="sidebar-menu">
-                <li>
-                    <form id="searchFormSidebar">
-                        <input pattern="^[A-zÀ-ú\s]*$" id="search" type="search" name="search" class="search" placeholder="Buscar">
-                    </form>
-                </li>
-                {% include 'partials/menu.html' %}
-            </ul>
-        </div>
-    </nav>
+        {% include "partials/nav.html" %}
     {% endblock %}
 
     <main class="container">
@@ -79,54 +53,11 @@
     {% endblock aftercontent %}
 
     {% block footer %}
-    <footer>
-        <div class="links">
-            <section class="social-media">
-                <ul class="social-icons">
-                    <li><a href="https://facebook.com/latteporlaciudad/"><i class="fa-brands fa-facebook fa-2x"></i></a>
-                    </li>
-                    <li><a href="https://www.instagram.com/latte.porlaciudad/"><i
-                                class="fa-brands fa-instagram fa-2x"></i></a></li>
-                    <li><a href="https://twitter.com/sui_azanza/"><i class="fa-brands fa-twitter fa-2x"></i></a></li>
-                </ul>
-            </section>
-            <section class="legal">
-                <p><a href="{% url 'legal' %}">Legal</a></p>
-            </section>
-        </div>
-        <div class="credits"><small>Coded with ☕ in latam by <a href="https://eduardozepeda.dev">Eduardo
-                    Zepeda.</a></small>
-        </div>
-    </footer>
+        {% include "partials/footer.html" %}
     {% endblock %}
 
     {% block footer_scripts %}
     {% endblock footer_scripts %}
-    <script>
-        function handleSearchSubmit(event){
-                event.preventDefault()
-                window.location.href = '/shops/search/' + event.target.firstElementChild.value
-            }
-        window.onload = function() {
-            let sidebarClose = true
-            let searchInputClosed = true
-            const close = document.getElementById("close")
-            const bars = document.getElementById("menu-bars")
-            const sidebar = document.getElementById("sidebar")
-            function toggleSidebar(){
-                if(sidebarClose){
-                    sidebar.classList.remove("hidden")
-                } else {
-                    sidebar.classList.add("hidden")
-                }
-                sidebarClose = !sidebarClose
-            }
-            close.addEventListener("click", toggleSidebar)
-            bars.addEventListener("click", toggleSidebar)
-            document.getElementById("searchForm").addEventListener("submit", handleSearchSubmit)
-            document.getElementById("searchFormSidebar").addEventListener("submit", handleSearchSubmit)
-        }
-    </script>
+    {% include "partials/menu_script.html" %}
 </body>
-
 </html>

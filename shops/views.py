@@ -14,6 +14,7 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.generic.detail import DetailView
 from leaflet.forms.widgets import LeafletWidget
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import SearchForm
 from .models import Shop
@@ -75,7 +76,7 @@ class ShopDetail(generic.DetailView):
     context_object_name = "shop"
 
     def get_queryset(self):
-        queryset = super(ShopDetail, self).get_queryset()
+        queryset = super().get_queryset()
         return queryset.annotate(likes_count=Count("likes"))
 
     def get_context_data(self, **kwargs):
@@ -86,13 +87,19 @@ class ShopDetail(generic.DetailView):
             "DEFAULT_ZOOM": 15,
             "DEFAULT_CENTER": (shop_coords[1], shop_coords[0]),
         }
-        # Retrieve whether the current users likes or not the current coffee shop
-        shop = (
-            Shop.objects.prefetch_related("likes")
-            .prefetch_related("reviews")
-            .get(pk=self.kwargs.get("pk"))
-        )
-        context["object"].liked = self.request.user in shop.likes.all()
+        if self.request.user.is_authenticated:
+            # Retrieve whether the current users likes or not the current coffee shop
+            shop = (
+                Shop.objects.prefetch_related("likes")
+                .prefetch_related("reviews")
+                .get(pk=self.kwargs.get("pk"))
+            )
+            context["object"].liked = self.request.user in shop.likes.all()
+            try:
+                review = shop.reviews.get(user=self.request.user)
+                context["object"].review = review
+            except ObjectDoesNotExist:
+                context["object"].review = None
         return context
 
 
@@ -150,4 +157,8 @@ class LikesByUser(generic.ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.prefetch_related("likes").filter(likes=self.request.user).order_by("-created_date")
+        return (
+            queryset.prefetch_related("likes")
+            .filter(likes=self.request.user)
+            .order_by("-created_date")
+        )

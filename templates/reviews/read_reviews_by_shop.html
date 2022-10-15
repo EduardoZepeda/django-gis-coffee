@@ -8,15 +8,15 @@
         <h3>{{review.user}} {% trans " says:" %}</h3>
         <p>{{review.content}}</p>
         <small>{{review.created}}</small>
-        <p>{% if review.recommended%}
+        <div class="thumbs-icon">{% if review.recommended%}
             <i class="fa-solid fa-thumbs-up"></i> {% trans "Recommended" %}
             {% else %}
             <i class="fa-solid fa-thumbs-down"></i> {% trans "Not recommended" %}
             {% endif %}
-        </p>
+        </div>
         {% empty %}
         <p>{% trans "Be the first in leaving a review" %}</p>
-        <a href='{% url "reviews:create" shop.id %}'><button class="btn">{% trans "Leave a review"%}</button></a>
+        <a class="link" href='{% url "reviews:create" shop.id %}'><button class="btn">{% trans "Leave a review"%}</button></a>
     {% endfor %}
 </div>
 {% endblock %}

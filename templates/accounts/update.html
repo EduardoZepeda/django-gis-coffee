@@ -8,7 +8,7 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{form|crispy}}
-    <p><a class="help-text" href='{% url "accounts:change_password" %}'>{% trans "Change password" %}</a></p>
+    <p><a class="link help-text" href='{% url "accounts:change_password" %}'>{% trans "Change password" %}</a></p>
     <button class="btn" type="submit">{% trans "Update my info" %}</button>
 </form>
 {% endblock %}

@@ -1,0 +1,25 @@
+<script>
+    function handleSearchSubmit(event){
+            event.preventDefault()
+            window.location.href = '/shops/search/' + event.target.firstElementChild.value
+        }
+    window.onload = function() {
+        let sidebarClose = true
+        let searchInputClosed = true
+        const close = document.getElementById("close")
+        const bars = document.getElementById("menu-bars")
+        const sidebar = document.getElementById("sidebar")
+        function toggleSidebar(){
+            if(sidebarClose){
+                sidebar.classList.remove("hidden")
+            } else {
+                sidebar.classList.add("hidden")
+            }
+            sidebarClose = !sidebarClose
+        }
+        close.addEventListener("click", toggleSidebar)
+        bars.addEventListener("click", toggleSidebar)
+        document.getElementById("searchForm").addEventListener("submit", handleSearchSubmit)
+        document.getElementById("searchFormSidebar").addEventListener("submit", handleSearchSubmit)
+    }
+</script>
