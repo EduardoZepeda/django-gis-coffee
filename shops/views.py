@@ -87,8 +87,12 @@ class ShopDetail(generic.DetailView):
             "DEFAULT_CENTER": (shop_coords[1], shop_coords[0]),
         }
         # Retrieve whether the current users likes or not the current coffee shop
+        shop = Shop.objects.prefetch_related("likes").prefetch_related("reviews").get(pk=self.kwargs.get("pk"))
         context["object"].liked = (
-            self.request.user in Shop.objects.get(pk=self.kwargs.get("pk")).likes.all()
+            self.request.user in shop.likes.all()
+        )
+        context["object"].review = (
+            shop.reviews.get(user=self.request.user)
         )
         return context
 

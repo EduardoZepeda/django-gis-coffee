@@ -9,8 +9,8 @@ User = get_user_model()
 class Review(models.Model):
     content = models.CharField(max_length=255)
     recommended = models.BooleanField(default=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="reviews", on_delete=models.CASCADE)
+    shop = models.ForeignKey(Shop, related_name="reviews", on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
@@ -19,3 +19,8 @@ class Review(models.Model):
 
     def get_absolute_url():
         return reverse("reviews:detail", args=[self.pk])
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user", "shop"], name="Only one review per user and shop")
+        ]
