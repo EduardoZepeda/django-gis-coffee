@@ -23,14 +23,21 @@ from django.contrib.sitemaps.views import sitemap
 from shops.sitemap import ShopSitemap
 
 sitemaps = {
-    'shops': ShopSitemap,
+    "shops": ShopSitemap,
 }
 
 
 urlpatterns = [
-    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
-        name='django.contrib.sitemaps.views.sitemap'),
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
     path("", views.Geo.as_view(), name="home"),
     path("admin/", admin.site.urls, name="admin"),
     path("accounts/", include(("accounts.urls", "accounts"), namespace="accounts")),
@@ -42,5 +49,6 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    urlpatterns += [path('__debug__/', include('debug_toolbar.urls'))]
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

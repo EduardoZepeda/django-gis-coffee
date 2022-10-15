@@ -22,5 +22,7 @@ class Review(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["user", "shop"], name="Only one review per user and shop")
+            models.UniqueConstraint(
+                fields=["user", "shop"], name="Only one review per user and shop"
+            )
         ]

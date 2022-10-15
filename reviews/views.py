@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from .models import Review
 from feeds.utils import create_action
 
+
 @method_decorator(login_required, name="dispatch")
 class CreateCoffeeShopReview(CreateView):
     model = Review
@@ -21,7 +22,9 @@ class CreateCoffeeShopReview(CreateView):
         review = form.save(commit=False)
         review.user = self.request.user
         shop = get_object_or_404(Shop, pk=self.kwargs["coffee_shop_id"])
-        is_duplicated = Review.objects.filter(user=self.request.user, shop=shop).exists()
+        is_duplicated = Review.objects.filter(
+            user=self.request.user, shop=shop
+        ).exists()
         if is_duplicated:
             form.add_error(None, "You already left a a review for this coffee shop")
             return super().form_invalid(form)
@@ -29,6 +32,7 @@ class CreateCoffeeShopReview(CreateView):
         review.save()
         create_action(self.request.user, "reviewed", shop)
         return super().form_valid(form)
+
 
 @method_decorator(login_required, name="dispatch")
 class ReadCoffeeShopReview(DetailView):

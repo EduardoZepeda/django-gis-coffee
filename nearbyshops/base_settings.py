@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "django.contrib.sites",
     "django.contrib.sitemaps",
+    "debug_toolbar",
     "crispy_forms",
     "ckeditor",
     "leaflet",

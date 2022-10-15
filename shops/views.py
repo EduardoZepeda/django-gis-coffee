@@ -87,13 +87,12 @@ class ShopDetail(generic.DetailView):
             "DEFAULT_CENTER": (shop_coords[1], shop_coords[0]),
         }
         # Retrieve whether the current users likes or not the current coffee shop
-        shop = Shop.objects.prefetch_related("likes").prefetch_related("reviews").get(pk=self.kwargs.get("pk"))
-        context["object"].liked = (
-            self.request.user in shop.likes.all()
+        shop = (
+            Shop.objects.prefetch_related("likes")
+            .prefetch_related("reviews")
+            .get(pk=self.kwargs.get("pk"))
         )
-        context["object"].review = (
-            shop.reviews.get(user=self.request.user)
-        )
+        context["object"].liked = self.request.user in shop.likes.all()
         return context
 
 
@@ -151,4 +150,4 @@ class LikesByUser(generic.ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(likes=self.request.user).order_by("-created_date")
+        return queryset.prefetch_related("likes").filter(likes=self.request.user).order_by("-created_date")
