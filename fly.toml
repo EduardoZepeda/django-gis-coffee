@@ -49,6 +49,3 @@ processes = []
   guest_path = "/app/media"
   url_prefix = "/media/"
 
-[mounts]
-  source="django_gis_coffee_data"
-  destination="/app/media"
