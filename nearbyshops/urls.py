@@ -19,8 +19,17 @@ from shops import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
+from django.contrib.sitemaps.views import sitemap
+from shops.sitemap import ShopSitemap
+
+sitemaps = {
+    'shops': ShopSitemap,
+}
+
 
 urlpatterns = [
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap'),
     path("", views.Geo.as_view(), name="home"),
     path("admin/", admin.site.urls, name="admin"),
     path("accounts/", include(("accounts.urls", "accounts"), namespace="accounts")),
