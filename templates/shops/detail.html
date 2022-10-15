@@ -30,8 +30,19 @@
             <i id="like-icon" class="fa-regular fa-heart fa-xl"></i>
         {% endif %}
         <span id="likes-count">{{shop.likes_count}}</span>
-        <p><a href='{% url "reviews:create" shop.pk %}'>{% trans " Review coffee shop" %}</a></p>
-        <p><a href='{% url "reviews:list" shop.pk %}'>{% trans " Read people's reviews" %}</a></p>
+        <p><a href='{% url "reviews:list" shop.pk %}'>{% trans " Read other people's reviews" %}</a></p>
+        {% if not shop.review %}
+            <p><a href='{% url "reviews:create" shop.pk %}'>{% trans " Review coffee shop" %}</a></p>
+        {% else %}
+            <h3>{% trans "Your opinion" %}</h3>
+            <p><a href='{% url "reviews:list" shop.pk %}'>{{ shop.review.content }}</a></p>
+            <p>{% if shop.review.recommended%}
+                <i class="fa-solid fa-thumbs-up"></i> {% trans "Recommended" %}
+                {% else %}
+                <i class="fa-solid fa-thumbs-down"></i> {% trans "Not recommended" %}
+                {% endif %}
+            </p>
+        {% endif %}
     </div>
     {% endif %}
     {% if shop.content or shop.rating %}
@@ -49,7 +60,7 @@
     {% endif %}
     {% if shop.roaster %}
     <h2>{%  trans "Additional services" %}</h2>
-    <div class="roaster"><i class="fa-solid fa-fire"></i><span> Tostador</span></div>
+    <div class="roaster"><i class="fa-solid fa-fire"></i><span> {% trans "Roaster" %}</span></div>
     {% endif %}
     {% if shop.product.all %}
     <h2>{% trans "Products" %}</h2>
