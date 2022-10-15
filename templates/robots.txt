@@ -1,0 +1,7 @@
+# If you're reading this, you must be very interested in checking this site's quality
+# Why don't you drop me a message with the word "Iwakura"
+User-Agent: *
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /accounts/
+Disallow: /feed/
