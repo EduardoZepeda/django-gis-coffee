@@ -21,5 +21,5 @@ class FeedList(ListView):
                 .select_related("user")
                 .prefetch_related("target")
             )
-            actions = actions[:10]
-        return actions
+            actions = actions
+        return actions[:10]

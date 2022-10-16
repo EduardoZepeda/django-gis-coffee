@@ -5,9 +5,9 @@ from .views import (
     UpdateUser,
     ChangePassword,
     PasswordChanged,
-    Profile,
     UserProfile,
     FollowUser,
+    UserLikes,
 )
 
 urlpatterns = [
@@ -19,11 +19,11 @@ urlpatterns = [
         ),
         name="change_password",
     ),
-    path("profile/", Profile.as_view(), name="profile"),
+    path("<int:pk>/likes/", UserLikes.as_view(), name="likes"),
+    path("<int:pk>/profile/", UserProfile.as_view(), name="user_profile"),
+    path("<int:pk>/update/", UpdateUser.as_view(), name="update"),
     path("follow/", FollowUser.as_view(), name="follow"),
-    path("profile/<int:pk>/", UserProfile.as_view(), name="user_profile"),
     path("register/", RegisterUser.as_view(), name="register"),
-    path("update/<int:pk>/", UpdateUser.as_view(), name="update"),
     path("change-password/", ChangePassword.as_view(), name="change_password"),
     path("password-changed/", PasswordChanged.as_view(), name="password_changed"),
 ]

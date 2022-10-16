@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+{% if likes %}
+<div class="likes-list">
+    <h2>{{user}} {% trans "likes" %}</h2>
+    <ul class="list likes-list">
+        {% for shop in likes %}
+            <li class="item likes-item">
+                <a class="link likes-item-link" href="{{ shop.get_absolute_url }}">{{shop.name}}</a>
+            </li>
+        {% endfor %}
+{% else %}
+    {% trans "This account has not liked any coffee shop" %}
+{% endif %}
+    </ul>
+</div>
+<div class='pagination'>
+    {% if page_obj.has_previous %}
+    <a class="link pagination-link" href='{% url "accounts:likes" user.pk %}?page={{ page_obj.previous_page_number }}'>{% trans "Previous" %} </a>
+    {% endif %}
+    <span class='pagination-info'>
+        {% blocktrans with number=page_obj.number num_pages=page_obj.paginator.num_pages %} 
+            Page {{ number }} of {{ num_pages }}
+        {% endblocktrans %}
+    </span>
+    {% if page_obj.has_next %}
+    <a class="link pagination-link" href='{% url "accounts:likes" user.pk %}?page={{ page_obj.next_page_number }}' > {% trans "Next" %}</a>
+    {% endif %}
+</div>
+{% endblock %}

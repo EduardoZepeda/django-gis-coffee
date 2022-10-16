@@ -3,10 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
+<h2>{% trans "Login to your account" %}</h2>
 {% if next %}
     {% if user.is_authenticated %}
     <p>Your account doesn't have access to this page. To proceed,
@@ -15,12 +12,13 @@
     <p>Please login to see this page.</p>
     {% endif %}
 {% endif %}
-
 <form method="post" action="{% url 'accounts:login' %}">
 {% csrf_token %}
 {{form|crispy}}
+{% if form.errors %}
+    <p class="help-block">Your username and password didn't match. Please try again.</p>
+{% endif %}
 <p><a class="link help-text" href="{% url 'accounts:password_reset' %}">{% trans "Lost password?"%}</a></p>
-
 <button class="btn" type="submit">{% trans "Login" %}</button>
 <input type="hidden" name="next" value="{{ next }}">
 </form>
