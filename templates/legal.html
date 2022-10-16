@@ -1,5 +1,12 @@
 {% extends "base.html" %}
-
+{% load i18n %}
+{% block title %}{% trans "Legal" %}{% endblock %}
+{% block meta %}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content='{% trans "Tampers legal site"%}'>
+    <meta property="og:description" content='{% trans "This should probably be a readable version of the legal contract"%}'>
+    <meta name="description" content='{% trans "This should probably be a readable version of the legal contract"%}'>
+{% endblock %}
 {% block content %}
 <article class="page-content">
     <h1>Legal</h1>

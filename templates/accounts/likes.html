@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
+{% block title %}{{user}} {% trans "likes" %}{% endblock %}
 {% block content %}
 {% if likes %}
 <div class="likes-list">
-    <h2>{{user}} {% trans "likes" %}</h2>
+    <h1>{{user}} {% trans "likes" %}</h1>
     <ul class="list likes-list">
         {% for shop in likes %}
             <li class="item likes-item">

@@ -338,7 +338,11 @@ a:visited {
 
 .feed-item-picture {
     width: 40px;
+    height: 40px;
+    margin-right: 0.5rem;
     border-radius: 50%;
+    box-sizing: border-box;
+    object-fit: cover;
 }
 
 @media (max-width: 768px) {
