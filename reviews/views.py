@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.db import models
 from django.views.generic import CreateView, DetailView, ListView
 from shops.models import Shop
@@ -16,7 +16,10 @@ class CreateCoffeeShopReview(CreateView):
     model = Review
     fields = ["content", "recommended"]
     template_name = "reviews/create_review.html"
-    success_url = reverse_lazy("reviews:list")
+
+    def get_success_url(self):
+        # Obtain the shop id directly from the created review
+        return reverse_lazy("reviews:list", kwargs={"coffee_shop_id": self.object.shop.pk})
 
     def form_valid(self, form):
         review = form.save(commit=False)

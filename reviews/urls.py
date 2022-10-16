@@ -10,5 +10,5 @@ urlpatterns = [
         "create/<int:coffee_shop_id>/", CreateCoffeeShopReview.as_view(), name="create"
     ),
     path("read/<int:pk>/", ReadCoffeeShopReview.as_view(), name="read"),
-    path("shop/<int:coffee_shop_id>", ReadCoffeeShopReviewList.as_view(), name="list"),
+    path("shop/<int:coffee_shop_id>/", ReadCoffeeShopReviewList.as_view(), name="list"),
 ]
