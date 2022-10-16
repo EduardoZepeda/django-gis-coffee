@@ -33,6 +33,7 @@ class User(AbstractUser):
     profile_picture = ResizedImageField(
         size=[500, 500], upload_to=user_directory_path, null=True, blank=True
     )
+    bio = models.CharField(max_length=250, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse("accounts:user_profile", args=[self.pk])

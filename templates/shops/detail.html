@@ -128,7 +128,14 @@
     }, false);
     // Url is generated using django template system
     let url = '{% url "shops:like" %}'
+
+    let waitingResponse = false
+
     liked.onclick = async () => {
+        if(waitingResponse){
+            return
+        }
+        waitingResponse = true
         let setLike = getLikedValue()
         let shopId = getShopId()
         let request = new Request(
@@ -150,8 +157,10 @@
             setLikedValue(data.liked)
             toggleHeartIcon()
             increaseOrDecreaseCounter(data.liked)
+            waitingResponse = false
         } catch (err) {
             console.error(err)
+            waitingResponse = false
         }
     }
 </script>

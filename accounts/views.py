@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
-from django.views.generic import DetailView, RedirectView
+from django.views.generic import DetailView, RedirectView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from shops.models import Shop
 from feeds.models import Action
@@ -23,7 +23,7 @@ from feeds.utils import create_action
 User = get_user_model()
 
 
-@method_decorator(anonymous_required("accounts:profile"), name="dispatch")
+@method_decorator(anonymous_required("home"), name="dispatch")
 class RegisterUser(CreateView):
     # New custom UseCreationForm is required for setting custom user model
     # Otherwise passwords won"t be hashed
@@ -35,10 +35,10 @@ class RegisterUser(CreateView):
 class UpdateUser(UpdateView):
     model = User
     template_name = "accounts/update.html"
-    fields = ["username", "first_name", "last_name", "profile_picture"]
+    fields = ["username", "bio", "first_name", "last_name", "profile_picture"]
 
     def get_success_url(self):
-        return reverse("accounts:profile")
+        return reverse("accounts:user_profile", args=[self.request.user.pk])
 
     def get_object(self):
         # Users can only update their own accounts
@@ -57,42 +57,26 @@ class DeleteUser(DeleteView):
 
 
 @method_decorator(login_required, name="dispatch")
-class Profile(DetailView):
-    template_name = "accounts/profile.html"
-
-    def get_object(self):
-        # Users can only see their own profiles
-        return self.request.user
-
-    def get_context_data(self, **kwargs):
-        context = super(Profile, self).get_context_data(**kwargs)
-        # Add shops that the user has liked to context data
-        context["likes"] = Shop.objects.filter(likes=self.object)
-        return context
-
-
-@method_decorator(login_required, name="dispatch")
 class UserProfile(DetailView):
     model = User
     template_name = "accounts/user_profile.html"
     context_object_name = "user"
 
     def get_queryset(self):
-        queryset = super(UserProfile, self).get_queryset()
-        return queryset.annotate(followers_count=Count("following"))
+        queryset = super().get_queryset()
+        # Get the followers and following count, if distinct is not used, it changes the following value
+        return queryset.annotate(
+            following_count=Count("following", distinct=True)
+        ).annotate(followers_count=Count("followers", distinct=True))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["object"].following_user = (
-            self.request.user
-            in User.objects.get(pk=self.kwargs.get("pk")).following.all()
-        )
+        user = User.objects.prefetch_related("following").get(pk=self.kwargs.get("pk"))
+        context["object"].following_user = self.request.user in user.following.all()
+        context["likes"] = Shop.objects.filter(likes=self.object)[:5]
+        context["following"] = user.following.all()
+        context["followers"] = user.followers.all()
         return context
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user == self.get_object():
-            return redirect("accounts:profile")
-        return super().dispatch(request, *args, **kwargs)
 
 
 @method_decorator(login_required, name="dispatch")
@@ -104,7 +88,25 @@ class ChangePassword(PasswordChangeView):
 
 @method_decorator(login_required, name="dispatch")
 class PasswordChanged(RedirectView):
-    pattern_name = "accounts:profile"
+    pattern_name = "home"
+
+
+@method_decorator(login_required, name="dispatch")
+class UserLikes(ListView):
+    model = Shop
+    template_name = "accounts/likes.html"
+    context_object_name = "likes"
+    paginate_by = 5
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # Falta el nombre  del usuario en la plantilla
+        return queryset.filter(likes__pk=self.kwargs.get("pk"))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = User.objects.get(pk=self.kwargs.get("pk"))
+        return context
 
 
 @method_decorator(login_required, name="dispatch")

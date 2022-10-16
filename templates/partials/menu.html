@@ -4,10 +4,10 @@
     <li class="item"><a class="link menu-link" href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
 {% endif %}
     <li class="item"><a class="link menu-link" href="{% url 'about' %}">{% trans "About" %}</a></li>
-    <li class="item"><a class="link menu-link" href="{% url 'shops:newest' %}">{% trans "New coffee shops" %}</a></li>
+    <li class="item"><a class="link menu-link" href="{% url 'shops:newest' %}">{% trans "News" %}</a></li>
 {% if request.user.is_authenticated %}
     <li class="item"><a class="link menu-link" href="{% url 'feeds:list' %}">{% trans "Feed" %}</a></li>
-    <li class="item"><a class="link menu-link" href="{% url 'accounts:profile' %}">{% trans "Profile" %}</a></li>
+    <li class="item"><a class="link menu-link" href="{% url 'accounts:user_profile' request.user.pk %}">{% trans "Profile" %}</a></li>
     <li class="item"><a class="link menu-link" href="{% url 'accounts:logout' %}">{% trans "Logout" %}</a></li>
 {% else %}
     <li class="item"><a class="link menu-link" href="{% url 'accounts:register' %}">{% trans "Register" %}</a></li>

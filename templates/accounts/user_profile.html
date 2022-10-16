@@ -4,19 +4,49 @@
 {% block content %}
 <div class="social-card">
     <div class="social-card-info">
-    <h2>{{user}}</h2>
-    <p>{{user.first_name}} {{user.last_name}}</p>
-        <img class="profile-picture" src='{% if user.profile_picture %}{{user.profile_picture.url}}{% else %}{% static "images/no-profile-picture.jpg" %}{% endif %}' alt=""/>
+        <h2>{{user}}</h2>
+        <p>{{user.first_name}} {{user.last_name}}</p>
+            <img class="profile-picture" src='{% if user.profile_picture %}{{user.profile_picture.url}}{% else %}{% static "images/no-profile-picture.jpg" %}{% endif %}' alt=""/>
+            {% if user.bio %}<p>{{user.bio}}</p>{% endif %}
+        </div>
+    <div class="social-card-relations">
+        <div class="social-card-followers">
+            <a class="link" href="#following"><strong>{{user.following_count}}</strong> {% trans "Following" %}</a>
+            <a class="link" href="#followers"><strong>{{user.followers_count}}</strong> {% trans "Followers" %}</a>
     </div>
+    {% if not user == request.user %}
     <button class="btn" id="follow" user-id='{{user.id}}' action='{% if user.following_user %}unfollow{% else %}follow{% endif %}'>
         {% if user.following_user %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
     </button>
+    {% else %}
+    <a class="link" href='{% url "accounts:update" request.user.pk %}'>
+        <button class="btn">{% trans "Update info" %}</button>
+    </a>
+    {% endif %}
     <form>
         {% csrf_token %}
     </form>
 </div>
+<h2>{% trans "likes" %}</h2>
+{% if likes %}
+<div class="likes-list">
+    <ul class="list likes-list">
+        {% for shop in likes %}
+            <li class="item likes-item">
+                <a class="link likes-item-link" href="{{ shop.get_absolute_url }}">{{shop.name}}</a>
+            </li>
+        {% endfor %}
+        <a class="link" href='{% url "accounts:likes" user.pk %}'>
+            <button class="btn">{% trans "See all likes" %}</button>
+        </a>
+{% else %}
+    <p>{% trans "This account has not liked any coffee shop" %}</p>
+{% endif %}
+    </ul>
+</div>
+{% include "partials/modal.html" with accounts=followers type="followers" %}
+{% include "partials/modal.html" with accounts=following type="following" %}
 {% endblock %}
-
 {% block footer_scripts %}
 <script>
     function getAction() {
@@ -37,6 +67,14 @@
         document.getElementById('follow').textContent = action
         document.getElementById('follow').classList.toggle('followed')
     }
+    
+    function setDisabled(disabled){
+        if(disabled){
+            document.getElementById('follow').setAttribute('disabled', disabled)
+        }else{
+            document.getElementById('follow').removeAttribute('disabled')
+        }
+    }
 
     // csrf is provided by Django backend
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -45,7 +83,14 @@
     
     let followingButton = document.getElementById('follow')
 
+    let waitingResponse = false
+
     followingButton.onclick = async () => {
+        if(waitingResponse){
+            return
+        }
+        waitingResponse = true
+        setDisabled(true)
         let action = getAction()
         let userId = getUserId()
         let request = new Request(
@@ -66,8 +111,11 @@
             const data = await response.json()
             setActionValue(data.action)
             toggleFollowButton(data.action)
+            setDisabled(false)
+            waitingResponse = false
         } catch (err) {
             console.error(err)
+            waitingResponse = false
         }
     }
 </script>

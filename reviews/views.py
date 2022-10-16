@@ -16,7 +16,7 @@ class CreateCoffeeShopReview(CreateView):
     model = Review
     fields = ["content", "recommended"]
     template_name = "reviews/create_review.html"
-    success_url = reverse_lazy("accounts:profile")
+    success_url = reverse_lazy("reviews:list")
 
     def form_valid(self, form):
         review = form.save(commit=False)
