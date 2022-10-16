@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load newest_shops %}
+{% load render_queryset_as_string %}
+
+{% block title %}{% trans "Search" %}{% endblock %}
+{% block meta %}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content='{% trans "Results for: "%}{{query}}'>
+    <meta property="og:description" content='{{shops|render_queryset_as_string|truncatechars:150}}'>
+    <meta name="description" content='{{shops|render_queryset_as_string|truncatechars:150}}'>
+{% endblock %}
 {% block content %}
 <div class="new-cafes-container">
     <h1>{% trans "Looking for: " %} {{ query }}</h1>

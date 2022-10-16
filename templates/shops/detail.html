@@ -5,6 +5,12 @@
 {% load render_stars %}
 {% load i18n %}
 {% block title %}{% if shop %}{{ shop.name }}{% endif %}{% endblock %}
+{% block meta %}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{shop}}">
+    <meta property="og:description" content="{{shop}} {{shop.address}}">
+    <meta name="description" content="{{shop}} {{shop.address}}">
+{% endblock %}
 {% block javascript %}
 {% leaflet_js plugins="forms" %}
 {{ geoform.media }}
