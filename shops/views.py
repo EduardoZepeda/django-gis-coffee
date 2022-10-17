@@ -26,7 +26,7 @@ latitude = 20.659698
 
 user_location = Point(
     longitude, latitude, srid=4326
-)  # srid is a standar, please don't change it
+)  # srid is a standard, please don't change it
 
 
 class MyGeoForm(forms.Form):
