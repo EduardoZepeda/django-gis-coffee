@@ -22,7 +22,9 @@ class CreateCoffeeShopReview(CreateView):
 
     def get_success_url(self):
         # Obtain the shop id directly from the created review
-        return reverse_lazy("reviews:list", kwargs={"coffee_shop_id": self.object.shop.pk})
+        return reverse_lazy(
+            "reviews:list", kwargs={"coffee_shop_id": self.object.shop.pk}
+        )
 
     def form_valid(self, form):
         review = form.save(commit=False)
@@ -37,7 +39,9 @@ class CreateCoffeeShopReview(CreateView):
         review.shop = shop
         review.save()
         create_action(self.request.user, "reviewed", shop)
-        messages.add_message(self.request, messages.SUCCESS, _("Your review was created"))
+        messages.add_message(
+            self.request, messages.SUCCESS, _("Your review was created")
+        )
         return super().form_valid(form)
 
 

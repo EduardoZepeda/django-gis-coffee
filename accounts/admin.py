@@ -7,13 +7,10 @@ from .models import Contact
 
 user = get_user_model()
 
+
 class CustomUserAdmin(UserAdmin):
     pass
 
+
 admin.site.register(Contact)
 admin.site.register(user, CustomUserAdmin)
-
-
-
-
-

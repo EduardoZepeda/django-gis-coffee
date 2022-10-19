@@ -13,12 +13,11 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.generic.detail import DetailView
+from feeds.utils import create_action
 from leaflet.forms.widgets import LeafletWidget
-from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import SearchForm
 from .models import Shop
-from feeds.utils import create_action
 
 # These longitude and latitude correspond to Guadalajara's downtown
 longitude = -103.349609

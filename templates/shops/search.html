@@ -18,7 +18,7 @@
         <li class="item search-item">
             <a class="link search-item-link" href="{% url 'shops:detail' shop.pk %}">{{ shop.name }}</a>
             {% if shop.created_date|days_ago:15 %}
-                <span class="recent-addition">new</span>
+                <span class="new-coffee-shop">new</span>
             {% endif %}
             <small>{{ shop.address }} </small>
         </li>
