@@ -1,12 +1,13 @@
-from django.urls import path, include
 from django.contrib.auth.views import PasswordChangeView
+from django.urls import include, path
+
 from .views import (
+    ChangePassword,
+    FollowUser,
     RegisterUser,
     UpdateUser,
-    ChangePassword,
-    UserProfile,
-    FollowUser,
     UserLikes,
+    UserProfile,
 )
 
 urlpatterns = [

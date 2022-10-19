@@ -22,7 +22,7 @@ format:
 	@echo 'Formating Python code'
 	black .
 
-## format: Deploy to fly.io
+## deploy: Deploy to fly.io
 .PHONY: deploy
 deploy:
 	@echo 'Deploying app to fly.io'

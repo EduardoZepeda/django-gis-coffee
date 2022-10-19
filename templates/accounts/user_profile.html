@@ -13,8 +13,8 @@
     </div>
     <div class="social-card-relations">
         <div class="social-card-followers">
-            <a class="link" href="#following"><strong>{{user.following_count}}</strong> {% trans "Following" %}</a>
-            <a class="link" href="#followers"><strong>{{user.followers_count}}</strong> {% trans "Followers" %}</a>
+            <a class="link" href="#following"><strong>{{user.following_count}}</strong> {% trans "Followers" %}</a>
+            <a class="link" href="#followers"><strong>{{user.followers_count}}</strong> {% trans "Following" %}</a>
         </div>
     </div>
     {% if not user == request.user %}

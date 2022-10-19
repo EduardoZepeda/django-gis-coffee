@@ -1,25 +1,25 @@
 import json
 
-from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
-from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 from django.contrib.auth.views import PasswordChangeView
 from django.db.models import Count
-from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext_lazy as _
 from django.views import generic
-from django.views.generic import DetailView, RedirectView, ListView
+from django.views.generic import DetailView, ListView, RedirectView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from shops.models import Shop
 from feeds.models import Action
-
-from .forms import CustomUserCreationForm
-from .decorators import anonymous_required
 from feeds.utils import create_action
+from shops.models import Shop
+
+from .decorators import anonymous_required
+from .forms import CustomUserCreationForm
 
 # Allow us to use a custom user model
 User = get_user_model()
@@ -31,7 +31,6 @@ class RegisterUser(CreateView):
     # Otherwise passwords won"t be hashed
     form_class = CustomUserCreationForm
     template_name = "accounts/register.html"
-
 
 
 @method_decorator(login_required, name="dispatch")
@@ -48,8 +47,11 @@ class UpdateUser(UpdateView):
         return self.request.user
 
     def form_valid(self, form):
-        messages.add_message(self.request, messages.SUCCESS, _("Your account was updated"))
+        messages.add_message(
+            self.request, messages.SUCCESS, _("Your account was updated")
+        )
         return super().form_valid(form)
+
 
 @method_decorator(login_required, name="dispatch")
 class DeleteUser(DeleteView):
@@ -92,8 +94,9 @@ class ChangePassword(PasswordChangeView):
     template_name = "accounts/change-password.html"
 
     def form_valid(self, form):
-        print("Form validdsadsadsadsadsadsadsadsadsadsadsadadsadadsadsadsada")
-        messages.add_message(self.request, messages.SUCCESS, _("Your password was changed successfully"))
+        messages.add_message(
+            self.request, messages.SUCCESS, _("Your password was changed successfully")
+        )
         return super().form_valid(form)
 
 
