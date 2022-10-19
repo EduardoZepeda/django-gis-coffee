@@ -95,6 +95,10 @@ a:visited {
     color: var(--red);
 }
 
+.likes-item {
+    margin: var(--margin-1x) 0;
+}
+
 #map {
     width: 100%;
 }
@@ -118,6 +122,30 @@ a:visited {
     background-color: var(--dark);
     /* Leaflet map uses z-index 1000 by default */
     z-index: 1001;
+}
+
+.accounts-to-follow{
+    display: flex;
+    justify-content: center;
+    overflow: scroll;
+    flex-wrap: wrap;
+    gap: 3rem;
+    max-width: 64ch;
+}
+
+.account {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account-picture {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+    object-fit: cover;
 }
 
 .sidebar-menu {
@@ -235,6 +263,10 @@ a:visited {
 .credits {
     color: gray;
     text-align: center;
+}
+
+.social-card {
+    max-width: 64ch;
 }
 
 .social-icons {

@@ -1,0 +1,14 @@
+{% load static %}
+{% load i18n %}
+{% if users_to_follow %}
+<h2>{% trans "Other coffee lovers you may know" %}</h2>
+<div class="accounts-to-follow">
+{% for account in users_to_follow %}
+    <div class="account">
+        <a href="{{account.get_absolute_url}}"><img class="account-picture" src='{% if account.profile_picture %}{{account.profile_picture.url}}{% else %}{% static "images/no-profile-picture.jpg" %}{% endif %}' alt=""/></a>
+        <p>{{account}}</p>
+        <a href="{{account.get_absolute_url}}"><button class="btn">{% trans "Visit profile" %}</button></a>
+    </div>
+{% endfor %}
+</div>
+{% endif %}
