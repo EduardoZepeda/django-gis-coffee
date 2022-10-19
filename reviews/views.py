@@ -1,3 +1,6 @@
+from django.contrib import messages
+
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -34,6 +37,7 @@ class CreateCoffeeShopReview(CreateView):
         review.shop = shop
         review.save()
         create_action(self.request.user, "reviewed", shop)
+        messages.add_message(self.request, messages.SUCCESS, _("Your review was created"))
         return super().form_valid(form)
 
 

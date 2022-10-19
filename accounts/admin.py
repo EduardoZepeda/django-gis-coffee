@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 
 # Register your models here.
-from .models import Contact, User
+from .models import Contact
 
 user = get_user_model()
 
