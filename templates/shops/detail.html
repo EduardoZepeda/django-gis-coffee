@@ -96,8 +96,8 @@
 <form>
     {% csrf_token %}
 </form>
+{% include "partials/accounts_to_follow.html" %}
 {% endblock %}
-
 {% block footer_scripts %}
 <script>
     function getLikedValue() {
