@@ -1,5 +1,7 @@
 import json
 
+from django.utils.translation import gettext_lazy as _
+from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -31,6 +33,7 @@ class RegisterUser(CreateView):
     template_name = "accounts/register.html"
 
 
+
 @method_decorator(login_required, name="dispatch")
 class UpdateUser(UpdateView):
     model = User
@@ -44,6 +47,9 @@ class UpdateUser(UpdateView):
         # Users can only update their own accounts
         return self.request.user
 
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, _("Your account was updated"))
+        return super().form_valid(form)
 
 @method_decorator(login_required, name="dispatch")
 class DeleteUser(DeleteView):
@@ -82,13 +88,13 @@ class UserProfile(DetailView):
 @method_decorator(login_required, name="dispatch")
 class ChangePassword(PasswordChangeView):
     form_class = PasswordChangeForm
-    success_url = reverse_lazy("accounts:password_changed")
+    success_url = reverse_lazy("home")
     template_name = "accounts/change-password.html"
 
-
-@method_decorator(login_required, name="dispatch")
-class PasswordChanged(RedirectView):
-    pattern_name = "home"
+    def form_valid(self, form):
+        print("Form validdsadsadsadsadsadsadsadsadsadsadsadadsadadsadsadsada")
+        messages.add_message(self.request, messages.SUCCESS, _("Your password was changed successfully"))
+        return super().form_valid(form)
 
 
 @method_decorator(login_required, name="dispatch")

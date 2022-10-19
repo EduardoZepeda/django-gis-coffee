@@ -21,6 +21,7 @@
     <meta name="apple-mobile-web-app-title" content="{{ site.name }}">
     {% block meta %}
     <meta property="og:type" content="website">
+    <meta property="og:title" content="Tamper">
     <meta property="og:description" content="The best speciality coffee shops or Cafes in Guadalajara, Jalisco, México">
     <meta name="description" content="The best speciality coffee shops or Cafes in Guadalajara, Jalisco, México">
     {% endblock meta %}
@@ -44,9 +45,22 @@
         {% include "partials/nav.html" %}
     {% endblock %}
 
-    <main class="container">
-        {% block content %}
-        {% endblock content %}
+    <main class="main">
+        {% block messages %}
+        {% if messages %}
+            <div class="messages-container">
+                <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="message {{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% endblock messages%}
+        <div class="container">
+            {% block content %}
+            {% endblock content %}
+        </div>
     </main>
     {% block aftercontent %}
     {% endblock aftercontent %}

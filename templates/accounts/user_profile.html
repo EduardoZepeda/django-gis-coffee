@@ -49,75 +49,7 @@
 {% include "partials/modal.html" with accounts=following type="following" %}
 {% endblock %}
 {% block footer_scripts %}
-<script>
-    function getAction() {
-        return document.getElementById('follow').getAttribute('action')
-    }
-
-    function getUserId() {
-        let id = document.getElementById('follow').getAttribute('user-id')
-        return parseInt(id)
-    }
-
-    function setActionValue(action) {
-        document.getElementById('follow').setAttribute('action', action)
-    }
-
-    function toggleFollowButton(action){
-        // Toggles the solid color and the empty color heart version 
-        document.getElementById('follow').textContent = action
-        document.getElementById('follow').classList.toggle('followed')
-    }
-    
-    function setDisabled(disabled){
-        if(disabled){
-            document.getElementById('follow').setAttribute('disabled', disabled)
-        }else{
-            document.getElementById('follow').removeAttribute('disabled')
-        }
-    }
-
-    // csrf is provided by Django backend
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-    let url = '{% url "accounts:follow" %}'
-    
-    let followingButton = document.getElementById('follow')
-
-    let waitingResponse = false
-
-    followingButton.onclick = async () => {
-        if(waitingResponse){
-            return
-        }
-        waitingResponse = true
-        setDisabled(true)
-        let action = getAction()
-        let userId = getUserId()
-        let request = new Request(
-            url,
-            {
-                method: 'POST',
-                headers: { 
-                    'X-CSRFToken': csrftoken,
-                    // Backend requires the HTTP request to be made asynchronously
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                mode: 'same-origin',
-                body: JSON.stringify({ "action": action, "id": userId })
-            }
-        )
-        try {
-            const response = await fetch(request)
-            const data = await response.json()
-            setActionValue(data.action)
-            toggleFollowButton(data.action)
-            setDisabled(false)
-            waitingResponse = false
-        } catch (err) {
-            console.error(err)
-            waitingResponse = false
-        }
-    }
-</script>
+{% if not user == request.user %}
+    {% include "partials/following_script.html" %}
+{% endif %}
 {% endblock %}
