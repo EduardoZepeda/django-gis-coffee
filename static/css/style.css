@@ -4,7 +4,8 @@
     --dark: #181818;
     --main-text: #383838;
     --main-text-light: #4d4d4d;
-    --blue: #2b82cb;
+    --blue: #00cfff;
+    --green: #00cc97;
     --red: #ef4444;
     --yellow: #fbbd0a;
     --padding-1x: 1rem;
@@ -146,12 +147,23 @@ a:visited {
     font-size: 1.4rem;
 }
 
+.main {
+    position: relative;
+}
+
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 2rem;
+    padding: var(--padding-2x);
+    margin: var(--margin-2x);
+}
+
+.messages-container{
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 .help-text {
@@ -345,6 +357,36 @@ a:visited {
     object-fit: cover;
 }
 
+.messages{
+    width:100%;
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+
+.message {
+    padding: 1rem;
+    color: var(--white);
+    font-weight: bold;
+}
+
+.message.transparent {
+    opacity: 0;
+    transition-duration: 200ms;
+}
+
+.message.success{
+    background-color: var(--green);
+}
+
+.message.warning{
+    background-color: var(--yellow);
+}
+
+.message.error{
+    background-color: var(--red);
+}
+
 @media (max-width: 768px) {
     .navbar {
         display: none;
@@ -439,3 +481,4 @@ TODO: remove django-leaftlet  */
     align-content: center;
     align-items: center;
 }
+
