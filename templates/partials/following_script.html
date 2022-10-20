@@ -1,42 +1,40 @@
 <script>
-    function getAction() {
-        return document.getElementById('follow').getAttribute('action')
-    }
 
-    function getUserId() {
-        let id = document.getElementById('follow').getAttribute('user-id')
-        return parseInt(id)
-    }
+    async function handleFollow(event) {
+        let button = event.target
+        // csrf is provided by Django backend
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        let url = '{% url "accounts:follow" %}'
+        let waitingResponse = false
 
-    function setActionValue(action) {
-        document.getElementById('follow').setAttribute('action', action)
-    }
-
-    function toggleFollowButton(action){
-        // Toggles the solid color and the empty color heart version 
-        document.getElementById('follow').textContent = action
-        document.getElementById('follow').classList.toggle('followed')
-    }
-    
-    function setDisabled(disabled){
-        if(disabled){
-            document.getElementById('follow').setAttribute('disabled', disabled)
-        }else{
-            document.getElementById('follow').removeAttribute('disabled')
+        function getAction() {
+            return button.getAttribute('action')
         }
-    }
 
-    // csrf is provided by Django backend
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        function getUserId() {
+            let id = button.getAttribute('user-id')
+            return parseInt(id)
+        }
 
-    let url = '{% url "accounts:follow" %}'
-    
-    let followingButton = document.getElementById('follow')
+        function setActionValue(action) {
+            button.setAttribute('action', action)
+        }
 
-    let waitingResponse = false
+        function toggleFollowButton(action) {
+            // Toggles the solid color and the empty color heart version 
+            button.textContent = action
+            button.classList.toggle('followed')
+        }
 
-    followingButton.onclick = async () => {
-        if(waitingResponse){
+        function setDisabled(disabled) {
+            if (disabled) {
+                button.setAttribute('disabled', disabled)
+            } else {
+                button.removeAttribute('disabled')
+            }
+        }
+
+        if (waitingResponse) {
             return
         }
         waitingResponse = true
@@ -47,7 +45,7 @@
             url,
             {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'X-CSRFToken': csrftoken,
                     // Backend requires the HTTP request to be made asynchronously
                     'X-Requested-With': 'XMLHttpRequest',

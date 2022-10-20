@@ -6,10 +6,10 @@
 {% load i18n %}
 {% block title %}{% if shop %}{{ shop.name }}{% endif %}{% endblock %}
 {% block meta %}
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="{{shop}}">
-    <meta property="og:description" content="{{shop}} {{shop.address}}">
-    <meta name="description" content="{{shop}} {{shop.address}}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{shop}}">
+<meta property="og:description" content="{{shop}} {{shop.address}}">
+<meta name="description" content="{{shop}} {{shop.address}}">
 {% endblock %}
 {% block javascript %}
 {% leaflet_js plugins="forms" %}
@@ -24,41 +24,24 @@
 {% if shop %}
 <article class="article-content">
     <h1 class="shop-name">{{ shop.name }}</h1>
-    {% if request.user.is_staff %}<p><a class="link edit-link" href="{% url 'admin:shops_shop_change' shop.id %}">{% trans "Edit" %} <span><i
-                    class="fa-solid fa-pencil"></i></span></a></p>{% endif %} 
+    {% if request.user.is_staff %}
+    <p>
+        <a class="link edit-link" href="{% url 'admin:shops_shop_change' shop.id %}">
+            {% trans "Edit" %} <span><i class="fa-solid fa-pencil"></i></span>
+        </a>
+    </p>
+    {% endif %}
     {% if request.user.is_anonymous %}
     <div>
-        <a class="link secondary-link" href="{% url 'accounts:login' %}">{% trans "Please log in to like this coffee shop" %}</a>
+        <a class="link secondary-link"
+            href="{% url 'accounts:login' %}">{% trans "Please log in to like this coffee shop" %}</a>
     </div>
     {% else %}
-    <div id="liked" shop-id="{{shop.pk}}" liked="{{shop.liked | lower}}" class="liked">
-        {% if shop.liked %}
-            <i id="like-icon" class="fa-solid fa-heart fa-xl"></i>
-        {% else %}
-            <i id="like-icon" class="fa-regular fa-heart fa-xl"></i>
-        {% endif %}
-        <span id="likes-count">{{shop.likes_count}}</span>
-    </div>
-    <div class="reviews">
-        <a class="link secondary-link" href='{% url "reviews:list" shop.pk %}'>{% trans " Read other people's reviews" %}</a>
-    {% if not shop.review %}
-            <a class="link secondary-link" href='{% url "reviews:create" shop.pk %}'>{% trans " Review coffee shop" %}</a>
-    {% else %}
-        <h3>{% trans "Your opinion" %}</h3>
-        <div>
-            <p><a class="link review-content" href='{% url "reviews:list" shop.pk %}'>{{ shop.review.content }}</a></p>
-        </div>
-        <div class="thumbs-icon">{% if shop.review.recommended %}
-            <i class="fa-solid fa-thumbs-up"></i> {% trans "Recommended" %}
-            {% else %}
-            <i class="fa-solid fa-thumbs-down"></i> {% trans "Not recommended" %}
-            {% endif %}
-        </div>
+    {% include "partials/shop_liked.html" with shop=shop %}
+    {% include "partials/shop_user_opinion.html" with shop=shop %}
     {% endif %}
-    {% endif %}
-    </div>
     {% if shop.content or shop.rating %}
-        <h2>{% trans "Our expert barista insights"%}</h2>
+    <h2>{% trans "Our expert barista insights"%}</h2>
     {% endif %}
     {% if shop.content %}
     <div class="review-content">
@@ -71,7 +54,7 @@
     {% render_stars shop.rating %}
     {% endif %}
     {% if shop.roaster %}
-    <h2>{%  trans "Additional services" %}</h2>
+    <h2>{% trans "Additional services" %}</h2>
     <div class="roaster"><i class="fa-solid fa-fire"></i><span> {% trans "Roaster" %}</span></div>
     {% endif %}
     {% if shop.product.all %}
@@ -94,80 +77,12 @@
 </article>
 {% endif %}
 <form>
+    {% comment %} CSRF token to prevent attacks, used by like and follow functions {% endcomment %}
     {% csrf_token %}
 </form>
 {% include "partials/accounts_to_follow.html" %}
 {% endblock %}
 {% block footer_scripts %}
-<script>
-    function getLikedValue() {
-        let liked = document.getElementById('liked').getAttribute('liked')
-        return liked === 'true' ? true : false
-    }
-
-    function getShopId() {
-        let id = document.getElementById('liked').getAttribute('shop-id')
-        return parseInt(id)
-    }
-
-    function setLikedValue(value) {
-        document.getElementById('liked').setAttribute('liked', value)
-    }
-
-    function toggleHeartIcon(){
-        // Toggles the solid color and the empty color heart version 
-        document.getElementById('like-icon').setAttribute('data-prefix', getLikedValue()?'fas':'far')
-    }
-
-    function increaseOrDecreaseCounter(liked){
-        let likesCounter = document.getElementById('likes-count')
-        let numberOfLikes = parseInt(likesCounter.textContent)
-        likesCounter.textContent = numberOfLikes + (liked ? 1 : -1)
-    }
-
-    // csrf is provided by Django backend
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-    window.addEventListener('map:init', function (e) {
-        var detail = e.detail;
-        L.marker([{{ shop.location.1 }}, {{ shop.location.0 }}]).addTo(detail.map);
-    }, false);
-    // Url is generated using django template system
-    let url = '{% url "shops:like" %}'
-
-    let waitingResponse = false
-
-    liked.onclick = async () => {
-        if(waitingResponse){
-            return
-        }
-        waitingResponse = true
-        let setLike = getLikedValue()
-        let shopId = getShopId()
-        let request = new Request(
-            url,
-            {
-                method: 'POST',
-                headers: { 
-                    'X-CSRFToken': csrftoken,
-                    // Backend requires the HTTP request to be made asynchronously
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                mode: 'same-origin',
-                body: JSON.stringify({ liked: setLike, id: shopId })
-            }
-        )
-        try {
-            const response = await fetch(request)
-            const data = await response.json()
-            setLikedValue(data.liked)
-            toggleHeartIcon()
-            increaseOrDecreaseCounter(data.liked)
-            waitingResponse = false
-        } catch (err) {
-            console.error(err)
-            waitingResponse = false
-        }
-    }
-</script>
+{% include "partials/following_script.html" %}
+{% include "partials/detail_shop_script.html" %}
 {% endblock %}
