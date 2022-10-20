@@ -42,19 +42,19 @@
 
 <body>
     {% block header %}
-        {% include "partials/nav.html" %}
+    {% include "partials/nav.html" %}
     {% endblock %}
 
     <main class="main">
         {% block messages %}
         {% if messages %}
-            <div class="messages-container">
-                <ul class="messages">
+        <div class="messages-container">
+            <ul class="messages">
                 {% for message in messages %}
-                    <li{% if message.tags %} class="message {{ message.tags }}"{% endif %}>{{ message }}</li>
+                <li {% if message.tags %} class="message {{ message.tags }}" {% endif %}>{{ message }}</li>
                 {% endfor %}
-                </ul>
-            </div>
+            </ul>
+        </div>
         {% endif %}
         {% endblock messages%}
         <div class="container">
@@ -66,11 +66,12 @@
     {% endblock aftercontent %}
 
     {% block footer %}
-        {% include "partials/footer.html" %}
+    {% include "partials/footer.html" %}
     {% endblock %}
 
     {% block footer_scripts %}
     {% endblock footer_scripts %}
     {% include "partials/menu_script.html" %}
 </body>
+
 </html>
