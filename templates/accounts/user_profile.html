@@ -8,18 +8,22 @@
     <div class="social-card-info">
         <h2>{{user}}</h2>
         <p>{{user.first_name}} {{user.last_name}}</p>
-            <img class="profile-picture" src='{% if user.profile_picture %}{{user.profile_picture.url}}{% else %}{% static "images/no-profile-picture.jpg" %}{% endif %}' alt=""/>
-            {% if user.bio %}<p>{{user.bio}}</p>{% endif %}
+        <img class="profile-picture"
+            src='{% if user.profile_picture %}{{user.profile_picture.url}}{% else %}{% static "images/no-profile-picture.jpg" %}{% endif %}'
+            alt="" />
+        {% if user.bio %}<p>{{user.bio}}</p>{% endif %}
     </div>
     <div class="social-card-relations">
         <div class="social-card-followers">
-            <a class="link" href="#following"><strong>{{user.following_count}}</strong> {% trans "Followers" %}</a>
-            <a class="link" href="#followers"><strong>{{user.followers_count}}</strong> {% trans "Following" %}</a>
+            <a class="link" href="#following"><strong>{{user.following_count}}</strong> {% trans "Following" %}</a>
+            <a class="link" href="#followers"><strong>{{user.followers_count}}</strong> {% trans "Followers" %}</a>
         </div>
     </div>
+    <!-- If we're not in the current user profile create a follow button -->
     {% if not user == request.user %}
-    <button class="btn" id="follow" user-id='{{user.id}}' action='{% if user.following_user %}unfollow{% else %}follow{% endif %}'>
-        {% if user.following_user %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
+    <button class="btn" id="follow" user-id='{{user.id}}'
+        action='{% if user.is_followed %}unfollow{% else %}follow{% endif %}'>
+        {% if user.is_followed %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
     </button>
     {% else %}
     <a class="link" href='{% url "accounts:update" request.user.pk %}'>
@@ -34,27 +38,27 @@
 </div>
 <h2>{% trans "likes" %}</h2>
 <div class="likes-list">
-{% if likes %}
-        <ul class="list likes-list">
-            {% for shop in likes %}
-                <li class="item likes-item">
-                    <a class="link likes-item-link" href="{{ shop.get_absolute_url }}">{{shop.name}}</a>
-                </li>
-            {% endfor %}
-            <a class="link" href='{% url "accounts:likes" user.pk %}'>
-                <button class="btn">{% trans "See all likes" %}</button>
-            </a>
-        </ul>
-    
-{% else %}
+    {% if likes %}
+    <ul class="list likes-list">
+        {% for shop in likes %}
+        <li class="item likes-item">
+            <a class="link likes-item-link" href="{{ shop.get_absolute_url }}">{{shop.name}}</a>
+        </li>
+        {% endfor %}
+        <a class="link" href='{% url "accounts:likes" user.pk %}'>
+            <button class="btn">{% trans "See all likes" %}</button>
+        </a>
+    </ul>
+
+    {% else %}
     <p>{% trans "This account has not liked any coffee shop" %}</p>
-{% endif %}
+    {% endif %}
 </div>
 {% include "partials/accounts_to_follow.html" %}
 </div>
 {% endblock %}
 {% block footer_scripts %}
 {% if not user == request.user %}
-    {% include "partials/following_script.html" %}
+{% include "partials/following_script.html" %}
 {% endif %}
 {% endblock %}

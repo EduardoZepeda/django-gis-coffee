@@ -65,6 +65,19 @@ class DeleteUser(DeleteView):
 
 
 @method_decorator(login_required, name="dispatch")
+class ChangePassword(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy("home")
+    template_name = "accounts/change-password.html"
+
+    def form_valid(self, form):
+        messages.add_message(
+            self.request, messages.SUCCESS, _("Your password was changed successfully")
+        )
+        return super().form_valid(form)
+
+
+@method_decorator(login_required, name="dispatch")
 class UserProfile(DetailView):
     model = User
     template_name = "accounts/user_profile.html"
@@ -79,25 +92,12 @@ class UserProfile(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = User.objects.prefetch_related("following").get(pk=self.kwargs.get("pk"))
-        context["object"].following_user = self.request.user in user.following.all()
+        user = User.objects.prefetch_related("followers").get(pk=self.kwargs.get("pk"))
+        context["object"].is_followed = self.request.user in user.followers.all()
         context["likes"] = Shop.objects.filter(likes=self.object)[:5]
         context["following"] = user.following.all()
         context["followers"] = user.followers.all()
         return context
-
-
-@method_decorator(login_required, name="dispatch")
-class ChangePassword(PasswordChangeView):
-    form_class = PasswordChangeForm
-    success_url = reverse_lazy("home")
-    template_name = "accounts/change-password.html"
-
-    def form_valid(self, form):
-        messages.add_message(
-            self.request, messages.SUCCESS, _("Your password was changed successfully")
-        )
-        return super().form_valid(form)
 
 
 @method_decorator(login_required, name="dispatch")
@@ -134,10 +134,10 @@ class FollowUser(generic.View):
                 )
             # data.liked can be either true or false
             if data.get("action") == "unfollow":
-                user.following.remove(request.user)
+                request.user.following.remove(user)
                 return JsonResponse({"message": "ok", "action": "follow"})
-            user.following.add(request.user)
-            create_action(self.request.user, "followed", user)
+            request.user.following.add(user)
+            create_action(request.user, "followed", user)
             return JsonResponse({"message": "ok", "action": "unfollow"})
         return JsonResponse(
             {
