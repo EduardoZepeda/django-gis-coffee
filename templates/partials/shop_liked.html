@@ -1,0 +1,8 @@
+<div id="liked" shop-id="{{shop.pk}}" liked="{{shop.liked | lower}}" class="liked">
+    {% if shop.liked %}
+    <i id="like-icon" class="fa-solid fa-heart fa-xl"></i>
+    {% else %}
+    <i id="like-icon" class="fa-regular fa-heart fa-xl"></i>
+    {% endif %}
+    <span id="likes-count">{{shop.likes_count}}</span>
+</div>

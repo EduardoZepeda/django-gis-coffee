@@ -5,23 +5,10 @@
 {% block content %}
 
 <div class="social-card">
-    <div class="social-card-info">
-        <h2>{{user}}</h2>
-        <p>{{user.first_name}} {{user.last_name}}</p>
-        <img class="profile-picture"
-            src='{% if user.profile_picture %}{{user.profile_picture.url}}{% else %}{% static "images/no-profile-picture.jpg" %}{% endif %}'
-            alt="" />
-        {% if user.bio %}<p>{{user.bio}}</p>{% endif %}
-    </div>
-    <div class="social-card-relations">
-        <div class="social-card-followers">
-            <a class="link" href="#following"><strong>{{user.following_count}}</strong> {% trans "Following" %}</a>
-            <a class="link" href="#followers"><strong>{{user.followers_count}}</strong> {% trans "Followers" %}</a>
-        </div>
-    </div>
+    {% include "partials/social-card.html" with user=user %}
     <!-- If we're not in the current user profile create a follow button -->
     {% if not user == request.user %}
-    <button class="btn" id="follow" user-id='{{user.id}}'
+    <button onclick="handleFollow(event)" class="btn" id="follow" user-id='{{user.id}}'
         action='{% if user.is_followed %}unfollow{% else %}follow{% endif %}'>
         {% if user.is_followed %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
     </button>
@@ -35,30 +22,11 @@
     </form>
     {% include "partials/modal.html" with accounts=followers type="followers" %}
     {% include "partials/modal.html" with accounts=following type="following" %}
-</div>
-<h2>{% trans "likes" %}</h2>
-<div class="likes-list">
-    {% if likes %}
-    <ul class="list likes-list">
-        {% for shop in likes %}
-        <li class="item likes-item">
-            <a class="link likes-item-link" href="{{ shop.get_absolute_url }}">{{shop.name}}</a>
-        </li>
-        {% endfor %}
-        <a class="link" href='{% url "accounts:likes" user.pk %}'>
-            <button class="btn">{% trans "See all likes" %}</button>
-        </a>
-    </ul>
-
-    {% else %}
-    <p>{% trans "This account has not liked any coffee shop" %}</p>
-    {% endif %}
+    {% include "partials/likes_for_user.html" with user=user shop=shop %}
 </div>
 {% include "partials/accounts_to_follow.html" %}
 </div>
 {% endblock %}
 {% block footer_scripts %}
-{% if not user == request.user %}
 {% include "partials/following_script.html" %}
-{% endif %}
 {% endblock %}

@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<h2>{% trans "likes" %}</h2>
+<div class="likes-list">
+    {% if likes %}
+    <ul class="list likes-list">
+        {% for shop in likes %}
+        <li class="item likes-item">
+            <a class="link likes-item-link" href="{{ shop.get_absolute_url }}">{{shop.name}}</a>
+        </li>
+        {% endfor %}
+        <a class="link" href='{% url "accounts:likes" user.pk %}'>
+            <button class="btn">{% trans "See all likes" %}</button>
+        </a>
+    </ul>
+    {% else %}
+    <p>{% trans "This account has not liked any coffee shop" %}</p>
+    {% endif %}
+</div>
