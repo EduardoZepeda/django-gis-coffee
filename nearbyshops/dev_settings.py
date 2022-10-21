@@ -21,3 +21,5 @@ MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+
+DJANGO_VITE_DEV_MODE = DEBUG

@@ -1,0 +1,519 @@
+:root {
+    --white: #FFF;
+    --ivory-white: #dbdbdb;
+    --dark: #181818;
+    --main-text: #383838;
+    --main-text-light: #4d4d4d;
+    --blue: #00cfff;
+    --green: #00cc97;
+    --red: #ef4444;
+    --yellow: #fbbd0a;
+    --padding-1x: 1rem;
+    --padding-2x: 2rem;
+    --margin-1x: 1.5rem;
+    --margin-2x: 2rem;
+    --gap-padding: 1rem;
+}
+
+
+html,
+body {
+    min-height: 100vh;
+}
+
+body {
+    background-color: var(--white);
+    color: var(--main-text-light);
+    font-family: 'Mukta', sans-serif;
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    position: relative;
+    grid-template-rows: auto 1fr auto;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--padding-2x);
+    min-height: 100px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 3px 0px;
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem;
+    min-height: 30px;
+    gap: var(--padding-2x);
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, .1), 0 -2px 2px rgba(0, 0, 0, .06), 0 0 2px rgba(0, 0, 0, .07);
+}
+
+h1,
+h2 {
+    font-family: 'Comfortaa', cursive;
+    color: var(--main-text);
+}
+
+.site-title {
+    font-size: 4rem;
+}
+
+.site-subtitle {
+    margin: 0;
+}
+
+.responsive-img {
+    border-radius: 6px;
+    width: 100%;
+    height: auto;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.item {
+    margin: var(--margin-1x);
+}
+
+.link {
+    color: var(--main-text-light);
+}
+
+.liked {
+    color: var(--red);
+}
+
+.likes-item {
+    margin: var(--margin-1x) 0;
+}
+
+#map {
+    width: 100%;
+}
+
+.menu {
+    display: inline-flex;
+    align-items: center;
+}
+
+.menu-bars {
+    display: none;
+    padding: 0 0.5rem;
+}
+
+.sidebar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--dark);
+    /* Leaflet map uses z-index 1000 by default */
+    z-index: 1001;
+}
+
+.accounts-to-follow {
+    display: flex;
+    justify-content: center;
+    overflow: scroll;
+    flex-wrap: wrap;
+    gap: 3rem;
+    max-width: 64ch;
+}
+
+.account {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account-picture {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+    object-fit: cover;
+}
+
+.sidebar-menu {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.close {
+    color: var(--white);
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2rem;
+}
+
+.rating-container {
+    color: var(--yellow);
+}
+
+.sidebar-menu a {
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.main {
+    position: relative;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: var(--padding-2x);
+    margin: var(--margin-2x);
+}
+
+.messages-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.help-text {
+    margin: 1rem;
+}
+
+.page-content {
+    max-width: 64ch;
+    align-self: center;
+}
+
+.leaflet-container {
+    /* all maps */
+    height: 800px;
+}
+
+.logo {
+    font-family: 'Comfortaa', cursive;
+}
+
+.shop-tag {
+    color: var(--blue);
+    font-weight: bold;
+    width: 100px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 4px;
+    background-color: var(--white);
+    border: 1px solid var(--blue);
+}
+
+.review-content {
+    max-width: 64ch;
+    line-height: 2.5rem;
+}
+
+.reviews {
+    margin: var(--margin-2x) 0;
+}
+
+.secondary-link {
+    border: 1px solid var(--main-text-light);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+}
+
+#detail-map {
+    max-width: 400px;
+    height: 400px;
+}
+
+.shop-map {
+    width: 100%;
+}
+
+.article-content {
+    min-width: 400px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 2rem;
+}
+
+
+.credits {
+    color: gray;
+    text-align: center;
+}
+
+.social-card {
+    max-width: 64ch;
+}
+
+.social-icons {
+    display: inline-flex;
+    list-style: none;
+    gap: var(--gap-padding);
+}
+
+.social-link {
+    color: var(--main-text-light);
+}
+
+.logo-link {
+    color: var(--main-text-light);
+}
+
+.new-coffee-shop {
+    background-color: var(--green);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    padding: 0 0.1rem;
+    color: var(--white);
+}
+
+.hidden {
+    display: none;
+}
+
+.blurry {
+    filter: blur(8px);
+}
+
+.search-wrapper {
+    position: relative;
+    width: 100px;
+}
+
+.search {
+    border-radius: 2px;
+    border: 1px solid var(--main-text-light);
+    padding: 0.5rem;
+}
+
+.help-block {
+    color: var(--red);
+    font-size: 0.9rem;
+    line-height: 1rem;
+}
+
+.textInput,
+.emailinput {
+    padding: var(--padding-1x);
+    border: 1px solid var(--ivory-white);
+    color: var(--main-text-light);
+    box-shadow: inset 0 .0625em .125em rgba(10, 10, 10, .05);
+    max-width: 100%;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.control-group {
+    margin: var(--margin-1x);
+}
+
+.control-group>.controls {
+    font-size: 0.9rem;
+}
+
+.btn {
+    margin: var(--margin-1x) 0;
+    border-radius: 4px;
+    background-color: var(--yellow);
+    color: var(--main-text);
+    border-color: transparent;
+    padding: var(--padding-1x);
+}
+
+.btn:disabled {
+    opacity: 0.7;
+}
+
+.pagination {
+    margin: var(--margin-2x) var(--margin-1x);
+}
+
+.pagination-link {
+    color: var(--main-text-light);
+    border: 1px solid var(--main-text-light);
+    padding: 0.5rem var(--padding-1x);
+}
+
+.pagination-info {
+    margin: 0rem var(--padding-1x);
+}
+
+.feed-item {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: var(--gap-padding);
+}
+
+.profile-picture {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    box-sizing: border-box;
+    object-fit: cover;
+}
+
+.feed-item-picture-container {
+    display: inherit;
+}
+
+.feed-item-picture {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+    box-sizing: border-box;
+    object-fit: cover;
+}
+
+.messages {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.message {
+    padding: 1rem;
+    color: var(--white);
+    font-weight: bold;
+}
+
+.message.transparent {
+    opacity: 0;
+    transition-duration: 200ms;
+}
+
+.message.success {
+    background-color: var(--green);
+}
+
+.message.warning {
+    background-color: var(--yellow);
+}
+
+.message.error {
+    background-color: var(--red);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        display: none;
+    }
+
+    .menu-bars {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+
+/* Firefox reports excessive amount of will-change memory usage, caused by a leaflet version */
+/* Since this is just a demo project I leave it as is for now
+TODO: remove django-leaftlet  */
+.leaflet-fade-anim .leaflet-tile,
+.leaflet-zoom-anim .leaflet-zoom-animated {
+    will-change: auto !important;
+}
+
+
+/* Modal css */
+
+.modalDialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+
+.modalDialog:target {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modalDialog>div {
+    width: 80%;
+    position: relative;
+    padding: 0.5rem var(--padding-1x);
+    margin: 10% auto;
+    border-radius: 10px;
+    background: var(--white);
+    background: -moz-linear-gradient(var(--white), var(--main-text-light));
+    background: -webkit-linear-gradient(var(--white), var(--main-text-light));
+    background: -o-linear-gradient(var(--white), var(--main-text-light));
+    background-color: var(--white);
+    max-width: 400px;
+}
+
+.follow {
+    overflow-y: scroll;
+    max-height: 600px;
+}
+
+.close-modal {
+    background: var(--main-text-light);
+    color: var(--white);
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px var(--dark);
+    -webkit-box-shadow: 1px 1px 3px var(--dark);
+    box-shadow: 1px 1px 3px var(--dark);
+}
+
+.close-modal:hover {
+    background: var(--blue);
+}
+
+.follow-container {
+    margin: var(--margin-1x);
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
