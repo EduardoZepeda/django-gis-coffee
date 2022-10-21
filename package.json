@@ -1,0 +1,24 @@
+{
+  "name": "django-gis-coffee",
+  "version": "1.0.0",
+  "description": "Handle Django's asset files",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EduardoZepeda/django-gis-coffee.git"
+  },
+  "author": "Eduardo Zepeda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EduardoZepeda/django-gis-coffee/issues"
+  },
+  "homepage": "https://github.com/EduardoZepeda/django-gis-coffee#readme",
+  "dependencies": {
+    "vite": "^3.1.8"
+  }
+}
