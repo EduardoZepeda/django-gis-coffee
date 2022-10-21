@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load django_vite %}
 {% load leaflet_tags %}
 {% load static %}
 {% load render_stars %}
@@ -22,7 +23,8 @@
 
 {% block content %}
 {% if shop %}
-<article class="article-content">
+<article id="coffee-shop" title="{{ shop.name }}" longitude={{shop.location.0}} latitude={{shop.location.1}}
+    class="article-content">
     <h1 class="shop-name">{{ shop.name }}</h1>
     {% if request.user.is_staff %}
     <p>
@@ -83,6 +85,6 @@
 {% include "partials/accounts_to_follow.html" %}
 {% endblock %}
 {% block footer_scripts %}
-{% include "partials/following_script.html" %}
-{% include "partials/detail_shop_script.html" %}
+{% vite_asset 'js/followAccount.js' %}
+{% vite_asset 'js/detailShop.js' %}
 {% endblock %}

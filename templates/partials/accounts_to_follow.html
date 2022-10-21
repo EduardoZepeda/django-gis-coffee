@@ -9,7 +9,7 @@
                 src='{% if account.profile_picture %}{{account.profile_picture.url}}{% else %}{% static "images/no-profile-picture.jpg" %}{% endif %}'
                 alt="" /></a>
         <p>{{account}}</p>
-        <button onclick="handleFollow(event)" class="btn" id="follow" user-id='{{account.id}}'
+        <button class="btn follow-button" user-id='{{account.id}}'
             action='{% if account.is_followed %}unfollow{% else %}follow{% endif %}'>
             {% if account.is_followed %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
         </button>

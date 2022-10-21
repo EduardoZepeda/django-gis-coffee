@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load django_vite %}
 {% load i18n %}
 {% block title %}{{user}} {% trans "profile" %}{% endblock %}
 {% block content %}
@@ -8,7 +9,7 @@
     {% include "partials/social-card.html" with user=user %}
     <!-- If we're not in the current user profile create a follow button -->
     {% if not user == request.user %}
-    <button onclick="handleFollow(event)" class="btn" id="follow" user-id='{{user.id}}'
+    <button class="btn follow-button" user-id='{{user.id}}'
         action='{% if user.is_followed %}unfollow{% else %}follow{% endif %}'>
         {% if user.is_followed %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
     </button>
@@ -28,5 +29,5 @@
 </div>
 {% endblock %}
 {% block footer_scripts %}
-{% include "partials/following_script.html" %}
+{% vite_asset 'js/followAccount.js' %}
 {% endblock %}
