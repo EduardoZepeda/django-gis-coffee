@@ -12,13 +12,17 @@ RUN apt-get update && apt-get install -y \
     libgdal-dev \
     python3-gdal \
     binutils \
-    libproj-dev
+    libproj-dev \
+    nodejs
 
 RUN mkdir app
 WORKDIR /app
 
 COPY requirements.txt .
+
 RUN pip install -r requirements.txt
+
+RUN npm run build
 
 COPY . .
 
