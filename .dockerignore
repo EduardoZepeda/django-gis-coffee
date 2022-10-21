@@ -4,3 +4,5 @@ __pycache__
 staticfiles/
 venv/
 *.env$
+node_modules/
+static/dist/
