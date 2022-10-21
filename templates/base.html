@@ -1,13 +1,15 @@
 {% load static %}
 {% load i18n %}
+{% load django_vite %}
 {% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 
 <head>
+    {% vite_hmr_client %}
     <title>{% block title %}{{ site.name }}{% endblock %}</title>
-    <link async rel="stylesheet" href="{%  static  'css/style.css'  %}">
+    {% vite_asset 'js/mainCss.js' %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -71,7 +73,8 @@
 
     {% block footer_scripts %}
     {% endblock footer_scripts %}
-    {% include "partials/menu_script.html" %}
+    {% vite_asset "js/menuAndSearch.js" %}
+
 </body>
 
 </html>
