@@ -33,13 +33,13 @@
         </a>
     </p>
     {% endif %}
+    {% include "partials/shop_liked.html" with shop=shop %}
     {% if request.user.is_anonymous %}
     <div>
         <a class="link secondary-link"
-            href="{% url 'accounts:login' %}">{% trans "Please log in to like this coffee shop" %}</a>
+            href="{% url 'accounts:login' %}?next={{ request.path }}">{% trans "Please log in to like this coffee shop" %}</a>
     </div>
     {% else %}
-    {% include "partials/shop_liked.html" with shop=shop %}
     {% include "partials/shop_user_opinion.html" with shop=shop %}
     {% endif %}
     {% if shop.content or shop.rating %}
@@ -85,6 +85,9 @@
 {% include "partials/accounts_to_follow.html" %}
 {% endblock %}
 {% block footer_scripts %}
+{% vite_asset 'js/placeLocationOnMap.js' %}
+{% if user.is_authenticated %}
 {% vite_asset 'js/followAccount.js' %}
-{% vite_asset 'js/detailShop.js' %}
+{% vite_asset 'js/likeShop.js' %}
+{% endif %}
 {% endblock %}
