@@ -13,6 +13,7 @@
     --margin-1x: 1.5rem;
     --margin-2x: 2rem;
     --gap-padding: 1rem;
+    --default-opacity: 0.7;
 }
 
 
@@ -94,6 +95,11 @@ a:visited {
 
 .liked {
     color: var(--red);
+    margin: var(--margin-1x) 0;
+}
+
+.liked.disabled {
+    opacity: var(--default-opacity);
 }
 
 .likes-item {
@@ -347,7 +353,7 @@ a:visited {
 }
 
 .btn:disabled {
-    opacity: 0.7;
+    opacity: var(--default-opacity);
 }
 
 .pagination {

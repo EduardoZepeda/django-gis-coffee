@@ -1,13 +1,5 @@
 import 'vite/modulepreload-polyfill'
 
-function getShopLatitudeAndLongitude(){
-    let article = document.getElementById('coffee-shop')
-    return {
-        "latitude": article.getAttribute('latitude'),
-        "longitude": article.getAttribute('longitude')
-    }
-}
-
 function getLikedValue() {
     let liked = document.getElementById('liked').getAttribute('liked')
     return liked === 'true' ? true : false
@@ -35,12 +27,7 @@ function increaseOrDecreaseCounter(liked) {
 
 // csrf is provided by Django backend
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-const latAndLon = getShopLatitudeAndLongitude()
 
-window.addEventListener('map:init', function (e) {
-    var detail = e.detail;
-    L.marker([latAndLon.latitude, latAndLon.longitude]).addTo(detail.map);
-}, false);
 // Url is generated using django template system
 let url = '/shops/like/'
 

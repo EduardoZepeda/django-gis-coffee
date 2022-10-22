@@ -25,9 +25,10 @@ module.exports = {
     rollupOptions: {
       input: {
         home: resolve('./static/src/js/home.js'),
+        placeLocationOnMap: resolve('./static/src/js/placeLocationOnMap.js'),
         mainCss: resolve('./static/src/js/mainCss.js'),
         menuAndSearch: resolve('./static/src/js/menuAndSearch.js'),
-        detailShop: resolve('./static/src/js/detailShop.js'),
+        likeShop: resolve('./static/src/js/likeShop.js'),
         followAccount: resolve('./static/src/js/followAccount.js'),
       },
       output: {
