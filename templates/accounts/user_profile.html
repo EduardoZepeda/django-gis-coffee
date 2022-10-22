@@ -6,7 +6,7 @@
 {% block content %}
 
 <div class="social-card">
-    {% include "partials/social-card.html" with user=user %}
+    {% include "partials/social_card.html" with user=user %}
     <!-- If we're not in the current user profile create a follow button -->
     {% if not user == request.user %}
     <button class="btn follow-button" user-id='{{user.id}}'

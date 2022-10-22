@@ -1,10 +1,13 @@
 {% load i18n %}
 
 <div class="reviews">
-    <a class="link secondary-link"
-        href='{% url "reviews:list" shop.pk %}'>{% trans " Read other people's reviews" %}</a>
+    <a class="link secondary-link" href='{% url "reviews:list" shop.pk %}'>
+        {% trans " Read other people's reviews" %}
+    </a>
     {% if not shop.review %}
-    <a class="link secondary-link" href='{% url "reviews:create" shop.pk %}'>{% trans " Review coffee shop" %}</a>
+    <a class="link secondary-link" href='{% url "reviews:create" shop.pk %}'>
+        {% trans " Review coffee shop" %}
+    </a>
     {% else %}
     <h3>{% trans "Your opinion" %}</h3>
     <div>
@@ -16,6 +19,6 @@
         {% else %}
         <i class="fa-solid fa-thumbs-down"></i> {% trans "Not recommended" %}
         {% endif %}
-        {% endif %}
     </div>
+    {% endif %}
 </div>
