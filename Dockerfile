@@ -13,7 +13,12 @@ RUN apt-get update && apt-get install -y \
     python3-gdal \
     binutils \
     libproj-dev \
-    nodejs
+    nodejs \
+    npm
+
+# Vite requires a node version greater than 16, but Python image downloads v12.x
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - 
+RUN apt-get install -y nodejs
 
 RUN mkdir app
 WORKDIR /app
@@ -22,9 +27,13 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-RUN npm run build
+COPY package.json .
+
+RUN npm install
 
 COPY . .
+
+RUN npm run build
 
 RUN python3 manage.py collectstatic --noinput
 
