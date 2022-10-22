@@ -20,7 +20,6 @@ function vanishMessages() {
 
 window.onload = function () {
     let sidebarClose = true
-    let searchInputClosed = true
     const close = document.getElementById("close")
     const bars = document.getElementById("menu-bars")
     const sidebar = document.getElementById("sidebar")

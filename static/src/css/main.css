@@ -269,7 +269,7 @@ a:visited {
 
 
 .credits {
-    color: gray;
+    color: var(--main-text-light);
     text-align: center;
 }
 
