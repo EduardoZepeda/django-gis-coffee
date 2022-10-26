@@ -21,6 +21,12 @@ class Contact(models.Model):
 
     class Meta:
         ordering = ("-created",)
+        constraints = [
+            # Ensure follow records are unique
+            models.UniqueConstraint(
+                fields=["user_to", "user_from"], name="userTo-userFrom"
+            )
+        ]
 
     def __str__(self):
         return "{} follows {}".format(self.user_from, self.user_to)
@@ -37,3 +43,9 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse("accounts:user_profile", args=[self.pk])
+
+    class Meta:
+        constraints = [
+            # Ensure username and email are unique
+            models.UniqueConstraint(fields=["username", "email"], name="email-user")
+        ]
