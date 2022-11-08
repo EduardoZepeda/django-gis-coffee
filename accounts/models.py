@@ -46,6 +46,8 @@ class User(AbstractUser):
 
     class Meta:
         constraints = [
-            # Ensure username and email are unique
-            models.UniqueConstraint(fields=["username", "email"], name="email-user")
+            # Prevent a user from registering an existing email address
+            models.UniqueConstraint(fields=["email"], name="unique-email"),
+            # Ensure username and email combination are unique
+            models.UniqueConstraint(fields=["username", "email"], name="email-user"),
         ]
