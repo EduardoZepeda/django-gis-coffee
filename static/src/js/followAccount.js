@@ -75,11 +75,11 @@ async function handleFollow(event) {
     try {
         const response = await fetch(request)
         const data = await response.json()
+        setLoading(waitingResponse)
         setActionValue(data.action)
         toggleFollowButton(data.action)
         setDisabled(false)
         waitingResponse = false
-        setLoading(waitingResponse)
     } catch (err) {
         console.error(err)
         waitingResponse = false
