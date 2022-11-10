@@ -25,6 +25,18 @@ async function handleFollow(event) {
         button.setAttribute('action', action)
     }
 
+    function setLoading(value){
+        if(value){
+            const loader = document.createElement('span')
+            loader.classList.add('loader')
+            button.textContent = ''
+            button.appendChild(loader)
+            return
+        }
+        const loader = button.firstChild
+        button.removeChild(loader)
+    }
+
     function toggleFollowButton(action) {
         // Toggles the solid color and the empty color heart version 
         button.textContent = action
@@ -34,16 +46,17 @@ async function handleFollow(event) {
     function setDisabled(disabled) {
         if (disabled) {
             button.setAttribute('disabled', disabled)
-        } else {
-            button.removeAttribute('disabled')
-        }
+            return
+        } 
+        button.removeAttribute('disabled')
     }
 
     if (waitingResponse) {
         return
     }
     waitingResponse = true
-    setDisabled(true)
+    setDisabled(waitingResponse)
+    setLoading(waitingResponse)
     let action = getAction()
     let userId = getUserId()
     let request = new Request(
@@ -66,8 +79,10 @@ async function handleFollow(event) {
         toggleFollowButton(data.action)
         setDisabled(false)
         waitingResponse = false
+        setLoading(waitingResponse)
     } catch (err) {
         console.error(err)
         waitingResponse = false
+        setLoading(waitingResponse)
     }
 }
