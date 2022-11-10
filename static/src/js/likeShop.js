@@ -14,6 +14,15 @@ function setLikedValue(value) {
     document.getElementById('liked').setAttribute('liked', value)
 }
 
+function setLoader(value) {
+    if(value){
+        document.getElementById('like-icon').classList.add("heart-loader")
+        return
+    }
+    document.getElementById('like-icon').classList.remove("heart-loader")
+}
+
+
 function toggleHeartIcon() {
     // Toggles the solid color and the empty color heart version 
     document.getElementById('like-icon').setAttribute('data-prefix', getLikedValue() ? 'fas' : 'far')
@@ -39,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             return
         }
         waitingResponse = true
+        setLoader(waitingResponse)
         let setLike = getLikedValue()
         let shopId = getShopId()
         let request = new Request(
@@ -61,9 +71,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
             toggleHeartIcon()
             increaseOrDecreaseCounter(data.liked)
             waitingResponse = false
+            setLoader(waitingResponse)
         } catch (err) {
             console.error(err)
             waitingResponse = false
+            setLoader(waitingResponse)
         }
     }
 })
