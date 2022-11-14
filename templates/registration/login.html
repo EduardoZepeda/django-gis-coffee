@@ -5,23 +5,23 @@
 {% block content %}
 <h2>{% trans "Login to your account" %}</h2>
 {% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
+{% if user.is_authenticated %}
+<p>Your account doesn't have access to this page. To proceed,
     please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
+{% else %}
+<p>Please login to see this page.</p>
+{% endif %}
 {% endif %}
 <form method="post" action="{% url 'accounts:login' %}">
-{% csrf_token %}
-{{form|crispy}}
-{% if form.errors %}
+    {% csrf_token %}
+    {{form|crispy}}
+    {% if form.errors %}
     <p class="help-block">Your username and password didn't match. Please try again.</p>
-{% endif %}
-<p><a class="link help-text" href="{% url 'accounts:password_reset' %}">{% trans "Lost password?"%}</a></p>
-<button class="btn" type="submit">{% trans "Login" %}</button>
-<input type="hidden" name="next" value="{{ next }}">
+    {% endif %}
+    <p><a class="link help-text" href="{% url 'accounts:password_reset' %}">{% trans "Lost password?"%}</a></p>
+    <button class="btn" type="submit">{% trans "Login" %}</button>
+    <input type="hidden" name="next" value="{{ next }}">
+    <p><a class="link" href="{% url 'accounts:register' %}">{% trans "Don't have an account? Create one here" %}</a></p>
 </form>
-
 {# Assumes you set up the password_reset view in your URLconf #}
 {% endblock %}
