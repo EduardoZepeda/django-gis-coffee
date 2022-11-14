@@ -14,7 +14,7 @@ module.exports = {
     },
   },
   resolve: {
-    extensions: ['.js', '.json'],
+    extensions: ['.js', '.json', 'css'],
   },
   build: {
     outDir: resolve('./static/dist'),
@@ -26,10 +26,10 @@ module.exports = {
       input: {
         home: resolve('./static/src/js/home.js'),
         placeLocationOnMap: resolve('./static/src/js/placeLocationOnMap.js'),
-        mainCss: resolve('./static/src/js/mainCss.js'),
         menuAndSearch: resolve('./static/src/js/menuAndSearch.js'),
         likeShop: resolve('./static/src/js/likeShop.js'),
         followAccount: resolve('./static/src/js/followAccount.js'),
+        mainCss: resolve('./static/src/css/main.css'),
       },
       output: {
         chunkFileNames: undefined,
