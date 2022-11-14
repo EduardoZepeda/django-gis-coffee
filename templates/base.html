@@ -9,7 +9,8 @@
 <head>
     {% vite_hmr_client %}
     <title>{% block title %}{{ site.name }}{% endblock %}</title>
-    {% vite_asset 'js/mainCss.js' %}
+    {% comment %} Load css file as style instead of as module {% endcomment %}
+    <link rel="stylesheet" href="{% vite_asset_url 'css/main.css' %}">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
         integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
