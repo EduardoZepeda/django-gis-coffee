@@ -46,6 +46,10 @@
     {% endblock %}
 
     <main class="main">
+        {% comment %} This dummy script prevents FOUC in firefox, because "firefox" {% endcomment %}
+        <script>
+            0
+        </script>
         {% block messages %}
         {% if messages %}
         <div class="messages-container">
