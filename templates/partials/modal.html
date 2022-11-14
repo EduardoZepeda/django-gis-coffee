@@ -7,16 +7,17 @@
             {% for account in accounts %}
             <div class="follow-container">
                 <div class="follow-item-picture-container">
-                    <img class="feed-item-picture" src='{% if account.profile_picture %}{{account.profile_picture.url}}{% else %}{% static "images/no-profile-picture.jpg" %}{% endif %}'>
+                    <img class="feed-item-picture"
+                        src='{% if account.profile_picture %}{{account.profile_picture.url}}{% else %}{% static "images/no-profile-picture.jpg" %}{% endif %}'>
                 </div>
                 <div>
                     <a class="link" href="{{account.get_absolute_url}}">{{account}}</a>
                 </div>
             </div>
             {% empty %}
-                <div class="follow-container">
-                    <p>{% trans "No one is here" %}</p>
-                </div>
+            <div class="follow-container">
+                <p>{% trans "No one is here" %}</p>
+            </div>
             {% endfor %}
         </div>
     </div>
