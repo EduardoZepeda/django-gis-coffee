@@ -5,6 +5,7 @@
     --main-text: #383838;
     --main-text-light: #4d4d4d;
     --blue: #00cfff;
+    --point-blue: #2880CACC;
     --green: #00cc97;
     --red: #ef4444;
     --yellow: #fbbd0a;
@@ -251,14 +252,14 @@ a:visited {
 }
 
 .shop-tag {
-    color: var(--blue);
+    color: var(--white);
     font-weight: bold;
     width: 100px;
     display: inline-block;
     text-align: center;
     border-radius: 4px;
-    background-color: var(--white);
-    border: 1px solid var(--blue);
+    background-color: var(--point-blue);
+    border: 1px solid var(--point-blue);
 }
 
 .review-content {
