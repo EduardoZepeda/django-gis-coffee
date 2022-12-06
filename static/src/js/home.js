@@ -14,10 +14,17 @@ window.addEventListener("map:init", function (e) {
     let markers = []
     let distanceInput = document.getElementById('distance')
     let distanceValue = document.getElementById('distanceValue')
-    distanceInput.addEventListener('change', handleDistanceValue)
+    distanceInput.addEventListener('change', distanceRangeChanged)
 
     function handleDistanceValue(event) {
+        // distance value is used to fetch elements from the API
         distanceValue.innerText = distanceInput.value
+    }
+
+    function distanceRangeChanged(event){
+        // if distance range changes, re render nearby coffee ships
+        handleDistanceValue(event)
+        fetchDataAndRender()
     }
 
     function generateFontAwesomestars(rating) {
@@ -27,6 +34,7 @@ window.addEventListener("map:init", function (e) {
     }
 
     function renderMarkers() {
+        // Create a marker for each element fetched from the API
         items.forEach((item, i) => {
             var LamMarker = new L.marker([items[i].lat, items[i].lng], {
                 icon: new L.DivIcon({
@@ -71,6 +79,7 @@ window.addEventListener("map:init", function (e) {
                 }
             })
             renderMarkers()
+            // centers the map view and change the zoom 
             map.flyTo([LatLng.lat, LatLng.lng], 15)
         })
     }
@@ -103,7 +112,7 @@ window.addEventListener("map:init", function (e) {
     }
 
     function listenToClickOnMap(e) {
-        // default current position is where clicked was captured
+        // make default current position to the point where clicked was captured
         if (firstClick) {
             navigator.geolocation.getCurrentPosition(setUserGeolocation, function () {
                 setClickedLocation(e.latlng)
