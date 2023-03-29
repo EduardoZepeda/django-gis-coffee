@@ -35,6 +35,7 @@ SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -52,6 +53,8 @@ INSTALLED_APPS = [
     "reviews",
     "feeds",
     "django_vite",
+    "chat",
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -85,7 +88,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "nearbyshops.wsgi.application"
-
+ASGI_APPLICATION = "nearbyshops.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -161,3 +164,10 @@ AUTH_USER_MODEL = "accounts.User"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = "/"
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+#
