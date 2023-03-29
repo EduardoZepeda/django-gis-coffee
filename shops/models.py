@@ -3,6 +3,7 @@ from decimal import Decimal
 from ckeditor.fields import RichTextField
 from django.contrib.gis.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 
 STATE_CHOICES = (
     ("26", "Sonora"),
@@ -75,6 +76,7 @@ RATING_CHOICES = (
 
 class Shop(models.Model):
     name = models.CharField(max_length=100)
+    # slug = models.SlugField(max_length=255, unique=True)
     location = models.PointField()
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
@@ -93,6 +95,9 @@ class Shop(models.Model):
     def __str__(self):
         return "{}".format(self.name)
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Shop, self).save(*args, **kwargs)
 
 class CoffeeBag(models.Model):
     brand = models.CharField(max_length=200)
