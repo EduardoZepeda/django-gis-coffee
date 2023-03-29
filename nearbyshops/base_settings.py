@@ -55,6 +55,11 @@ INSTALLED_APPS = [
     "django_vite",
     "chat",
     "channels",
+    "rest_framework",
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'allauth', 
+    'allauth.account',
 ]
 
 MIDDLEWARE = [
@@ -164,10 +169,27 @@ AUTH_USER_MODEL = "accounts.User"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = "/"
 
+
+# TODO: Don't use this channel on a real project
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
 
-#
+# settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication' 
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = False  # this is the default, and should be kept this way

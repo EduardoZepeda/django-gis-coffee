@@ -24,6 +24,53 @@
     {% include "partials/modal.html" with accounts=followers type="followers" %}
     {% include "partials/modal.html" with accounts=following type="following" %}
     {% include "partials/likes_for_user.html" with user=user shop=shop %}
+    <script>
+        // Se crea la conexión por websocket
+        const chatSocket = new WebSocket(
+            'ws://' +
+            window.location.host +
+            '/ws/chat/'
+        );
+        // Cada que se recibe un mensaje se lee y se imprime en pantalla
+        chatSocket.onmessage = function (e) {
+            console.log(e)
+            const data = JSON.parse(e.data);
+            console.log(data)
+            let chatBox = document.querySelector("#chatBox")
+            let message = document.createElement("p")
+            message.textContent = data.message
+            chatBox.append(message)
+        }
+
+        function validateText(text) {
+            // some fancy validation would go here
+            if (text.length > 0) {
+                return true
+            }
+            return false
+        }
+
+        function cleanText() {
+            let inputText = document.querySelector("#message")
+            inputText.value = ''
+        }
+
+        // Envia el texto "nuestro mensaje"
+        function sendMessage() {
+            let inputText = document.querySelector("#message")
+            if (validateText(inputText.value)) {
+                chatSocket.send(JSON.stringify({
+                    'message': inputText.value,
+                    'receiver': "{{user.username}}"
+                }))
+                cleanText()
+            }
+
+        }
+    </script>
+    <div id="chatBox" class="messages"></div>
+    <input name="message" type="text" id="message" />
+    <button onclick=sendMessage()>Enviar</button>
 </div>
 {% include "partials/accounts_to_follow.html" %}
 </div>
