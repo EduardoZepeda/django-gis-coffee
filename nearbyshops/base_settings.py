@@ -57,10 +57,12 @@ INSTALLED_APPS = [
     "channels",
     "rest_framework",
     "rest_framework.authtoken",
+    "rest_framework_gis",
+    "django_filters",
     "dj_rest_auth",
     "allauth",
     "allauth.account",
-    "drf_yasg",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -184,6 +186,8 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 20,
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
@@ -194,3 +198,11 @@ CSRF_COOKIE_HTTPONLY = False  # this is the default, and should be kept this way
 APPEND_SLASH = True
 
 SECONDS_TO_TRACK_REPEATING_ACTIONS = 180
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Django coffee GIS",
+    "DESCRIPTION": "Nearby speciality coffee shops in Guadalajara",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
+}
