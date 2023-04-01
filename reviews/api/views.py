@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from permissions.api_permissions import IsOwnerOrReadOnly, IsStaffOrReadOnly
+from utils.permissions.api_permissions import IsOwnerOrReadOnly, IsStaffOrReadOnly
 
 from ..models import Review
 from .serializers import ReviewSerializer

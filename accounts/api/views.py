@@ -4,64 +4,76 @@ from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import mixins
 
-from permissions.api_permissions import IsRequestUser, IsStaffOrReadOnly
+from utils.permissions.api_permissions import IsRequestUser, IsStaffOrReadOnly
 
 from ..models import Contact
 from .serializers import ContactSerializer, UserSerializer, UserUsernameSerializer
+from shops.api.serializers import ShopIdSerializer
+from shops.models import Shop
 
 User = get_user_model()
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet,
+):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = "username"
     permission_classes = [IsRequestUser, IsAuthenticated]
 
 
-class FollowingViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserUsernameSerializer
-    lookup_field = "username"
+class FollowingViewSet(
+    viewsets.GenericViewSet,
+):
     parser_classes = [JSONParser]
-    permission_classes = [IsRequestUser, IsAuthenticated]
+    lookup_field = "username"
+    permission_classes = [IsAuthenticated]
 
-    def is_following(self, user_from_id, user_to_id):
-        """Check if one user is following another user"""
-        return Contact.objects.filter(
-            user_from__id=user_from_id, user_to__id=user_to_id
-        ).exists()
-
-    @action(methods=["post", "delete"], detail=True)
-    def following(self, request, username=None):
-        serializer = ContactSerializer(
-            data={"user_to": request.data["user_to"], "user_from": request.user.id}
+    def connection_exists(self, user_from, user_to):
+        return (
+            Contact.objects.filter(user_from=user_from, user_to=user_to).exists()
+            and user_from != user_to
         )
-        if request.method == "POST":
-            if serializer.is_valid(raise_exception=True):
-                # If user is already following the target, return bad request
-                if self.is_following(request.user.id, request.data["user_to"]):
-                    return Response(
-                        {"message": "You're already following that user"},
-                        status=status.HTTP_400_BAD_REQUEST,
-                    )
-                serializer.save()
-                return Response({}, status=status.HTTP_201_CREATED)
 
-        if request.method == "DELETE":
-            if serializer.is_valid(raise_exception=True):
-                # If user is not following the target return bad request
-                if not self.is_following(request.user.id, request.data["user_to"]):
-                    return Response(
-                        {"message": "You're not following that user"},
-                        status=status.HTTP_400_BAD_REQUEST,
-                    )
-                # Search for the contact object that exists and delete it
-                following = Contact.objects.get(
-                    user_from__id=request.user.id, user_to__id=request.data["user_to"]
-                )
-                following.delete()
-                return Response({}, status=status.HTTP_204_NO_CONTENT)
-        # If method is not POST or DELETE return method not allowed
-        return Response("", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    @action(methods=["post"], detail=True, permission_classes=[IsAuthenticated])
+    def follow(self, request, username=None):
+        user_from = request.user
+        try:
+            user_to = User.objects.get(username=self.kwargs["username"])
+        except User.DoesNotExist:
+            return Response(
+                {"message": "User not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+        if self.connection_exists(user_from, user_to):
+            return Response(
+                {"message": "You're already following this user"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        user_from.following.add(user_to)
+        return Response({}, status=status.HTTP_201_CREATED)
+
+    @action(
+        methods=["post", "delete"], detail=True, permission_classes=[IsAuthenticated]
+    )
+    def unfollow(self, request, username=None):
+        user_from = request.user
+        try:
+            user_to = User.objects.get(username=self.kwargs["username"])
+        except User.DoesNotExist:
+            return Response(
+                {"message": "User not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+        if not self.connection_exists(user_from, user_to):
+            return Response(
+                {"message": "You're not following this user"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        user_from.following.remove(user_to)
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
