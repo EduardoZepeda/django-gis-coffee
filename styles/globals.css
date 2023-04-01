@@ -9,7 +9,9 @@
   --margin-2x: 2rem;
   --margin-3x: 3rem;
   --font-sm: 0.9rem;
-  --font-lg: 2rem;
+  --font-md: 1.1rem;
+  --font-h1: 4rem;
+  --font-h2: 2rem;
   --sidebar-bg: #141414;
   --main-color: #2c2c2c;
   --secondary-color: #535353;
@@ -19,11 +21,28 @@
 html,
 body {
   height: 100%;
+  font-family: 'Mukta', sans-serif;
+  font-size: var(--font-md);
 }
 
 body {
   margin: 0;
   padding: 0;
+}
+
+h1,
+h2,
+h3 {
+  margin: var(--margin-1x);
+  font-family: 'Comfortaa', cursive;
+}
+
+h1 {
+  font-size: var(--font-h1);
+}
+
+h2 {
+  font-size: var(--font-h2);
 }
 
 a {

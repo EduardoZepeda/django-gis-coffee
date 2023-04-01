@@ -6,7 +6,9 @@
     align-items: center;
 }
 
-.logo {}
+.logo {
+    font-family: 'Comfortaa';
+}
 
 .menuSidebar {}
 
