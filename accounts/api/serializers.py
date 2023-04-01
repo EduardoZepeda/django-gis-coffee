@@ -34,3 +34,12 @@ class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
         fields = ["user_to", "user_from"]
+
+
+class UserIdSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+
+    def validate_id(self, value):
+        if User.objects.filter(id=value).exists():
+            return value
+        raise serializers.ValidationError("User doesn't exist")
