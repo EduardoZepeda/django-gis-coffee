@@ -1,0 +1,18 @@
+.nav {
+    min-height: var(--nav-height);
+    padding: var(--padding-1x);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {}
+
+.menuSidebar {}
+
+
+@media (max-width:768px) {
+    .menu {
+        display: none;
+    }
+}

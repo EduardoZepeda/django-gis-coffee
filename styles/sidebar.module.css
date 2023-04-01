@@ -1,0 +1,26 @@
+.sidebar {
+    color: var(--white);
+    background-color: var(--sidebar-bg);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+.cross {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
