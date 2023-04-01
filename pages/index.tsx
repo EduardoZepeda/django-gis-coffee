@@ -26,6 +26,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <h1>Tamper</h1>
+        <h2>Nearby Coffee Shops in Gdl</h2>
+        <p>Let us find your favorite speciality coffee shop in Guadalajara</p>
         <Map />
       </main>
     </>
