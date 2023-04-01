@@ -1,17 +1,19 @@
 from rest_framework import serializers, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import serializers
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from accounts.api.serializers import UserUsernameSerializer
 
 from ..models import CoffeeBag, Shop
 
 
-class ShopSerializer(serializers.HyperlinkedModelSerializer):
+class ShopSerializer(GeoFeatureModelSerializer):
     likes = UserUsernameSerializer(many=True, read_only=True)
 
     class Meta:
         model = Shop
+        geo_field = "location"
         fields = [
             "id",
             "name",
@@ -24,6 +26,7 @@ class ShopSerializer(serializers.HyperlinkedModelSerializer):
             "content",
             "url",
         ]
+        filterset_fields = ["name", "address", "content"]
 
 
 class CoffeeBagSerializer(serializers.ModelSerializer):
@@ -32,3 +35,4 @@ class CoffeeBagSerializer(serializers.ModelSerializer):
     class Meta:
         model = CoffeeBag
         fields = ["brand", "species", "origin", "coffee_shop", "url"]
+        filterset_fields = ["brand", "species", "origin"]
