@@ -7,16 +7,6 @@ from accounts.api.serializers import UserUsernameSerializer
 from ..models import CoffeeBag, Shop
 
 
-class ShopIdSerializer(serializers.Serializer):
-    # Please make sure ids are integers
-    id = serializers.IntegerField()
-
-    def validate_id(self, value):
-        if Shop.objects.filter(id=value).exists():
-            return value
-        raise serializers.ValidationError("Shop doesn't exist")
-
-
 class ShopSerializer(serializers.HyperlinkedModelSerializer):
     likes = UserUsernameSerializer(many=True, read_only=True)
 
