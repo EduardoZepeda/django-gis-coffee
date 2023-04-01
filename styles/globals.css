@@ -1,0 +1,48 @@
+:root {
+  --nav-height: 50px;
+  --footer-height: 100px;
+  --icon-padding: 0.5rem;
+  --padding-1x: 1rem;
+  --padding-2x: 2rem;
+  --padding-3x: 3rem;
+  --margin-1x: 1rem;
+  --margin-2x: 2rem;
+  --margin-3x: 3rem;
+  --font-sm: 0.9rem;
+  --font-lg: 2rem;
+  --sidebar-bg: #141414;
+  --main-color: #2c2c2c;
+  --secondary-color: #535353;
+  --white: #FFFFFF;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#__next {
+  height: 100%;
+  position: relative;
+}
+
+#map {
+  height: 430px;
+}

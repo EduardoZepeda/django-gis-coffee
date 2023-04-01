@@ -1,24 +1,26 @@
 {
-  "name": "django-gis-coffee",
-  "version": "1.0.0",
-  "description": "Handle Django's asset files",
-  "main": "index.js",
+  "name": "django-gis-coffee-fe",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/EduardoZepeda/django-gis-coffee.git"
-  },
-  "author": "Eduardo Zepeda",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/EduardoZepeda/django-gis-coffee/issues"
-  },
-  "homepage": "https://github.com/EduardoZepeda/django-gis-coffee#readme",
   "dependencies": {
-    "vite": "^3.1.8"
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.31",
+    "@types/react-dom": "18.0.11",
+    "eslint": "8.37.0",
+    "eslint-config-next": "13.2.4",
+    "next": "13.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-leaflet": "^4.2.1",
+    "typescript": "5.0.3"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.3"
   }
 }

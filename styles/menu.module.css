@@ -1,0 +1,18 @@
+.list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.item {
+    padding: var(--padding-1x);
+}
+
+@media (max-width: 768px) {
+    .list {
+        flex-direction: column;
+    }
+}

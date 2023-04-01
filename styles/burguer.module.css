@@ -1,0 +1,25 @@
+.burguer {
+    padding: var(--icon-padding);
+    width: 30px;
+    height: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.line {
+    margin: 2px;
+    width: 30px;
+    height: 4px;
+    background-color: var(--main-color);
+    display: block;
+    border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+    .burguer {
+        display: none;
+    }
+}
