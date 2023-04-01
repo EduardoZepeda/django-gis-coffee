@@ -7,10 +7,10 @@ from rest_framework.response import Response
 from rest_framework import mixins
 
 from utils.permissions.api_permissions import IsRequestUser, IsStaffOrReadOnly
+from feeds.utils import create_action
 
 from ..models import Contact
 from .serializers import ContactSerializer, UserSerializer, UserUsernameSerializer
-from shops.api.serializers import ShopIdSerializer
 from shops.models import Shop
 
 User = get_user_model()
@@ -57,6 +57,8 @@ class FollowingViewSet(
                 status=status.HTTP_400_BAD_REQUEST,
             )
         user_from.following.add(user_to)
+        # Create action
+        create_action(user_from, "followed", user_to)
         return Response({}, status=status.HTTP_201_CREATED)
 
     @action(

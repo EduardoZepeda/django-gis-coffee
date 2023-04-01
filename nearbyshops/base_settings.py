@@ -192,3 +192,5 @@ CSRF_USE_SESSIONS = False
 CSRF_COOKIE_HTTPONLY = False  # this is the default, and should be kept this way
 
 APPEND_SLASH = True
+
+SECONDS_TO_TRACK_REPEATING_ACTIONS = 180

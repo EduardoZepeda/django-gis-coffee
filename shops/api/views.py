@@ -1,8 +1,9 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.parsers import JSONParser
 from rest_framework.decorators import action
+from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAuthenticated
 
+from feeds.utils import create_action
 from utils.permissions.api_permissions import IsStaffOrReadOnly
 
 from ..models import CoffeeBag, Shop
@@ -32,7 +33,7 @@ class ShopLikesViewSet(viewsets.GenericViewSet):
     lookup_field = "id"
     permission_classes = [IsAuthenticated]
 
-    def shop_liked(shop, user):
+    def shop_already_liked_by_user(shop, user):
         return shop in user.likes.all()
 
     @action(methods=["post"], detail=True, permission_classes=[IsAuthenticated])
@@ -43,12 +44,14 @@ class ShopLikesViewSet(viewsets.GenericViewSet):
             return Response(
                 {"message": "Shop not found"}, status=status.HTTP_404_NOT_FOUND
             )
-        if self.shop_liked(shop, request.user):
+        if self.shop_already_liked_by_user(shop, request.user):
             return Response(
                 {"message": "You already liked this shop"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         request.user.likes.add(shop)
+        # Create action for like
+        create_action(request.user, "liked", shop)
         return Response({}, status=status.HTTP_201_CREATED)
 
     @action(
@@ -61,7 +64,7 @@ class ShopLikesViewSet(viewsets.GenericViewSet):
             return Response(
                 {"message": "Shop not found"}, status=status.HTTP_404_NOT_FOUND
             )
-        if not self.shop_liked(shop, request.user):
+        if not self.shop_already_liked_by_user(shop, request.user):
             return Response(
                 {"message": "You haven't liked this shop"},
                 status=status.HTTP_400_BAD_REQUEST,

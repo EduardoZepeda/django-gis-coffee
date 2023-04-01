@@ -1,17 +1,16 @@
 from django.contrib import messages
-
-from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
 from django.db import models
-from django.views.generic import CreateView, DetailView, ListView
-from shops.models import Shop
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import CreateView, DetailView, ListView
+
+from feeds.utils import create_action
+from shops.models import Shop
 
 from .models import Review
-from feeds.utils import create_action
 
 
 @method_decorator(login_required, name="dispatch")
