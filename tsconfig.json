@@ -17,9 +17,11 @@
     "paths": {
       "@/*": ["./*"],
       "@styles/*": ["./styles/*"],
-      "@components/*": ["./pages/components/*"]
+      "@components/*": ["./pages/components/*"],
+      "@urls/*": ["./pages/urls/*"]
+
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/components/Map.js"],
   "exclude": ["node_modules"]
 }
