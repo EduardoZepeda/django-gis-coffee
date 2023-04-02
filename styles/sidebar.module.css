@@ -7,6 +7,8 @@
     left: 0;
     bottom: 0;
     height: 100%;
+    z-index: 1001;
+    /* z-index make a conflict with leaf-let map, this is the minimum value accepted to not overlap */
 }
 
 .hidden {
