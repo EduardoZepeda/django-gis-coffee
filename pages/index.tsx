@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
 import dynamic from 'next/dynamic'
 
 export default function Home() {
@@ -13,24 +12,14 @@ export default function Home() {
     <>
       <Head>
         <title>Tamper</title>
-        {/* Block leaflet requisites CDN */}
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-          crossOrigin="" />
-        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-          integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-          crossOrigin=""></script>
-        {/* EndBlock leaflet requisites CDN */}
         <meta name="description" content="Let us find your favorite speciality coffee shop in Guadalajara" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <h1>Tamper</h1>
-        <h2>Nearby Coffee Shops in Gdl</h2>
-        <p>Let us find your favorite speciality coffee shop in Guadalajara</p>
-        <Map />
-      </main>
+      <h1>Tamper</h1>
+      <h2>Nearby Coffee Shops in Gdl</h2>
+      <p>Let us find your favorite speciality coffee shop in Guadalajara</p>
+      <Map />
     </>
   )
 }
