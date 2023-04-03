@@ -1,14 +1,17 @@
 import React from 'react'
 import styles from '@styles/menu.module.css'
 import Link from 'next/link'
+import { useSession, signOut } from "next-auth/react"
 
 const Menu = () => {
+    const { data: session } = useSession()
+
     return (
         <ul className={styles.list}>
             <li className={styles.item}><Link href="/about">About</Link></li>
-            <li className={styles.item}><Link href="/register">Register</Link></li>
-            <li className={styles.item}><Link href="/login">Login</Link></li>
-            <li className={styles.item}><Link href="/logout">Logout</Link></li>
+            {session ? null : <li className={styles.item}><Link href="/register">Register</Link></li>}
+            {session ? null : <li className={styles.item}><Link href="/api/auth/signin">Login</Link></li>}
+            {session ? <li onClick={() => signOut()} className={styles.item}>Logout</li> : null}
             <li className={styles.item}><Link href="/new-additions">New additions</Link></li>
         </ul>
     )
