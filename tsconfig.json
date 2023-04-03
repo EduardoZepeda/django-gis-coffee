@@ -15,11 +15,9 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./*"],
       "@styles/*": ["./styles/*"],
       "@components/*": ["./pages/components/*"],
       "@urls/*": ["./pages/urls/*"]
-
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/components/Map.js"],
