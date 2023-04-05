@@ -32,7 +32,7 @@ const PasswordReset = () => {
             <div>Please write down the mail you used to register, we will send you instructions to reset your password</div>
             {mutation.isError ? <div className={styles.requestError}>Some error ocurred</div> : null}
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="email">Email</label>
+                <label className={styles.label} htmlFor="email">Email</label>
                 <input
                     id={"email"}
                     className={`${styles.input} ${errors.email ? styles.inputError : styles.inputValid}`}

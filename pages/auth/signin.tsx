@@ -14,9 +14,9 @@ const Signin = ({ csrfToken, providers }: InferGetServerSidePropsType<typeof get
             <h3>Login</h3>
             <form className={styles.form} method="post" action="/api/auth/callback/credentials">
                 <input name='csrfToken' type='hidden' defaultValue={csrfToken} />
-                <label htmlFor="username">Username</label>
+                <label className={styles.label} htmlFor="username">Username</label>
                 <input id="username" name="username" className={styles.input} placeholder='username' value={"eduardo"} required />
-                <label htmlFor="password">Password</label>
+                <label className={styles.label} htmlFor="password">Password</label>
                 <input id="password" name="password" type="password" className={styles.input} value={"Stalker88"} placeholder='password' required />
                 <Link href={"/auth/password-reset"}>Forgot password?</Link>
                 <button type="submit" className={styles.submit}>Login</button>
