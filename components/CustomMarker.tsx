@@ -1,10 +1,10 @@
-import React, { useId } from "react"
+import React from "react"
 import { Marker, Popup, Tooltip } from 'react-leaflet'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFire } from '@fortawesome/free-solid-svg-icons'
 import RenderStars from "./RenderStars"
 
-export const CustomMarker = ({ coordinates, name, address, roaster, rating }: Properties) => {
+export const CustomMarker = ({ coordinates, name, address, roaster, rating }: CustomMarkerProps) => {
 
     return (
         <Marker position={coordinates}>

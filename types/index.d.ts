@@ -36,7 +36,7 @@ type FeaturesEntity = {
 }
 type Geometry = {
     type: string;
-    coordinates: number[];
+    coordinates: [number, number];
 }
 type Properties = {
     name: string;
@@ -68,3 +68,11 @@ type LikesProps = {
 }
 
 type LikeCoffeeShopType = FeaturesEntity["id"]
+
+type CustomMarkerProps = {
+    coordinates: LatLngExpression
+    name: Properties["name"]
+    address: Properties["address"]
+    roaster: Properties["roaster"]
+    rating: Properties["rating"]
+}
