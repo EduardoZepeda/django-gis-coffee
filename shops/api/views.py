@@ -6,10 +6,11 @@ from django.core.serializers import serialize
 from django.utils.decorators import method_decorator
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiExample, OpenApiParameter, extend_schema
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from feeds.utils import create_action
 from utils.permissions.api_permissions import IsStaffOrReadOnly
@@ -98,7 +99,7 @@ class ShopLikesViewSet(viewsets.GenericViewSet):
     lookup_field = "id"
     permission_classes = [IsAuthenticated]
 
-    def shop_already_liked_by_user(shop, user):
+    def shop_already_liked_by_user(self, shop, user):
         return shop in user.likes.all()
 
     @action(methods=["post"], detail=True, permission_classes=[IsAuthenticated])
