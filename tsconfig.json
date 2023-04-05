@@ -18,8 +18,8 @@
       "@types/*": ["./types/*"],
       "@services/*": ["./services/*"],
       "@styles/*": ["./styles/*"],
-      "@components/*": ["./pages/components/*"],
-      "@urls/*": ["./pages/urls/*"]
+      "@components/*": ["./components/*"],
+      "@urls/*": ["./urls/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/components/Map.js"],
