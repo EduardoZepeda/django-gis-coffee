@@ -9,8 +9,8 @@ const Menu = () => {
     return (
         <ul className={styles.list}>
             <li className={styles.item}><Link href="/about">About</Link></li>
-            {session ? null : <li className={styles.item}><Link href="/register">Register</Link></li>}
-            {session ? null : <li className={styles.item}><Link href="/api/auth/signin">Login</Link></li>}
+            {session ? null : <li className={styles.item}><Link href="/auth/register">Register</Link></li>}
+            {session ? null : <li className={styles.item}><Link href="/auth/signin">Login</Link></li>}
             {session ? <li onClick={() => signOut()} className={styles.item}>Logout</li> : null}
             <li className={styles.item}><Link href="/new-additions">New additions</Link></li>
         </ul>
