@@ -12,9 +12,14 @@
   --font-md: 1.1rem;
   --font-h1: 4rem;
   --font-h2: 2rem;
+  --orange: #D28537;
+  --red: #C03D29;
+  --green: #009456;
+  --button-radius: 20px;
+  --input-radius: 8px;
   --sidebar-bg: #141414;
-  --main-color: #2c2c2c;
-  --secondary-color: #535353;
+  --main-color: #212121;
+  --secondary-color: #3E3E3E;
   --white: #FFFFFF;
 }
 
@@ -33,8 +38,9 @@ body {
 h1,
 h2,
 h3 {
-  margin: var(--margin-1x);
+  margin: var(--margin-1x) 0;
   font-family: 'Comfortaa', cursive;
+  line-height: 3rem;
 }
 
 h1 {
