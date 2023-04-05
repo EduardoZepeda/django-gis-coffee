@@ -3,11 +3,6 @@ import styles from '@styles/sidebar.module.css'
 import Menu from '@components/Menu'
 import Cross from '@components/Cross'
 
-type sidebarProps = {
-    menuOpen: boolean
-    onClick: React.MouseEventHandler<HTMLElement>
-}
-
 const Sidebar = ({ menuOpen, onClick }: sidebarProps) => {
 
     return (

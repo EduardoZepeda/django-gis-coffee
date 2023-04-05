@@ -4,10 +4,6 @@ import Nav from '@components/Nav'
 import Footer from '@components/Footer'
 import mainStyles from '@styles/Home.module.css'
 
-interface propsWithChildren {
-    children: React.ReactNode
-}
-
 const Layout = ({ children }: propsWithChildren) => {
     return (
         <div className={styles.container}>

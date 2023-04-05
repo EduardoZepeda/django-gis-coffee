@@ -1,11 +1,6 @@
 import React from 'react'
 import styles from '@styles/burguer.module.css'
 
-type sidebarProps = {
-    onClick: React.MouseEventHandler<HTMLElement>
-}
-
-
 const Burguer = ({ onClick }: sidebarProps) => {
     return (
         <div onClick={onClick} className={styles.burguer}>
