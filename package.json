@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@hookform/resolvers": "^3.0.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.31",
     "@types/react-dom": "18.0.11",
@@ -20,11 +22,14 @@
     "eslint-config-next": "13.2.4",
     "isomorphic-fetch": "^3.0.0",
     "next": "13.2.4",
-    "next-auth": "^4.21.0",
+    "next-auth": "^4.21.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
     "react-leaflet": "^4.2.1",
-    "typescript": "5.0.3"
+    "react-query": "^3.39.3",
+    "typescript": "5.0.3",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/isomorphic-fetch": "^0.0.36",
