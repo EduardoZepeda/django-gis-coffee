@@ -1,47 +1,9 @@
-import { Marker, Popup, useMapEvents, Tooltip } from 'react-leaflet'
+import { Marker, Popup, useMapEvents } from 'react-leaflet'
 import { useState, useEffect, useRef, useMemo, useCallback, useId } from 'react'
 import { LatLngExpression, LocationEvent, LatLng, Marker as MarkerType } from 'leaflet'
 import { GdlLocation } from '@components/GuadalajaraLocation';
 import { CustomMarker } from '@components/CustomMarker';
-import { shopsByLocation } from '../urls'
-
-type CoffeeShops = {
-    count: number;
-    next: string;
-    previous?: null;
-    results: Results;
-}
-type Results = {
-    type: string;
-    features?: (FeaturesEntity)[] | null;
-}
-type FeaturesEntity = {
-    id: number;
-    type: string;
-    geometry: Geometry;
-    properties: Properties;
-}
-type Geometry = {
-    type: string;
-    coordinates: number[];
-}
-type Properties = {
-    name: string;
-    address: string;
-    city: string;
-    roaster: boolean;
-    rating: number;
-    likes?: (LikesEntity | null)[] | null;
-    content?: string | null;
-    url: string;
-}
-type LikesEntity = {
-    username: string;
-    url: string;
-    id: number;
-}
-
-
+import { shopsByLocation } from '@urls/index'
 
 export const LocationMarker = () => {
     // If map clicked, won't ask for location again
@@ -107,7 +69,7 @@ export const LocationMarker = () => {
     return (
         <>
             {/* if coffee shops render them otherwise set draggable marker */}
-            {coffeeShops?.results?.features ? coffeeShops?.results?.features?.map(({ id, geometry: { coordinates }, properties }, index) => {
+            {coffeeShops?.results?.features ? coffeeShops?.results?.features?.map(({ geometry: { coordinates }, properties }, index) => {
                 const formatedCoordinates: LatLngExpression = { lat: coordinates[1], lng: coordinates[0] }
                 return (
                     <CustomMarker key={`${marker}-${index}`} coordinates={formatedCoordinates} {...properties} />
