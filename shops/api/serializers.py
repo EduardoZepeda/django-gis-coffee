@@ -28,6 +28,9 @@ class ShopSerializer(GeoFeatureModelSerializer):
         ]
         filterset_fields = ["name", "address", "content"]
 
+    def get_queryset(self):
+        return Shop.objects.all().order_by("-created_date")
+
 
 class CoffeeBagSerializer(serializers.ModelSerializer):
     coffee_shop = ShopSerializer(many=True, read_only=True)
