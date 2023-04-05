@@ -3,14 +3,6 @@ import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials"
 import fetch from 'isomorphic-fetch'
 
-type User = {
-    pk: number
-    username: string
-    email: string
-    first_name: string
-    last_name: string
-    token: string
-}
 
 const options: NextAuthOptions = {
     debug: true,
@@ -42,9 +34,32 @@ const options: NextAuthOptions = {
                 return user
             }
             return null
-        }
-    }
+        },
+    },
     )],
+    callbacks: {
+        async jwt({ token, user }) {
+            /* Step 1: update the token based on the user object */
+            if (user) {
+                token.username = user.username
+                token.pk = user.pk
+                token.token = user.token
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            /* Step 2: update the session.user based on the token object */
+            if (token && session.user) {
+                session.user.username = token.username
+                session.user.pk = token.pk
+                session.user.token = token.token
+            }
+            return session;
+        },
+    },
+    pages: {
+        signIn: "/auth/signin",
+    }
 }
 
 export default NextAuth(options)
