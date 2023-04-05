@@ -1,1 +1,32 @@
-.footer {}
+.footer {
+    padding: var(--padding-2x);
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-2x);
+}
+
+.menu {
+    display: flex;
+    gap: var(--padding-2x);
+    flex-wrap: wrap;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-1x);
+    color: var(--secondary-color);
+}
+
+.social {
+    display: flex;
+    justify-content: center;
+    gap: var(--padding-2x);
+}
+
+.legal {
+    margin: var(--margin-2x);
+    display: flex;
+    justify-content: center;
+    gap: var(--padding-2x);
+}

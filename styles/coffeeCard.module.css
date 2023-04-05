@@ -1,0 +1,18 @@
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.image {
+    border-radius: 8px;
+    transition: filter 0.5s ease-in-out;
+}
+
+.image:hover {
+    filter: brightness(125%);
+}
+
+.address {
+    color: var(--secondary-color);
+}

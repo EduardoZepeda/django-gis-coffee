@@ -1,0 +1,28 @@
+.info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--padding-2x);
+}
+
+.image {
+    border-radius: 8px;
+}
+
+.review {
+    text-align: justify;
+}
+
+.stars {
+    color: var(--orange);
+}
+
+.roaster,
+.likes {
+    color: var(--red);
+}
+
+.address,
+.reviewText {
+    color: var(--secondary-color);
+}
