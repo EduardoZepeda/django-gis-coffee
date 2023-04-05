@@ -46,7 +46,7 @@ export default function Register() {
             {mutation.isError ? <div className={styles.requestError}>Some error ocurred</div> : null}
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 {/* Username */}
-                <label htmlFor="username">Username</label>
+                <label className={styles.label} htmlFor="username">Username</label>
                 <input
                     id={"username"}
                     className={`${styles.input} ${errors.username ? styles.inputError : styles.inputValid}`}
@@ -56,7 +56,7 @@ export default function Register() {
 
 
                 {/* Email */}
-                <label htmlFor="email">Email</label>
+                <label className={styles.label} htmlFor="email">Email</label>
                 <input
                     id={"email"}
                     className={`${styles.input} ${errors.email ? styles.inputError : styles.inputValid}`}
@@ -69,7 +69,7 @@ export default function Register() {
 
 
                 {/* Password */}
-                <label htmlFor="password">Password</label>
+                <label className={styles.label} htmlFor="password">Password</label>
                 <input
                     id={"password"}
                     className={`${styles.input} ${errors.password1 ? styles.inputError : styles.inputValid}`}
@@ -83,7 +83,7 @@ export default function Register() {
 
 
                 {/* password2 */}
-                <label htmlFor="password2">Password Confirmation</label>
+                <label className={styles.label} htmlFor="password2">Password Confirmation</label>
                 <input
                     id={"password2"}
                     className={`${styles.input} ${errors.password2 ? styles.inputError : styles.inputValid}`}
