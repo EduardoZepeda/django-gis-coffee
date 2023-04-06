@@ -1,15 +1,16 @@
 import { Marker, Popup, useMapEvents } from 'react-leaflet'
 import { useState, useEffect, useRef, useMemo, useCallback, useId } from 'react'
-import { LatLngExpression, LocationEvent, LatLng, Marker as MarkerType } from 'leaflet'
+import { LatLngLiteral, LocationEvent, Marker as MarkerType } from 'leaflet'
 import { GdlLocation } from '@components/GuadalajaraLocation';
 import { CustomMarker } from '@components/CustomMarker';
 import { shopsByLocation } from '@urls/index'
+import Link from 'next/link'
 
 export const LocationMarker = () => {
     // If map clicked, won't ask for location again
     const [firstClick, setFirstClick] = useState<boolean>(true)
     // Position is set when clicked, drag a marker or accepted location request
-    const [position, setPosition] = useState<LatLngExpression>(GdlLocation)
+    const [position, setPosition] = useState<LatLngLiteral>(GdlLocation)
     const [coffeeShops, setCoffeeShops] = useState<CoffeeShops | undefined>()
     // Disables or activates marker draggable status
     const [draggable, setDraggable] = useState<boolean>(true)
@@ -38,7 +39,7 @@ export const LocationMarker = () => {
     }, [])
 
     // Search coffee shops by latitude and longitude
-    const fetchCoffeeShopsData = async ({ lat, lng }: LatLng) => {
+    const fetchCoffeeShopsData = async ({ lat, lng }: LatLngLiteral) => {
         const response = await fetch(shopsByLocation + `?longitude=${lng}&latitude=${lat}`);
         const coffeeShops = await response.json();
         setCoffeeShops(coffeeShops)
@@ -63,21 +64,23 @@ export const LocationMarker = () => {
             setPosition(e.latlng)
             fetchCoffeeShopsData(e.latlng)
             map.flyTo(e.latlng, map.getZoom())
+        },
+        locationerror(e) {
+            fetchCoffeeShopsData(position)
         }
     })
     const marker = useId()
     return (
         <>
             {/* if coffee shops render them otherwise set draggable marker */}
-            {coffeeShops?.results?.features ? coffeeShops?.results?.features?.map(({ geometry: { coordinates }, properties }, index) => {
-                const formatedCoordinates: LatLngExpression = { lat: coordinates[1], lng: coordinates[0] }
+            {coffeeShops?.results?.features ? coffeeShops?.results?.features?.map(({ geometry: { coordinates }, properties, id }, index) => {
+                const formatedCoordinates: LatLngLiteral = { lat: coordinates[1], lng: coordinates[0] }
                 return (
-                    <CustomMarker key={`${marker}-${index}`} coordinates={formatedCoordinates} {...properties} />
+                    <CustomMarker key={`${marker}-${index}`} coordinates={formatedCoordinates} {...properties} id={id} />
                 )
             }) : (null)
             }
             <Marker
-                draggable={draggable}
                 eventHandlers={eventHandlers}
                 position={position}
                 ref={markerRef}>
