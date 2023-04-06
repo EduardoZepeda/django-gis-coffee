@@ -1,0 +1,15 @@
+.container {
+    text-align: justify;
+}
+
+.review {
+    margin: var(--margin-2x) 0;
+}
+
+.icon {
+    color: var(--pink);
+}
+
+.author {
+    color: var(--secondary-color);
+}
