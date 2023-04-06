@@ -1,0 +1,10 @@
+.error {
+    color: var(--red);
+}
+
+.success {
+    padding: 0.5rem 0.7rem;
+    border-radius: var(--input-radius);
+    background-color: var(--green);
+    color: var(--white);
+}
