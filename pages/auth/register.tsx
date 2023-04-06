@@ -50,7 +50,8 @@ export default function Register() {
                 <input
                     id={"username"}
                     className={`${styles.input} ${errors.username ? styles.inputError : styles.inputValid}`}
-                    defaultValue="" {...register("username", { required: true })}
+                    defaultValue=""
+                    {...register("username", { required: true })}
                     placeholder="Username" />
                 <span className={styles.inputErrorMessage}>{errors.username?.message}</span>
 
@@ -60,7 +61,8 @@ export default function Register() {
                 <input
                     id={"email"}
                     className={`${styles.input} ${errors.email ? styles.inputError : styles.inputValid}`}
-                    defaultValue="" {...register("email",
+                    defaultValue=""
+                    {...register("email",
                         {
                             required: true,
                         })}
@@ -73,7 +75,8 @@ export default function Register() {
                 <input
                     id={"password"}
                     className={`${styles.input} ${errors.password1 ? styles.inputError : styles.inputValid}`}
-                    defaultValue="" {...register("password1",
+                    defaultValue=""
+                    {...register("password1",
                         {
                             required: true,
                             minLength: 8,
@@ -87,7 +90,9 @@ export default function Register() {
                 <input
                     id={"password2"}
                     className={`${styles.input} ${errors.password2 ? styles.inputError : styles.inputValid}`}
-                    defaultValue="" {...register("password2", { required: true })} placeholder="Password confirmation" />
+                    defaultValue=""
+                    {...register("password2", { required: true })}
+                    placeholder="Password confirmation" />
                 <span className={styles.inputErrorMessage}>{errors.password2?.message}</span>
 
                 {/* Submit */}
