@@ -3,6 +3,7 @@ from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
 from django.contrib.postgres.search import SearchVector
 from django.core.serializers import serialize
+from django.db.models import Count, Exists, OuterRef
 from django.utils.decorators import method_decorator
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiExample, OpenApiParameter, extend_schema
@@ -15,6 +16,7 @@ from rest_framework.response import Response
 from feeds.utils import create_action
 from utils.permissions.api_permissions import IsStaffOrReadOnly
 
+from reviews.models import Review
 from ..models import CoffeeBag, Shop
 from .serializers import CoffeeBagSerializer, ShopSerializer
 
@@ -34,6 +36,23 @@ class ShopViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         query = self.request.query_params.get("query")
+        shops = (
+            Shop.objects.all()
+            .prefetch_related("likes")
+            .annotate(
+                likes_count=Count("likes"),
+                liked=Exists(
+                    Shop.likes.through.objects.filter(
+                        shop_id=OuterRef("pk"), user_id=self.request.user.id
+                    ),
+                ),
+                reviewed=Exists(
+                    Review.objects.filter(
+                        shop_id=OuterRef("pk"), user_id=self.request.user.id
+                    ),
+                ),
+            )
+        )
         # try to convert latitude, longitude to float
         # otherwise ignore the query and return all coffee shops
         try:
@@ -41,11 +60,10 @@ class ShopViewSet(viewsets.ReadOnlyModelViewSet):
             longitude = float(self.request.query_params.get("longitude", "0.0"))
             latitude = float(self.request.query_params.get("latitude", "0.0"))
         except ValueError:
-            return Shop.objects.all()
+            return shops
 
         # srid is a constant, don't move it
         coordenates = Point(longitude, latitude, srid=4326)
-        shops = Shop.objects.all()
         # if there is a query, filter results
         if query:
             shops = shops.annotate(
