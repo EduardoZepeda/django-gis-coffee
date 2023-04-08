@@ -13,6 +13,7 @@ const Menu = () => {
             <li className={styles.item}><Link href="/about">About</Link></li>
             {session ? null : <li className={styles.item}><Link href="/auth/register">Register</Link></li>}
             {session ? null : <li className={styles.item}><Link href="/auth/signin">Login</Link></li>}
+            {session ? <li className={styles.item}><Link href={`/users/${session.user?.username}`}>Profile</Link></li> : null}
             {session ? <li onClick={() => signOut()} className={styles.item}>Logout</li> : null}
             <li className={styles.item}><Link href="/new-additions">New additions</Link></li>
         </ul>
