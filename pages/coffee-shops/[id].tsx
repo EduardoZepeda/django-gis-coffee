@@ -11,12 +11,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFire, faHeart } from '@fortawesome/free-solid-svg-icons'
 import Head from 'next/head'
 import Likes from '@components/Likes'
+import Reviews from '@components/Reviews'
+import ReviewForm from '@components/ReviewForm'
 
 const CoffeeShop = () => {
     const router = useRouter()
     const { id } = router.query
     const { data, error, isLoading } = useQuery({
-        queryKey: [`coffeesShop-${id}`],
+        queryKey: ["coffeeShop", id],
         queryFn: () => getCoffeeShopById(id as string)
     })
 
@@ -30,11 +32,12 @@ const CoffeeShop = () => {
     if (isLoading) {
         return <Loader />
     }
+
+
     if (data) {
-        const { id, properties: { name, address, roaster, content, rating, likes } }: FeaturesEntity = data
-        console.log(data)
+        const { id, properties: { name, address, roaster, content, rating, likes, url, liked, reviewed } }: FeaturesEntity = data
         return (
-            <>
+            <div className={styles.detail}>
                 <Head>
                     <title>Tamper | {name}</title>
                 </Head>
@@ -45,11 +48,11 @@ const CoffeeShop = () => {
                     </div>
                     <div>
                         {/* Likes */}
-                        <Likes likes={likes} id={id} />
+                        <Likes liked={liked} likes={likes} id={id} />
                         {/* EndLikes */}
 
                         {/* address */}
-                        <div className={styles.address}>{address}</div>
+                        <div className={styles.address}>{address !== '' ? address : "No address has been provided, yet."}</div>
                         {/* endAddress */}
 
                         {/* Stars */}
@@ -65,8 +68,6 @@ const CoffeeShop = () => {
                             </strong>
                         </div> : null}
                         {/* EndRoaster */}
-
-
                     </div>
                 </div>
 
@@ -78,9 +79,14 @@ const CoffeeShop = () => {
                         <div className={styles.reviewText} dangerouslySetInnerHTML={{ __html: content }} />
                     </div>
                 ) : null}
+                {/* end Premium review */}
 
+                {/* Reviews */}
+                <Reviews />
+                {/* End Reviews */}
 
-            </>
+                {reviewed ? null : <ReviewForm id={url} />}
+            </div>
         )
     }
 
