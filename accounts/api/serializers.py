@@ -9,9 +9,17 @@ User = get_user_model()
 
 
 class UserUsernameSerializer(serializers.HyperlinkedModelSerializer):
+    followed = serializers.BooleanField(read_only=True)
+
     class Meta:
         model = User
-        fields = ["username", "url", "id"]
+        fields = [
+            "username",
+            "url",
+            "id",
+            "profile_picture",
+            "followed",
+        ]
         # Check user by username instead of pk
         lookup_field = "username"
         extra_kwargs = {"url": {"lookup_field": "username"}}
@@ -21,10 +29,21 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     # TODO paginate follow*
     following = UserUsernameSerializer(many=True, read_only=True)
     followers = UserUsernameSerializer(many=True, read_only=True)
+    followed = serializers.BooleanField(read_only=True)
+    reviews_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = User
-        fields = ["url", "username", "profile_picture", "bio", "following", "followers"]
+        fields = [
+            "url",
+            "username",
+            "profile_picture",
+            "bio",
+            "following",
+            "followers",
+            "followed",
+            "reviews_count",
+        ]
         lookup_field = "username"
         # Generate dynamic user url using username
         extra_kwargs = {"url": {"lookup_field": "username"}}

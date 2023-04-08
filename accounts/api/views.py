@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Exists, OuterRef, Count, Prefetch
 from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser
@@ -6,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import mixins
 
-from utils.permissions.api_permissions import IsRequestUser, IsStaffOrReadOnly
+from utils.permissions.api_permissions import IsRequestUserOrReadOnly, IsStaffOrReadOnly
 from feeds.utils import create_action
 
 from ..models import Contact
@@ -23,10 +24,54 @@ class UserViewSet(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
 ):
-    queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = "username"
-    permission_classes = [IsRequestUser, IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsRequestUserOrReadOnly]
+
+    def get_queryset(self):
+        # Add a count value of user's reviews and whether the request users is following or not this account
+        users = (
+            User.objects
+            # Annotate nested following entities with the followed attribute
+            # that tell us if the request user is following that user
+            .prefetch_related(
+                Prefetch(
+                    "following",
+                    User.objects.annotate(
+                        followed=Exists(
+                            User.following.through.objects.filter(
+                                user_to_id=OuterRef("pk"),
+                                user_from_id=self.request.user.id,
+                            )
+                        )
+                    ),
+                )
+            )
+            # same as above, but for followers instead of following
+            .prefetch_related(
+                Prefetch(
+                    "followers",
+                    User.objects.annotate(
+                        followed=Exists(
+                            User.followers.through.objects.filter(
+                                user_to_id=OuterRef("pk"),
+                                user_from_id=self.request.user.id,
+                            )
+                        )
+                    ),
+                )
+            ).all()
+            # Annotate the count of reviews for each user
+            .annotate(
+                reviews_count=Count("reviews"),
+                followed=Exists(
+                    User.following.through.objects.filter(
+                        user_to_id=OuterRef("pk"), user_from_id=self.request.user.id
+                    ),
+                ),
+            )
+        )
+        return users
 
 
 class FollowingViewSet(
@@ -59,7 +104,7 @@ class FollowingViewSet(
         user_from.following.add(user_to)
         # Create action
         create_action(user_from, "followed", user_to)
-        return Response({}, status=status.HTTP_201_CREATED)
+        return Response({"message": "followed"}, status=status.HTTP_201_CREATED)
 
     @action(
         methods=["post", "delete"], detail=True, permission_classes=[IsAuthenticated]
@@ -78,4 +123,5 @@ class FollowingViewSet(
                 status=status.HTTP_400_BAD_REQUEST,
             )
         user_from.following.remove(user_to)
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+        # BUG It should be 204, however somehow response hangs up, whether it returns a status.HTTP_204_NOT_FOUND or the number 204
+        return Response({"message": "unfollowed"}, status=status.HTTP_200_OK)
