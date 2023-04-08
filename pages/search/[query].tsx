@@ -8,12 +8,12 @@ import Loader from '@components/Loader'
 import Error from '@components/Error'
 import { useRouter } from 'next/router'
 
-export default function NewestAdditions() {
+export default function SearchCoffeeShops() {
     const coffeeCardId = useId()
     const router = useRouter()
     const { query } = router.query
     const { data, error, isLoading } = useQuery({
-        queryKey: [`search-${query}`],
+        queryKey: ["coffeeShops", "search", query],
         queryFn: () => getCoffeeShopQuery(query)
     })
 
