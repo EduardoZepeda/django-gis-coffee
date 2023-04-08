@@ -1,0 +1,56 @@
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.192);
+    display: grid;
+    place-items: center;
+}
+
+.socialAccounts {
+    position: relative;
+    width: 300px;
+    height: 450px;
+    border-radius: var(--input-radius);
+    padding: var(--padding-3x) var(--padding-2x);
+    overflow-y: scroll;
+    background-color: var(--secondary-color);
+}
+
+.cross {
+    position: absolute;
+    top: 0;
+    right: 25px;
+}
+
+.cross:after {
+    font-size: 3rem;
+    display: inline-block;
+    content: "\00d7";
+    /* This will render the 'X' */
+}
+
+.hidden {
+    display: none;
+}
+
+.account {
+    display: flex;
+    margin: var(--margin-1x);
+    justify-content: space-between;
+}
+
+.profilePicture {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    object-fit: cover;
+
+}
+
+.user {
+    display: flex;
+    gap: var(--padding-1x);
+}

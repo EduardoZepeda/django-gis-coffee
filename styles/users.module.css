@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 64ch;
+}
+
+.profilePicture {
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.bio {
+    margin: var(--margin-1x) 0;
+}
+
+.social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding-2x);
+    margin: var(--margin-2x) 0;
+}
+
+.btn {
+    width: 250px;
+    height: 40px;
+    padding: var(--btn-h) var(--btn-w);
+    background-color: var(--pink);
+    color: var(--white);
+    border: 0;
+}
