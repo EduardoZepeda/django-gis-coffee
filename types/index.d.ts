@@ -3,7 +3,7 @@ type resetPasswordType = {
 }
 
 type reviewSchemaType = {
-    recommend: boolean,
+    recommended: boolean,
     content: string,
     shop: string
 }
@@ -54,6 +54,8 @@ type Properties = {
     content?: string | null;
     url: string;
     liked: boolean;
+    likes_count: number;
+    reviewed: boolean;
 }
 type LikesEntity = {
     username: string;
@@ -106,11 +108,15 @@ type ReviewUser = {
     username: string;
     url: string;
     id: number;
+    bio?: string;
+    profile_picture?: string;
+    followed: boolean;
+    reviews_count: number;
 }
 
 type ReviewPostUpdate = {
     content: string;
-    recommend: boolean;
+    recommended: boolean;
     shop: string
 }
 
@@ -120,4 +126,34 @@ type ReviewFormProps = {
 
 type SearchSchemaType = {
     query: string
+}
+
+type OverlayProps = {
+    username: string;
+    openModal: boolean;
+    setOpenModal: (value: boolean) => void;
+}
+
+type FollowUnfollowProps = {
+    followed: boolean;
+    user: string;
+}
+
+type Profile = {
+    url: string;
+    username: string;
+    profile_picture?: string | null;
+    bio?: string | null;
+    following: FollowingEntityOrFollowersEntity[];
+    followers: FollowingEntityOrFollowersEntity[];
+    followed: boolean;
+    reviews_count: number;
+}
+
+type FollowingEntityOrFollowersEntity = {
+    username: string;
+    url: string;
+    id: number;
+    profile_picture?: string | null;
+    followed: boolean;
 }
