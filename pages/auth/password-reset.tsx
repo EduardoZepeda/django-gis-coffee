@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react'
 import { useForm, SubmitHandler } from "react-hook-form";
 import styles from '@styles/forms.module.css'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -11,26 +11,23 @@ const resetPasswordEmail = z.object({
 })
 
 const PasswordReset = () => {
-    const [sentEmail, setSentEmail] = useState<boolean>(false)
     const { register, handleSubmit, formState: { errors } } = useForm<resetPasswordType>(
         { resolver: zodResolver(resetPasswordEmail) }
     )
 
-    const mutation = useMutation(resetPassword, {
-        onSuccess: () => {
-            setSentEmail(true)
-        }
+    const { mutate, isError, isLoading, isSuccess } = useMutation(resetPassword, {
+
     })
 
     const onSubmit: SubmitHandler<resetPasswordType> = data => {
-        mutation.mutate(data)
+        mutate(data)
     }
 
     return (
         <div className={styles.formContainer}>
             <h3>Recover password</h3>
             <div>Please write down the mail you used to register, we will send you instructions to reset your password</div>
-            {mutation.isError ? <div className={styles.requestError}>Some error ocurred</div> : null}
+            {isError ? <div className={styles.requestError}>Some error ocurred</div> : null}
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <label className={styles.label} htmlFor="email">Email</label>
                 <input
@@ -42,9 +39,9 @@ const PasswordReset = () => {
                         })}
                     placeholder="Email" />
                 <span className={styles.inputErrorMessage}>{errors.email?.message}</span>
-                <button className={styles.submit} type="submit" disabled={mutation.isLoading || sentEmail} >Send reset password instructions</button>
+                <button className={styles.submit} type="submit" disabled={isLoading || isSuccess} >Send reset password instructions</button>
             </form>
-            {sentEmail ? <div className={styles.requestSuccess}>Check your inbox! If the email was correct we will send an email to that address!</div> : null}
+            {isSuccess ? <div className={styles.requestSuccess}>Check your inbox! If the email was correct we will send an email to that address!</div> : null}
         </div>
     )
 }
