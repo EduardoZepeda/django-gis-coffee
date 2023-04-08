@@ -29,21 +29,21 @@ export default function Register() {
         { resolver: zodResolver(newUserSchema) }
     )
 
-    const mutation = useMutation(registerUser, {
+    const { mutate, isError, isLoading } = useMutation(registerUser, {
         onSuccess: () => {
             push("/auth/signin")
         }
     })
 
     const onSubmit: SubmitHandler<NewUserType> = data => {
-        mutation.mutate(data)
+        mutate(data)
     }
 
 
     return (
         <>
             <h2>Register an account</h2>
-            {mutation.isError ? <div className={styles.requestError}>Some error ocurred</div> : null}
+            {isError ? <div className={styles.requestError}>Some error ocurred</div> : null}
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 {/* Username */}
                 <label className={styles.label} htmlFor="username">Username</label>
@@ -96,7 +96,7 @@ export default function Register() {
                 <span className={styles.inputErrorMessage}>{errors.password2?.message}</span>
 
                 {/* Submit */}
-                <button className={styles.submit} type="submit" disabled={mutation.isLoading} > Register</button>
+                <button className={styles.submit} type="submit" disabled={isLoading} > Register</button>
             </form >
         </>
     );
