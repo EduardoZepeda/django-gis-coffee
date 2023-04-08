@@ -8,8 +8,9 @@ import { useMutation } from 'react-query'
 import { LikeCoffeeShop, UnlikeCoffeeShop } from '@services/coffeeShops'
 import Link from 'next/link'
 
-const Likes = ({ likes, id }: LikesProps) => {
+const Likes = ({ liked, likes, id }: LikesProps) => {
     const { data: session } = useSession()
+    const [likesNumber, setLikesNumber] = useState<number>(likes?.length || 0)
     if (!session) {
         return (
             <div className={styles.likes}>
@@ -20,20 +21,21 @@ const Likes = ({ likes, id }: LikesProps) => {
         )
     }
     // if session id is in likes' array, set userLikedShop to false, if not to true
-    const [userLikedShop, setUserLikedShop] = useState<boolean>(session.user && likes ? (likes.map((like) => like?.id)).includes(session.user.pk) : false)
+    const [userLikedShop, setUserLikedShop] = useState<boolean>(liked)
     const mutation = useMutation(userLikedShop ? UnlikeCoffeeShop : LikeCoffeeShop, {
         onSuccess: () => {
+            setLikesNumber(userLikedShop ? likesNumber - 1 : likesNumber + 1)
             setUserLikedShop(!userLikedShop)
         }
     })
 
-    useEffect(() => { }, [userLikedShop])
+    useEffect(() => { }, [userLikedShop, likesNumber])
 
     return (
         <>
             {likes ? <div onClick={() => mutation.mutate(id)} className={styles.likes}>
                 <FontAwesomeIcon size={'lg'} icon={userLikedShop ? faHeart : faEmptyHeart} />
-                {" "}<strong>{likes.length}
+                {" "}<strong>{likesNumber}
                 </strong>
             </div> : null}
         </>
