@@ -12,4 +12,17 @@
 
 .author {
     color: var(--secondary-color);
+    display: flex;
+    gap: var(--padding-1x);
+}
+
+.profilePicture {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.content {
+    margin-left: var(--margin-2x);
 }

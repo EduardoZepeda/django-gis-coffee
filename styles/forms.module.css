@@ -10,12 +10,16 @@
 }
 
 .input {
-    color: var(--main-color);
+    color: var(--secondary-color);
     padding: 14px;
     border-radius: var(--input-radius);
-    border: 1px solid var(--main-color);
     font-size: var(--font-sm);
     outline: transparent;
+    border: 1px solid var(--light-gray);
+}
+
+.input:placeholder-shown {
+    border: 1px solid var(--light-gray);
 }
 
 .inputError {
@@ -55,4 +59,21 @@
     border-radius: 4px;
     background-color: var(--green);
     color: var(--white);
+}
+
+.label {
+    color: var(--secondary-color);
+    font-size: var(--font-sm);
+}
+
+.checkBoxRecommended {
+    opacity: 0;
+}
+
+.heart {
+    color: var(--pink);
+}
+
+.iconInactive {
+    filter: brightness(180%);
 }

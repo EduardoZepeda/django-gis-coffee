@@ -14,13 +14,17 @@
   --font-h2: 2rem;
   --orange: #D28537;
   --red: #C03D29;
+  --pink: #FB6F92;
   --green: #009456;
   --button-radius: 20px;
-  --input-radius: 8px;
+  --input-radius: 4px;
   --sidebar-bg: #141414;
   --main-color: #212121;
   --secondary-color: #3E3E3E;
+  --light-gray: #d4d4d4;
   --white: #FFFFFF;
+  --btn-h: 12px;
+  --btn-w: 20px;
 }
 
 html,
@@ -33,6 +37,7 @@ body {
 body {
   margin: 0;
   padding: 0;
+  background-color: #212121;
 }
 
 h1,
@@ -64,7 +69,7 @@ li {
 }
 
 #__next {
-  height: 100%;
+  min-height: 100%;
   position: relative;
 }
 
