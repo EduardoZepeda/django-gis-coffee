@@ -4,7 +4,6 @@ import { useQuery } from 'react-query'
 import { getNewestCoffeeshops } from '@services/coffeeShops'
 import CoffeeCard from '@components/CoffeeCard'
 import styles from '@styles/newestAdditions.module.css'
-import Link from 'next/link'
 import Loader from '@components/Loader'
 import Error from '@components/Error'
 
@@ -12,7 +11,7 @@ export default function NewestAdditions() {
     const coffeeCardId = useId()
 
     const { data, error, isLoading } = useQuery({
-        queryKey: ["newestCoffeeShops"],
+        queryKey: ["coffeeShops"],
         queryFn: getNewestCoffeeshops
     })
     if (error) {
