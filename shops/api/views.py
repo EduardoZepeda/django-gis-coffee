@@ -40,12 +40,14 @@ class ShopViewSet(viewsets.ReadOnlyModelViewSet):
             Shop.objects.all()
             .prefetch_related("likes")
             .annotate(
-                likes_count=Count("likes"),
+                likes_count=Count("likes"),  # count shop likes and add it to response
+                # Check if the current user has liked the shop and return it as part of the response object
                 liked=Exists(
                     Shop.likes.through.objects.filter(
                         shop_id=OuterRef("pk"), user_id=self.request.user.id
                     ),
                 ),
+                # check if the current user has liked the and return it as part of the response object
                 reviewed=Exists(
                     Review.objects.filter(
                         shop_id=OuterRef("pk"), user_id=self.request.user.id
@@ -158,4 +160,4 @@ class ShopLikesViewSet(viewsets.GenericViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         request.user.likes.remove(shop)
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+        return Response({}, status=status.HTTP_200_OK)
