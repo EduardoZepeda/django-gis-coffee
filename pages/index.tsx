@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 // Prevents window not defined error 
 // See more here https://stackoverflow.com/questions/57704196/leaflet-with-next-js
 const Map = dynamic(
-  () => import('../components/Map'), // replace '@components/map' with your component's location
+  () => import('@components/Map'), // replace '@components/map' with your component's location
   { ssr: false } // This line is important. It's what prevents server-side render
 )
 
