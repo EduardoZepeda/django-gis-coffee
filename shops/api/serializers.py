@@ -10,9 +10,9 @@ from ..models import CoffeeBag, Shop
 
 class ShopSerializer(GeoFeatureModelSerializer):
     likes = UserUsernameSerializer(many=True, read_only=True)
-    likes_count = serializers.IntegerField()
-    liked = serializers.BooleanField()
-    reviewed = serializers.BooleanField()
+    likes_count = serializers.IntegerField(read_only=True)
+    liked = serializers.BooleanField(read_only=True)
+    reviewed = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Shop
