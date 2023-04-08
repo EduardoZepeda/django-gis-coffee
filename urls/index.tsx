@@ -6,3 +6,7 @@ export const resetPasswordUrl = new URL('http://127.0.0.1:8000/api/v1/authentica
 export const getNewestCoffeeShopsUrl = new URL('http://127.0.0.1:8000/api/v1/shops/')
 export const getCoffeeShopByIdUrl = new URL('http://127.0.0.1:8000/api/v1/shops/')
 export const likeCoffeeShopUrl = new URL('http://127.0.0.1:8000/api/v1/shops/')
+export const getCoffeeShopReviewsUrl = new URL('http://127.0.0.1:8000/api/v1/reviews/')
+export const getUserByUsernameUrl = new URL('http://127.0.0.1:8000/api/v1/users/')
+export const followUserUrl = new URL('http://127.0.0.1:8000/api/v1/users/')
+export const unfollowUserUrl = new URL('http://127.0.0.1:8000/api/v1/users/')
