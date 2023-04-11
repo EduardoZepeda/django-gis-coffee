@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     "accounts",
     "reviews",
     "feeds",
-    "django_vite",
     "chat",
     "channels",
     "rest_framework",
@@ -146,11 +145,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-DJANGO_VITE_ASSETS_PATH = os.path.join(BASE_DIR, STATIC_URL, "dist")
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),
-    DJANGO_VITE_ASSETS_PATH,
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
