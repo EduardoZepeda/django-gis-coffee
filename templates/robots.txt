@@ -3,5 +3,7 @@
 User-Agent: *
 Disallow: /admin/
 Disallow: /dashboard/
-Disallow: /accounts/
-Disallow: /feed/
+Disallow: /api/v1/accounts/
+Disallow: /api/v1/feed/
+Disallow: /api/v1/authentication/
+Disallow: /api/v1/registration/
