@@ -15,11 +15,13 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
+      "@handlers/*": ["./fetchUtils/handlers/*"],
       "@types/*": ["./types/*"],
       "@services/*": ["./services/*"],
       "@styles/*": ["./styles/*"],
       "@components/*": ["./components/*"],
-      "@urls/*": ["./urls/*"]
+      "@urls/*": ["./urls/*"],
+      "@fetchUtils/*": ["./fetchUtils/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/components/Map.js"],
