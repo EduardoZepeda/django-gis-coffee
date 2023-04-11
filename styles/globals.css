@@ -37,7 +37,7 @@ body {
 body {
   margin: 0;
   padding: 0;
-  background-color: #212121;
+  background-color: var(--white);
 }
 
 h1,
