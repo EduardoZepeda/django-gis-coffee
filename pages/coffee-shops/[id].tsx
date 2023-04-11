@@ -1,26 +1,32 @@
-import React from 'react'
-import { useRouter } from 'next/router'
-import { useQuery } from 'react-query'
-import { getCoffeeShopById } from '@services/coffeeShops'
-import Image from 'next/image'
-import Loader from '@components/Loader'
-import Error from '@components/Error'
-import styles from '@styles/coffeeDetails.module.css'
-import RenderStars from '@components/RenderStars'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFire, faHeart } from '@fortawesome/free-solid-svg-icons'
-import Head from 'next/head'
-import Likes from '@components/Likes'
-import Reviews from '@components/Reviews'
-import ReviewForm from '@components/ReviewForm'
+import Error from '@components/Error';
+import Head from 'next/head';
+import Image from 'next/image';
+import Likes from '@components/Likes';
+import Loader from '@components/Loader';
+import React, { useEffect } from 'react';
+import RenderStars from '@components/RenderStars';
+import ReviewForm from '@components/ReviewForm';
+import Reviews from '@components/Reviews';
+import styles from '@styles/coffeeDetails.module.css';
+import { coffeeDetail } from '@urls/index';
+import { faFire } from '@fortawesome/free-solid-svg-icons';
+import { fetchGet } from '@fetchUtils/useFetch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useQuery } from 'react-query';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 
 const CoffeeShop = () => {
     const router = useRouter()
     const { id } = router.query
+    const { data: session, status } = useSession()
+    const token = session?.user?.token
     const { data, error, isLoading } = useQuery({
-        queryKey: ["coffeeShop", id],
-        queryFn: () => getCoffeeShopById(id as string)
+        queryKey: ["coffeeShops", id],
+        queryFn: () => fetchGet(coffeeDetail(id, {}), token),
+        enabled: router.isReady && status !== 'loading'
     })
+
 
     if (!id) {
         return null
@@ -29,10 +35,10 @@ const CoffeeShop = () => {
     if (error) {
         return <Error message={"We couldn't get the data for this coffee Shop. Please try again."} />
     }
+
     if (isLoading) {
         return <Loader />
     }
-
 
     if (data) {
         const { id, properties: { name, address, roaster, content, rating, likes, url, liked, reviewed } }: FeaturesEntity = data
