@@ -2,20 +2,25 @@ import React, { useId } from 'react'
 import styles from '@styles/reviews.module.css'
 import { useQuery } from 'react-query'
 import { useRouter } from 'next/router'
-import { getCoffeeShopReviewsById } from '@services/coffeeShops'
 import Loader from '@components/Loader'
 import Error from '@components/Error'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
+import { fetchGet } from '@fetchUtils/useFetch'
+import { reviewList } from '@urls/index'
+import { useSession } from 'next-auth/react'
 
 const Reviews = () => {
     const router = useRouter()
     const { id } = router.query
+    const { data: session, status } = useSession()
+    const token = session?.user?.token
     const keyId = useId()
     const { data, error, isLoading } = useQuery({
         queryKey: ["coffeeShops", "reviews", id],
-        queryFn: () => getCoffeeShopReviewsById(id as string)
+        queryFn: () => fetchGet(reviewList({ "shop_id": id }), token),
+        enabled: router.isReady && status !== 'loading' && !!session
     })
 
     if (error) {
@@ -26,9 +31,10 @@ const Reviews = () => {
         return <Loader />
     }
 
-    if (data.count === 0) {
+    if (data?.count === 0) {
         return null
     }
+
     if (data) {
         return (
             <div className={styles.container}>

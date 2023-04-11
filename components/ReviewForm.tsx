@@ -1,14 +1,16 @@
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import styles from '@styles/forms.module.css'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { useMutation } from 'react-query'
-import { postReview } from '@services/reviews'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons'
-import Success from '@components/Success';
-import { useSession } from 'next-auth/react'
 import Link from 'next/link';
+import styles from '@styles/forms.module.css';
+import Success from '@components/Success';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useMutation } from 'react-query';
+import { useSession } from 'next-auth/react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { fetchPost } from '@fetchUtils/useFetch';
+import { reviewCreate } from '@urls/index';
+import { useQueryClient } from 'react-query';
 
 const reviewSchema = z.object({
     content: z.string().min(10).max(255),
@@ -17,7 +19,9 @@ const reviewSchema = z.object({
 })
 
 const ReviewForm = ({ id }: ReviewFormProps) => {
+    const queryClient = useQueryClient()
     const { data: session } = useSession()
+    const token = session?.user?.token
     const { register, handleSubmit, control, setValue, formState: { errors } } = useForm<reviewSchemaType>(
         {
             resolver: zodResolver(reviewSchema),
@@ -27,7 +31,10 @@ const ReviewForm = ({ id }: ReviewFormProps) => {
         }
     )
 
-    const { mutate, isLoading, isSuccess, isError } = useMutation(postReview)
+    const { mutate, isLoading, isSuccess, isError } = useMutation({
+        mutationFn: (data: reviewSchemaType) => fetchPost(reviewCreate(), data, token),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["coffeeShops"] })
+    })
 
     const onSubmit: SubmitHandler<reviewSchemaType> = data => {
         mutate(data)
@@ -38,7 +45,7 @@ const ReviewForm = ({ id }: ReviewFormProps) => {
     }
 
     if (isSuccess) {
-        return <Success message={"Your review was published"} />
+        return <Success message={"Your review was published successfully"} />
     }
 
     return (
