@@ -1,10 +1,12 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import styles from '@styles/forms.module.css'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { useMutation } from 'react-query'
-import { registerUser } from '@services/users'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react';
+import styles from '@styles/forms.module.css';
+import { fetchPost } from '@fetchUtils/useFetch';
+import { registerUserUrl } from '@urls/index';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
+import { useRouter } from 'next/router';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const newUserSchema = z.object({
     username: z.string().max(150).min(1),
@@ -16,23 +18,20 @@ const newUserSchema = z.object({
     path: ["password2"],
 })
 
-type NewUserType = {
-    username: string
-    email: string,
-    password1: string,
-    password2: string,
-};
-
 export default function Register() {
-    const { push } = useRouter()
+    const router = useRouter()
     const { register, handleSubmit, formState: { errors } } = useForm<NewUserType>(
         { resolver: zodResolver(newUserSchema) }
     )
 
-    const { mutate, isError, isLoading } = useMutation(registerUser, {
+    const { mutate, isError, isLoading, error } = useMutation({
+        mutationFn: (data: NewUserType) => fetchPost(registerUserUrl, data, undefined),
         onSuccess: () => {
-            push("/auth/signin")
-        }
+            router.push({
+                pathname: "/auth/signin",
+                query: { "registration": "success" }
+            })
+        },
     })
 
     const onSubmit: SubmitHandler<NewUserType> = data => {
@@ -40,10 +39,29 @@ export default function Register() {
     }
 
 
+    let registerError: djError
+
+    // Check if unknown type correspond to custom type for error 
+    function isDrfRequestError(obj: any): obj is djError {
+        return (
+            typeof obj === 'object' &&
+            obj !== null &&
+            'message' in obj &&
+            'cause' in obj
+        )
+    }
+
+    if (isDrfRequestError(error)) {
+        registerError = error
+    } else {
+        registerError = { "message": "", "cause": {} }
+    }
+
+
     return (
         <>
             <h2>Register an account</h2>
-            {isError ? <div className={styles.requestError}>Some error ocurred</div> : null}
+            {isError ? <div className={styles.requestError}>{registerError?.message}</div> : null}
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 {/* Username */}
                 <label className={styles.label} htmlFor="username">Username</label>
@@ -53,7 +71,7 @@ export default function Register() {
                     defaultValue=""
                     {...register("username", { required: true })}
                     placeholder="Username" />
-                <span className={styles.inputErrorMessage}>{errors.username?.message}</span>
+                <span className={styles.inputErrorMessage}>{errors.username?.message}{registerError?.cause?.username}</span>
 
 
                 {/* Email */}
@@ -67,13 +85,14 @@ export default function Register() {
                             required: true,
                         })}
                     placeholder="Email" />
-                <span className={styles.inputErrorMessage}>{errors.email?.message}</span>
+                <span className={styles.inputErrorMessage}>{errors.email?.message}{registerError?.cause?.email}</span>
 
 
                 {/* Password */}
                 <label className={styles.label} htmlFor="password">Password</label>
                 <input
                     id={"password"}
+                    type="password"
                     className={`${styles.input} ${errors.password1 ? styles.inputError : styles.inputValid}`}
                     defaultValue=""
                     {...register("password1",
@@ -82,13 +101,14 @@ export default function Register() {
                             minLength: 8,
                         })}
                     placeholder="Password" />
-                <span className={styles.inputErrorMessage}>{errors.password1?.message}</span>
+                <span className={styles.inputErrorMessage}>{errors.password1?.message}{registerError?.cause?.password1}</span>
 
 
                 {/* password2 */}
                 <label className={styles.label} htmlFor="password2">Password Confirmation</label>
                 <input
                     id={"password2"}
+                    type="password"
                     className={`${styles.input} ${errors.password2 ? styles.inputError : styles.inputValid}`}
                     defaultValue=""
                     {...register("password2", { required: true })}
