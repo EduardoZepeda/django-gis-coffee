@@ -9,15 +9,9 @@
     font-size: 3rem;
     display: inline-block;
     content: "\00d7";
-    /* This will render the 'X' */
+    /* This content will render the 'X' */
 }
 
 .hidden {
     display: none;
-}
-
-@media (min-width: 768px) {
-    .cross {
-        display: none;
-    }
 }
