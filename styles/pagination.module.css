@@ -1,0 +1,30 @@
+.container {
+    margin: var(--margin-2x);
+}
+
+.pages {
+    display: flex;
+    flex-direction: row;
+    gap: var(--padding-1x);
+}
+
+.page {
+    padding: var(--padding-1x);
+    background-color: var(--main-color);
+    border-radius: 100%;
+    color: var(--white);
+    position: relative;
+}
+
+.number {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.activePage {
+    background-color: var(--green);
+}
