@@ -7,7 +7,7 @@ import { useQueryClient } from 'react-query'
 const Following = ({ openModal, setOpenModal, username }: OverlayProps) => {
     const keyId = useId()
     const queryClient = useQueryClient()
-    const profile = queryClient.getQueryData<Profile>(username);
+    const profile = queryClient.getQueryData<Profile>(["users", username]);
 
     if (profile) {
         const { following } = profile
