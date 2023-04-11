@@ -1,7 +1,7 @@
 import { User } from 'next-auth'
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next'
 import fetch from 'isomorphic-fetch'
-import { loginUrl, getCurrentUser } from '@urls/index'
+import { loginUrl, getCurrentUserUrl } from '@urls/index'
 
 const credentials: NextApiHandler<User> = async (request: NextApiRequest, response: NextApiResponse) => {
     const invalidCredentials = { "message": "invalid credentials" }
@@ -27,7 +27,7 @@ const credentials: NextApiHandler<User> = async (request: NextApiRequest, respon
         if (loginRequest.status === 200) {
             const { key } = await loginRequest.json()
             // If user managed to login in server, get its current data from this endpoint using newly adquired token
-            const currentUser = await fetch(getCurrentUser, {
+            const currentUser = await fetch(getCurrentUserUrl, {
                 method: 'GET',
                 // This route is only for authenticated users, add token to headers
                 headers: new Headers({ 'content-type': 'application/json', 'Authorization': `Token ${key}` },)
