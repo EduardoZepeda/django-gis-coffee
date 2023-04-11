@@ -8,6 +8,12 @@ from accounts.api.serializers import UserUsernameSerializer
 from ..models import CoffeeBag, Shop
 
 
+class FeedShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shop
+        fields = ["id", "name"]
+
+
 class ShopSerializer(GeoFeatureModelSerializer):
     likes = UserUsernameSerializer(many=True, read_only=True)
     likes_count = serializers.IntegerField(read_only=True)

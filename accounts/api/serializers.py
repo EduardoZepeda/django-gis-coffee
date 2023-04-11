@@ -62,3 +62,9 @@ class UserIdSerializer(serializers.Serializer):
         if User.objects.filter(id=value).exists():
             return value
         raise serializers.ValidationError("User doesn't exist")
+
+
+class FeedUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username"]
