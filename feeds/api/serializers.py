@@ -1,14 +1,30 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from accounts.api.serializers import UserUsernameSerializer
+from accounts.api.serializers import (
+    UserIdSerializer,
+    UserUsernameSerializer,
+    FeedUserSerializer,
+)
+from shops.api.serializers import FeedShopSerializer
+from shops.models import Shop
 
 from ..models import Action
 
+User = get_user_model()
+
 
 class ActionTargetSerializer(serializers.RelatedField):
-    # TODO change representation to a proper link of the object
     def to_representation(self, value):
-        return str(value)
+        if isinstance(value, Shop):
+            serializer = FeedShopSerializer(
+                value, context={"request": self.context.get("request")}
+            )
+        if isinstance(value, User):
+            serializer = FeedUserSerializer(
+                value, context={"request": self.context.get("request")}
+            )
+        return serializer.data
 
 
 class ActionSerializer(serializers.ModelSerializer):
