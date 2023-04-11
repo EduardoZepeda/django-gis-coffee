@@ -1,22 +1,23 @@
-import React from 'react'
-import styles from '@styles/followUnfollow.module.css'
-import { useSession } from "next-auth/react"
-import { useMutation } from 'react-query'
-import { followUser, unfollowUser } from '@services/users'
-import Loader from '@components/Loader'
-import { useQueryClient } from 'react-query'
+import Loader from '@components/Loader';
+import React from 'react';
+import styles from '@styles/followUnfollow.module.css';
+import { fetchPost } from '@fetchUtils/useFetch';
+import { followCreate, followDestroy } from '@urls/index';
+import { useMutation } from 'react-query';
+import { useQueryClient } from 'react-query';
+import { useSession } from 'next-auth/react';
 
 const FollowUnfollow = ({ user, followed }: FollowUnfollowProps) => {
     const queryClient = useQueryClient();
     const { data: session, status } = useSession()
+    const token = session?.user?.token
     const { mutate, isLoading } = useMutation({
-        mutationFn: followed ? unfollowUser : followUser,
+        mutationFn: () => (followed ? fetchPost(followDestroy(user), {}, token) : fetchPost(followCreate(user), {}, token)),
         onSuccess: () => {
             // Invalidate queries related to current user and profile
             // wrap them in a promise so both are applied
             return Promise.all([
-                queryClient.invalidateQueries(user),
-                queryClient.invalidateQueries(session?.user?.username)
+                queryClient.invalidateQueries({ queryKey: ['users'] }),
             ])
         }
     })
@@ -33,7 +34,7 @@ const FollowUnfollow = ({ user, followed }: FollowUnfollowProps) => {
     return (
         <button
             disabled={isLoading}
-            onClick={() => { mutate(user) }}
+            onClick={() => { mutate() }}
             className={`${styles.btn} ${followed ? styles.unfollow : styles.follow}`}>{followed ? "Unfollow" : "Follow"}
         </button>
     )
