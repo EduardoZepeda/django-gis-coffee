@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from '@styles/burguer.module.css'
 
-const Burguer = ({ onClick }: sidebarProps) => {
+const Burguer = ({ show, handleClick }: sidebarProps) => {
     return (
-        <div onClick={onClick} className={styles.burguer}>
+        <div onClick={() => handleClick(!show)} className={styles.burguer}>
             <div className={styles.line}></div>
             <div className={styles.line}></div>
             <div className={styles.line}></div>

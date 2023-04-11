@@ -18,8 +18,8 @@ const Nav = () => {
             <div className={styles.menu}>
                 <Menu />
             </div>
-            <Burguer onClick={toggleMenu} />
-            <Sidebar onClick={toggleMenu} menuOpen={menuOpen} />
+            <Burguer show={menuOpen} handleClick={toggleMenu} />
+            <Sidebar show={menuOpen} handleClick={toggleMenu} />
         </nav>
     )
 }

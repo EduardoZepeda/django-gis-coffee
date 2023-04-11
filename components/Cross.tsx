@@ -3,9 +3,9 @@ import styles from '@styles/cross.module.css'
 
 
 
-const Cross = ({ menuOpen, onClick }: sidebarProps) => {
+const Cross = ({ show, handleClick }: sidebarProps) => {
     return (
-        <div onClick={onClick} className={`${styles.cross} ${menuOpen ? '' : styles.hidden}`}>
+        <div onClick={() => handleClick(false)} className={`${styles.cross} ${show ? '' : styles.hidden}`}>
         </div>
     )
 }
