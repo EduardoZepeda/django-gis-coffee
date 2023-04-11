@@ -3,12 +3,12 @@ import styles from '@styles/sidebar.module.css'
 import Menu from '@components/Menu'
 import Cross from '@components/Cross'
 
-const Sidebar = ({ menuOpen, onClick }: sidebarProps) => {
+const Sidebar = ({ show, handleClick }: sidebarProps) => {
 
     return (
-        <div className={`${styles.sidebar} ${menuOpen ? '' : styles.hidden}`}>
+        <div className={`${styles.sidebar} ${show ? '' : styles.hidden}`}>
             <Menu />
-            <Cross onClick={onClick} menuOpen={menuOpen} />
+            <Cross show={show} handleClick={handleClick} />
         </div>
     )
 }

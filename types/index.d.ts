@@ -1,3 +1,4 @@
+
 type resetPasswordType = {
     email: string,
 }
@@ -16,8 +17,8 @@ type NewUserType = {
 }
 
 type sidebarProps = {
-    menuOpen?: boolean
-    onClick: React.MouseEventHandler<HTMLElement>
+    show?: boolean
+    handleClick: (show: boolean) => void
 }
 
 interface propsWithChildren {
@@ -157,3 +158,44 @@ type FollowingEntityOrFollowersEntity = {
     profile_picture?: string | null;
     followed: boolean;
 }
+
+type djError = {
+    message: string,
+    cause: {
+        [key: string]: any;
+    }
+}
+
+type PaginationProps = {
+    queryParams: {
+        query?: string | string[];
+        page: number;
+    };
+    totalPages: number;
+    setPage: (page: number) => void;
+}
+
+type FeedUser = {
+    username?: string;
+    url?: string;
+    id?: number;
+    profile_picture?: string;
+}
+
+type Feed = {
+    user: FeedUser;
+    action: string;
+    target: Target;
+    created: string;
+}
+
+interface Target extends FeedUser {
+    name?: string;
+}
+
+type FeedProps = {
+    openFeed: boolean;
+    setOpenFeed: (val: boolean) => void;
+}
+
+
