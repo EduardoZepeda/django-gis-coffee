@@ -18,7 +18,7 @@ const SearchBar = () => {
     )
 
     const onSubmit: SubmitHandler<SearchSchemaType> = data => {
-        router.push(`/search/${data.query}`)
+        router.push(`/search/${data.query}?page=1`)
         reset()
     }
 
