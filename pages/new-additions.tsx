@@ -1,27 +1,48 @@
-import { useId } from 'react'
-import Head from 'next/head'
-import { useQuery } from 'react-query'
-import { getNewestCoffeeshops } from '@services/coffeeShops'
-import CoffeeCard from '@components/CoffeeCard'
-import styles from '@styles/newestAdditions.module.css'
-import Loader from '@components/Loader'
-import Error from '@components/Error'
+import CoffeeCard from '@components/CoffeeCard';
+import Error from '@components/Error';
+import Head from 'next/head';
+import Loader from '@components/Loader';
+import styles from '@styles/newestAdditions.module.css';
+import { coffeeList } from '@urls/index';
+import { fetchGet } from '@fetchUtils/useFetch';
+import { useId, useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
+import { useSession } from 'next-auth/react';
+import Pagination from '@components/Pagination';
+import { useRouter } from 'next/router';
 
 export default function NewestAdditions() {
     const coffeeCardId = useId()
+    const router = useRouter()
+    const { page } = router.query
+    let intPage
+    if (typeof page === 'string' && typeof page !== undefined) {
+        intPage = parseInt(page)
+    } else {
+        intPage = 1
+    }
+    const [currentPage, setPage] = useState<number>(intPage)
+    const { data: session, status } = useSession()
+    const token = session?.user?.token
 
     const { data, error, isLoading } = useQuery({
-        queryKey: ["coffeeShops"],
-        queryFn: getNewestCoffeeshops
+        queryKey: ["coffeeShops", currentPage],
+        queryFn: () => fetchGet(coffeeList({ "page": currentPage }), token),
+        enabled: status !== 'loading' && router.isReady
     })
+
+    useEffect(() => { }, [page])
+
     if (error) {
         return <Error message={"Error"} />
     }
+
     if (isLoading) {
         return <Loader />
     }
 
     if (data) {
+        const { count } = data
         return (
             <>
                 <Head>
@@ -42,6 +63,7 @@ export default function NewestAdditions() {
                     )
                     }
                 </div>
+                <Pagination queryParams={{ "page": currentPage }} totalPages={Math.ceil(count / 20)} setPage={setPage} />
             </>
         )
     }
