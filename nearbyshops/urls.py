@@ -1,15 +1,16 @@
+from dj_rest_auth.views import PasswordResetConfirmView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path, re_path
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
-from dj_rest_auth.views import PasswordResetConfirmView
 from rest_framework import permissions, routers
 
 from accounts.api.views import FollowingViewSet, UserViewSet
@@ -59,14 +60,8 @@ urlpatterns = [
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
     ),
-    path("", views.Geo.as_view(), name="home"),
+    path("api/v1/", include((router.urls, "api-app"), namespace="api")),
     path("admin/", admin.site.urls, name="admin"),
-    path("accounts/", include(("accounts.urls", "accounts"), namespace="accounts")),
-    path("reviews/", include(("reviews.urls", "reviews"), namespace="reviews")),
-    path("feed/", include(("feeds.urls", "feeds"), namespace="feeds")),
-    path("shops/", include(("shops.urls", "shops"), namespace="shops")),
-    path("about/", TemplateView.as_view(template_name="about.html"), name="about"),
-    path("legal/", TemplateView.as_view(template_name="legal.html"), name="legal"),
     path(
         "api/v1/rest-auth/password/reset/confirm/<str:uidb64>/<str:token>",
         PasswordResetConfirmView.as_view(),
@@ -75,6 +70,7 @@ urlpatterns = [
     path("api/v1/", include(router.urls)),
     path("api/v1/authentication/", include("dj_rest_auth.urls")),
     path("api/v1/registration/", include("dj_rest_auth.registration.urls")),
+    path("", RedirectView.as_view(url="/api/v1/schema/swagger-ui/"), name="home"),
 ]
 
 if settings.DEBUG:
