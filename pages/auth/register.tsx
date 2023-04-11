@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import Head from 'next/head';
 import styles from '@styles/forms.module.css';
 import { fetchPost } from '@fetchUtils/useFetch';
 import { registerUserUrl } from '@urls/index';
@@ -60,6 +60,10 @@ export default function Register() {
 
     return (
         <>
+            <Head>
+                <title>{`Tamper | Register`}</title>
+                <meta name="description" content={`Register an account with tamper, best speciality coffee shops in gdl`} />
+            </Head>
             <h2>Register an account</h2>
             {isError ? <div className={styles.requestError}>{registerError?.message}</div> : null}
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
