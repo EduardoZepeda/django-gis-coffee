@@ -7,15 +7,15 @@ from django.conf import settings
 
 import chat.routing
 
-current_settings = "nearbyshops.settings" if settings.DEBUG else "nearbyshops.dev_settings"
+current_settings = (
+    "nearbyshops.settings" if settings.DEBUG else "nearbyshops.dev_settings"
+)
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", current_settings)
 
-application = ProtocolTypeRouter({
-  "http": get_asgi_application(),
-  "websocket": AuthMiddlewareStack(
-        URLRouter(
-            chat.routing.websocket_urlpatterns
-        )
-    ),
-})
+application = ProtocolTypeRouter(
+    {
+        "http": get_asgi_application(),
+        "websocket": AuthMiddlewareStack(URLRouter(chat.routing.websocket_urlpatterns)),
+    }
+)

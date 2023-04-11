@@ -99,6 +99,7 @@ class Shop(models.Model):
         self.slug = slugify(self.name)
         super(Shop, self).save(*args, **kwargs)
 
+
 class CoffeeBag(models.Model):
     brand = models.CharField(max_length=200)
     species = models.CharField(choices=COFFEE_SPECIES, default="Ar", max_length=2)

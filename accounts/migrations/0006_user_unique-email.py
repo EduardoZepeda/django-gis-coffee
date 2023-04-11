@@ -6,12 +6,12 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0005_alter_user_options_user_email-user'),
+        ("accounts", "0005_alter_user_options_user_email-user"),
     ]
 
     operations = [
         migrations.AddConstraint(
-            model_name='user',
-            constraint=models.UniqueConstraint(fields=('email',), name='unique-email'),
+            model_name="user",
+            constraint=models.UniqueConstraint(fields=("email",), name="unique-email"),
         ),
     ]
