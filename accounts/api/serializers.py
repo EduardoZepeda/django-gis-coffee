@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -31,6 +32,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     followers = UserUsernameSerializer(many=True, read_only=True)
     followed = serializers.BooleanField(read_only=True)
     reviews_count = serializers.IntegerField(read_only=True)
+    parser_classes = (MultiPartParser, FormParser)
+    profile_picture = serializers.ImageField(max_length=256, required=False)
 
     class Meta:
         model = User
