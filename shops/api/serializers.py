@@ -19,6 +19,7 @@ class ShopSerializer(GeoFeatureModelSerializer):
     likes_count = serializers.IntegerField(read_only=True)
     liked = serializers.BooleanField(read_only=True)
     reviewed = serializers.BooleanField(read_only=True)
+    lookup_field = "pk"
 
     class Meta:
         model = Shop
@@ -39,6 +40,7 @@ class ShopSerializer(GeoFeatureModelSerializer):
             "reviewed",
         ]
         filterset_fields = ["name", "address", "content"]
+        extra_kwargs = {"url": {"lookup_field": "pk"}}
 
     def get_queryset(self):
         return Shop.objects.all().order_by("-created_date")
