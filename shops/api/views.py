@@ -33,6 +33,7 @@ class CoffeeBagViewSet(viewsets.ReadOnlyModelViewSet):
 class ShopViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ShopSerializer
     permission_classes = [IsStaffOrReadOnly]
+    lookup_field = "pk"
 
     def get_queryset(self):
         query = self.request.query_params.get("query")
