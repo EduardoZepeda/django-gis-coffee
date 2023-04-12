@@ -28,3 +28,11 @@
     color: var(--white);
     border: 0;
 }
+
+.btnUpdate {
+    text-align: center;
+    padding: 0 var(--padding-2x);
+    background-color: var(--light-gray);
+    color: var(--secondary-color);
+    border-radius: 6px;
+}

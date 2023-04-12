@@ -77,3 +77,7 @@
 .iconInactive {
     filter: brightness(180%);
 }
+
+.fileInput {
+    border: 0;
+}
