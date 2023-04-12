@@ -60,7 +60,6 @@ urlpatterns = [
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
     ),
-    path("api/v1/", include((router.urls, "api-app"), namespace="api")),
     path("admin/", admin.site.urls, name="admin"),
     path(
         "api/v1/rest-auth/password/reset/confirm/<str:uidb64>/<str:token>",
