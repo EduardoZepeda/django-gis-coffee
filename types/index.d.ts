@@ -199,3 +199,8 @@ type FeedProps = {
 }
 
 
+type ProfileForm = {
+    username: string;
+    bio: string;
+    profile_picture?: FileList
+}
