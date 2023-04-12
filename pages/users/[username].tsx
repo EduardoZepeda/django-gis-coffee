@@ -2,6 +2,8 @@ import Error from '@components/Error';
 import Followers from '@components/Followers';
 import Following from '@components/Following';
 import FollowUnfollow from '@components/FollowUnfollow';
+import Head from 'next/head';
+import Link from 'next/link';
 import Loader from '@components/Loader';
 import React, { useEffect, useState } from 'react';
 import styles from '@styles/users.module.css';
@@ -10,7 +12,6 @@ import { useQuery } from 'react-query';
 import { userDetail } from '@urls/index';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import Head from 'next/head'
 
 const User = () => {
     const [openFollowers, setOpenFollowers] = useState<boolean>(false)
@@ -62,6 +63,7 @@ const User = () => {
                         alt={`${username} profile picture`} />
                     <h2>{username}</h2>
                     <FollowUnfollow followed={followed} user={username} />
+                    {session?.user?.username === username ? <Link className={styles.btnUpdate} href="/users/profile-update">Update profile</Link> : null}
                     <div className={styles.bio}>{bio}</div>
                     <div className={styles.social}>
                         <div onClick={() => { setOpenFollowing(true); setOpenFollowers(false) }}>
