@@ -47,6 +47,11 @@ export function userDetail(id: string | string[] | undefined, searchParams: obje
     return url
 }
 
+export function userUpdate(id: string | string[] | undefined): URL {
+    const url = new URL(`${base}/api/v1/users/${id}/`)
+    return url
+}
+
 // Coffee shops
 export function coffeeList(searchParams: object | undefined): URL {
     const url = new URL(`${base}/api/v1/shops/`)
