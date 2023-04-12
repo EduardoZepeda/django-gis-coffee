@@ -31,7 +31,8 @@ const ReviewForm = ({ id }: ReviewFormProps) => {
         }
     )
 
-    const { mutate, isLoading, isSuccess, isError } = useMutation({
+
+    const { mutate, isLoading, isSuccess, isError, error } = useMutation({
         mutationFn: (data: reviewSchemaType) => fetchPost(reviewCreate(), data, token),
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ["coffeeShops"] })
     })
@@ -39,6 +40,25 @@ const ReviewForm = ({ id }: ReviewFormProps) => {
     const onSubmit: SubmitHandler<reviewSchemaType> = data => {
         mutate(data)
     }
+
+    let registerError: djError
+
+    // Check if unknown type correspond to custom type for error 
+    function isDrfRequestError(obj: any): obj is djError {
+        return (
+            typeof obj === 'object' &&
+            obj !== null &&
+            'message' in obj &&
+            'cause' in obj
+        )
+    }
+
+    if (isDrfRequestError(error)) {
+        registerError = error
+    } else {
+        registerError = { "message": "", "cause": {} }
+    }
+
 
     if (!session) {
         return <Link href="/auth/signin">Login to left a review</Link>
@@ -51,7 +71,7 @@ const ReviewForm = ({ id }: ReviewFormProps) => {
     return (
         <div className={styles.formContainer}>
             <h3>Post a review</h3>
-            {isError ? <div className={styles.requestError}>Some error ocurred</div> : null}
+            {isError ? <div className={styles.requestError}>{registerError?.message}</div> : null}
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <label className={styles.label} htmlFor="content">Content</label>
                 <textarea
@@ -63,7 +83,7 @@ const ReviewForm = ({ id }: ReviewFormProps) => {
                             required: true,
                         })}
                     placeholder="Tell us how was your visit" />
-                <span className={styles.inputErrorMessage}>{errors.content?.message}</span>
+                <span className={styles.inputErrorMessage}>{errors.content?.message}{registerError?.cause?.content}</span>
 
                 {/* Contrlled checkbox so icons get rerendered according to checkbox value */}
                 <Controller
@@ -91,7 +111,7 @@ const ReviewForm = ({ id }: ReviewFormProps) => {
                                 className={styles.checkBoxRecommended}
                                 placeholder="recommended"
                             />
-                            <span className={styles.inputErrorMessage}>{errors.recommended?.message}</span></>)}
+                            <span className={styles.inputErrorMessage}>{errors.recommended?.message}{registerError?.cause?.recommend}</span></>)}
                     // end render check controlled input
 
                     name="recommended"
@@ -107,7 +127,7 @@ const ReviewForm = ({ id }: ReviewFormProps) => {
                             required: true,
                         })}
                 />
-                <span className={styles.inputErrorMessage}>{errors.shop?.message}</span>
+                <span className={styles.inputErrorMessage}>{errors.shop?.message}{registerError?.cause?.shop}</span>
 
                 <button className={styles.submit} type="submit" disabled={isLoading} >Send review</button>
             </form>
