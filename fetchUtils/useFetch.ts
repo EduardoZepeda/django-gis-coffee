@@ -37,9 +37,23 @@ export async function fetchUpdate(url: URL, data: object, token: string | undefi
     }
 
     return fetch(url, {
-        method: "UPDATE",
+        method: "PUT",
         headers: headers,
         body: JSON.stringify(data)
+    }).then(handleErrors).then(handleEmptyBody)
+}
+
+export async function fetchUpdateWithFiles(url: URL, data: FormData, token: string | undefined) {
+    const headers = new Headers({})
+
+    if (token) {
+        headers.append("Authorization", `Token ${token}`)
+    }
+
+    return fetch(url, {
+        method: "PUT",
+        headers: headers,
+        body: data
     }).then(handleErrors).then(handleEmptyBody)
 }
 
@@ -55,3 +69,4 @@ export async function fetchDelete(url: URL, token: string | undefined) {
     }).then(handleErrors).then(handleEmptyBody)
 
 }
+
