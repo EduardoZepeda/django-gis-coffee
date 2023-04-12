@@ -43,7 +43,7 @@ const CoffeeShop = () => {
     if (data) {
         const { id, properties: { name, address, roaster, content, rating, likes, url, liked, reviewed } }: FeaturesEntity = data
         return (
-            <div className={styles.detail}>
+            <section className={styles.detail}>
                 <Head>
                     <title>Tamper | {name}</title>
                 </Head>
@@ -92,7 +92,7 @@ const CoffeeShop = () => {
                 {/* End Reviews */}
 
                 {reviewed ? null : <ReviewForm id={url} />}
-            </div>
+            </section>
         )
     }
 

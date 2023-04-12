@@ -1,10 +1,11 @@
 .list {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-content: center;
     align-items: center;
     height: 100%;
+    gap: var(--padding-1x);
 }
 
 .item {
@@ -15,5 +16,6 @@
 @media (max-width: 768px) {
     .list {
         flex-direction: column;
+        margin-top: 150px;
     }
 }

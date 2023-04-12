@@ -52,7 +52,7 @@ export default function NewestAdditions() {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <h2>Newest coffee shops</h2>
-                <div className={styles.container}>
+                <section className={styles.container}>
                     {data.results.features.map(({ id, properties, type, geometry }: FeaturesEntity) =>
                         <CoffeeCard
                             id={id}
@@ -62,7 +62,7 @@ export default function NewestAdditions() {
                             key={`${coffeeCardId}-${id}`} />
                     )
                     }
-                </div>
+                </section>
                 <Pagination queryParams={{ "page": currentPage }} totalPages={Math.ceil(count / 20)} setPage={setPage} />
             </>
         )
