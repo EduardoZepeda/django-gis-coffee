@@ -81,3 +81,10 @@
 .fileInput {
     border: 0;
 }
+
+.profilePicture {
+    border-radius: 100%;
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+}

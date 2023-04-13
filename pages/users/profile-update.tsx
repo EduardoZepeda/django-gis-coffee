@@ -13,7 +13,8 @@ import { userUpdate } from '@urls/index';
 import { useSession } from 'next-auth/react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import { ChangeEvent } from 'react';
+import { useRef } from 'react';
 // 5 MB max size
 const MAX_FILE_SIZE = 500000;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
@@ -31,6 +32,7 @@ const newUserSchema = z.object({
 })
 
 export default function Register() {
+    const imageRef = useRef<HTMLImageElement>(null)
     const router = useRouter()
     const { data: session, status } = useSession()
     const token = session?.user?.token
@@ -43,7 +45,6 @@ export default function Register() {
     },
     )
 
-
     // Form
     const { register, handleSubmit, formState: { errors } } = useForm<ProfileForm>(
         {
@@ -55,7 +56,6 @@ export default function Register() {
         }
     )
     // endForm
-
 
     const { mutate, isError, isLoading, error } = useMutation({
         mutationFn: (data: FormData) => fetchUpdateWithFiles(userUpdate(username), data, token),
@@ -112,6 +112,20 @@ export default function Register() {
         return <Error message={"There was an error loading your profile, please refresh the page or try again later"} />
     }
 
+    // Set src attribute to uploaded image before form submit
+    function handleImageUpload(e: ChangeEvent<HTMLInputElement>) {
+        let file
+        if (e.target.files) {
+            file = e.target.files[0]
+        }
+        if (file) {
+            imageRef.current?.setAttribute("src", URL.createObjectURL(file))
+        }
+    }
+
+    // Get out register to access its onChange method
+    const profilePicture = register("profile_picture", { required: false })
+
     return (
         <>
             <Head>
@@ -121,6 +135,24 @@ export default function Register() {
             <h2>Update your profile</h2>
             {isError ? <div className={styles.requestError}>{updateError?.message}</div> : null}
             <form encType="multipart/form-data" className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                    <img ref={imageRef} className={styles.profilePicture} src={data?.profile_picture ? data?.profile_picture : '/no-profile-picture.jpg'} alt="" />
+                </div>
+                <label className={styles.label} htmlFor="profile_picture">Profile picture</label>
+                <input
+                    id={"profile_picture"}
+                    type='file'
+                    accept='image/*'
+                    className={`${styles.fileInput} ${errors.profile_picture ? styles.inputError : styles.inputValid}`}
+                    defaultValue=""
+                    {...profilePicture}
+                    onChange={(e) => {
+                        profilePicture.onChange(e)
+                        // override onChange method with handle input
+                        handleImageUpload(e)
+                    }}
+                />
+                <span className={styles.inputErrorMessage}>{errors.profile_picture?.message}{updateError?.cause?.profile_picture}</span>
                 {/* Username */}
                 <label className={styles.label} htmlFor="username">Username</label>
                 <input
@@ -144,16 +176,6 @@ export default function Register() {
                         })}
                     placeholder="Bio" />
                 <span className={styles.inputErrorMessage}>{errors.bio?.message}{updateError?.cause?.email}</span>
-
-                <input
-                    id={"profile_picture"}
-                    type='file'
-                    className={`${styles.fileInput} ${errors.profile_picture ? styles.inputError : styles.inputValid}`}
-                    defaultValue=""
-                    {...register("profile_picture", { required: false })}
-
-                />
-                <span className={styles.inputErrorMessage}>{errors.profile_picture?.message}{updateError?.cause?.profile_picture}</span>
 
                 {/* Submit */}
                 <button className={styles.submit} type="submit" disabled={isLoading} > Update</button>
