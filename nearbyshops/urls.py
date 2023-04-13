@@ -13,7 +13,7 @@ from drf_spectacular.views import (
 )
 from rest_framework import permissions, routers
 
-from accounts.api.views import FollowingViewSet, UserViewSet
+from accounts.api.views import FollowingViewSet, UserViewSet, UserRecommendationViewSet
 from feeds.api.views import ActionViewSet
 from reviews.api.views import ReviewViewSet
 from shops import views
@@ -25,6 +25,9 @@ sitemaps = {
 }
 
 router = routers.DefaultRouter()
+router.register(
+    r"recommended-users", UserRecommendationViewSet, basename="recommended-users"
+)
 router.register(r"users", UserViewSet, basename="user")
 router.register(r"users", FollowingViewSet, basename="user")
 router.register(r"shops", ShopViewSet, basename="shop")
