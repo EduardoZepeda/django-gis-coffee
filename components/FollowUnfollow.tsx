@@ -6,6 +6,7 @@ import { followCreate, followDestroy } from '@urls/index';
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import { useSession } from 'next-auth/react';
+import ButtonLoader from './ButtonLoader';
 
 const FollowUnfollow = ({ user, followed }: FollowUnfollowProps) => {
     const queryClient = useQueryClient();
@@ -36,7 +37,7 @@ const FollowUnfollow = ({ user, followed }: FollowUnfollowProps) => {
         <button
             disabled={isLoading}
             onClick={() => { mutate() }}
-            className={`${styles.btn} ${followed ? styles.unfollow : styles.follow}`}>{followed ? "Unfollow" : "Follow"}
+            className={`${styles.btn} ${followed ? styles.unfollow : styles.follow}`}>{isLoading ? <ButtonLoader /> : (followed ? "Unfollow" : "Follow")}
         </button>
     )
 }
