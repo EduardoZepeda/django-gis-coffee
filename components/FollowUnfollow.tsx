@@ -18,6 +18,7 @@ const FollowUnfollow = ({ user, followed }: FollowUnfollowProps) => {
             // wrap them in a promise so both are applied
             return Promise.all([
                 queryClient.invalidateQueries({ queryKey: ['users'] }),
+                queryClient.invalidateQueries({ queryKey: ['recommended-users', session?.user?.username] }),
             ])
         }
     })

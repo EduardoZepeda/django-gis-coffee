@@ -64,6 +64,9 @@ export function coffeeList(searchParams: object | undefined): URL {
     return url
 }
 
+export const recommendedUsersList = new URL(`${base}/api/v1/recommended-users/`)
+
+
 export function coffeeDetail(id: string | string[] | undefined, searchParams: object | undefined): URL {
     const url = new URL(`${base}/api/v1/shops/${id}/`)
     if (searchParams) {

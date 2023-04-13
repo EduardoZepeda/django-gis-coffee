@@ -53,4 +53,5 @@
 .user {
     display: flex;
     gap: var(--padding-1x);
+    overflow-x: scroll;
 }

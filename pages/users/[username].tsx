@@ -12,6 +12,7 @@ import { useQuery } from 'react-query';
 import { userDetail } from '@urls/index';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import RecommendedUsers from '@components/RecommendedUsers';
 
 const User = () => {
     const [openFollowers, setOpenFollowers] = useState<boolean>(false)
@@ -75,6 +76,7 @@ const User = () => {
                             {" "} Followers
                         </div>
                     </div>
+                    <RecommendedUsers />
                 </div >
             </>
         )
