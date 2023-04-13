@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from '@styles/feed.module.css'
 import Link from 'next/link'
+import { format } from 'timeago.js';
 
 const FeedItem = ({ user: { username: user, profile_picture }, action, target: { id, name, username }, created }: Feed) => {
     return (
@@ -12,6 +13,9 @@ const FeedItem = ({ user: { username: user, profile_picture }, action, target: {
                 <Link href={`/${action === 'followed' ? `users/${username}` : `coffee-shops/${id?.toString()}`}`}>
                     {`${user} ${action} ${username ? username : name}`}
                 </Link>
+                <div className={styles.time}>
+                    <small>{format(created)}</small>
+                </div>
             </div>
         </section>
     )

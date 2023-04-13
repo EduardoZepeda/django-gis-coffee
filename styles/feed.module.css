@@ -17,8 +17,8 @@
 }
 
 .img {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     border-radius: 100%;
     margin: 0 var(--margin-1x);
     object-fit: cover;
@@ -32,4 +32,8 @@
 
 .hidden {
     display: none;
+}
+
+.time {
+    color: var(--light-gray);
 }

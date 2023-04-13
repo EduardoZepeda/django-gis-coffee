@@ -1,3 +1,4 @@
+import Cross from '@components/Cross';
 import Error from '@components/Error';
 import FeedItem from '@components/FeedItem';
 import Loader from '@components/Loader';
@@ -7,7 +8,6 @@ import { feedUrl } from '@urls/index';
 import { fetchGet } from '@fetchUtils/useFetch';
 import { useQuery } from 'react-query';
 import { useSession } from 'next-auth/react';
-import Cross from '@components/Cross';
 
 const Feed = ({ openFeed, setOpenFeed }: FeedProps) => {
     const { data: session, status } = useSession()
