@@ -125,3 +125,28 @@ class FollowingViewSet(
         user_from.following.remove(user_to)
         # BUG It should be 204, however somehow response hangs up, whether it returns a status.HTTP_204_NOT_FOUND or the number 204
         return Response({"message": "unfollowed"}, status=status.HTTP_200_OK)
+
+
+class UserRecommendationViewSet(
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    serializer_class = UserUsernameSerializer
+    lookup_field = "username"
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Add a count value of user's reviews and whether the request users is following or not this account
+        users = (
+            User.objects
+            # Annotate nested following entities with the followed attribute
+            # that tell us if the request user is following that user
+            .annotate(
+                followed=Exists(
+                    User.following.through.objects.filter(
+                        user_to_id=OuterRef("pk"), user_from_id=self.request.user.id
+                    ),
+                ),
+            ).filter(followed=False)
+        )
+        return users
