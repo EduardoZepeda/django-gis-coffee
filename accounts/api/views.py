@@ -147,6 +147,8 @@ class UserRecommendationViewSet(
                         user_to_id=OuterRef("pk"), user_from_id=self.request.user.id
                     ),
                 ),
-            ).filter(followed=False)
+            )
+            .filter(followed=False)
+            .exclude(pk=self.request.user.id)
         )
         return users
