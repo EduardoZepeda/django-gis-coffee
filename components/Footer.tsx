@@ -18,9 +18,9 @@ const Footer = () => {
                 </div>
             </div>
             <div className={styles.social}>
-                {/* <FontAwesomeIcon size={size} icon={faFacebook} />
+                <FontAwesomeIcon size={size} icon={faFacebook} />
                 <FontAwesomeIcon size={size} icon={faInstagram} />
-                <FontAwesomeIcon size={size} icon={faTiktok} /> */}
+                <FontAwesomeIcon size={size} icon={faTiktok} />
             </div>
             <div className={styles.legal}>
                 <Link href="/cookies">Cookies Policy</Link>
