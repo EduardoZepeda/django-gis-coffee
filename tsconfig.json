@@ -15,6 +15,7 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
+      "@store/*": ["./store/*"],
       "@handlers/*": ["./fetchUtils/handlers/*"],
       "@types/*": ["./types/*"],
       "@services/*": ["./services/*"],
