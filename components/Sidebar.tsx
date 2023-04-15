@@ -7,8 +7,8 @@ const Sidebar = ({ show, handleClick }: sidebarProps) => {
 
     return (
         <div className={`${styles.sidebar} ${show ? '' : styles.hidden}`}>
-            <Menu />
             <Cross show={show} handleClick={handleClick} />
+            <Menu />
         </div>
     )
 }
