@@ -30,7 +30,8 @@
     "react-query": "^3.39.3",
     "timeago.js": "^4.0.2",
     "typescript": "5.0.3",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "@types/isomorphic-fetch": "^0.0.36",
