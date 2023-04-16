@@ -14,7 +14,7 @@ class ChatConsumer(WebsocketConsumer):
         self.accept()
         self.send(
             text_data=json.dumps(
-                {"message": "Se ha conectado %s" % (self.user.username)}
+                {"message": "You're connected: %s" % (self.user.username)}
             )
         )
 
@@ -25,7 +25,7 @@ class ChatConsumer(WebsocketConsumer):
 
     def validate_receiver(self, receiver):
         """Check the receiver is following the sender"""
-        if self.user not in receiver.followers.all():
+        if self.user not in receiver.following.all():
             return False
         return True
 
@@ -34,6 +34,7 @@ class ChatConsumer(WebsocketConsumer):
         data = json.loads(text_data)
         # override sender to active user
         data["sender"] = self.user
+        sender = self.user.username
         receiver = User.objects.get(username=data["receiver"])
         if self.validate_receiver(receiver):
             # If the receiver is following the sender create a new message in database
@@ -41,16 +42,38 @@ class ChatConsumer(WebsocketConsumer):
                 sender=data["sender"], receiver=receiver, message=data["message"]
             )
             new_message.save()
-            # Send the new message to the receiver
+            # Send the new message to the corresponding user
+            message = {
+                "message": data["message"],
+                "timestamp": new_message.timestamp,
+                "receiver": receiver.username,
+                "sender": sender,
+            }
+            # Send a copy to ourselves, default=str prevents time object not being serializable by default
+            self.send(
+                text_data=json.dumps(message, indent=4, sort_keys=True, default=str)
+            )
+            # Send the message to proper receiver
             async_to_sync(self.channel_layer.group_send)(
                 str(receiver.id),
                 {
                     "type": "chat.message",
-                    "message": {
-                        "message": data["message"],
-                        "timestamp": new_message.timestamp,
-                    },
+                    "message": message,
                 },
+            )
+        else:
+            self.send(
+                text_data=json.dumps(
+                    {
+                        "message": "You don't have permission to message a user that's not following you.",
+                        "timestamp": "None",
+                        "receiver": receiver.username,
+                        "sender": sender,
+                    },
+                    indent=4,
+                    sort_keys=True,
+                    default=str,
+                )
             )
 
     def chat_message(self, event):
