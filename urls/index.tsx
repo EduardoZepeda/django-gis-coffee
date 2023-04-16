@@ -96,3 +96,14 @@ export function reviewCreate(): URL {
     return url
 }
 // end Review
+
+
+export function messageList(searchParams: object | undefined): URL {
+    const url = new URL(`${base}/api/v1/messages/`)
+    if (searchParams) {
+        for (const [key, value] of Object.entries(searchParams)) {
+            url.searchParams.append(key, value)
+        }
+    }
+    return url
+}

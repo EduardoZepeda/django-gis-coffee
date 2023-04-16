@@ -1,0 +1,17 @@
+.bubble {
+    color: var(--white);
+    border-radius: 8px;
+    padding: var(--padding-sm);
+    margin: var(--margin-1x);
+    max-width: 200px;
+    word-break: keep-all;
+}
+
+.sender {
+    background-color: var(--green);
+    align-self: flex-end;
+}
+
+.receiver {
+    background-color: var(--pink);
+}
