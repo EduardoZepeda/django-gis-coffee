@@ -13,12 +13,13 @@ from drf_spectacular.views import (
 )
 from rest_framework import permissions, routers
 
-from accounts.api.views import FollowingViewSet, UserViewSet, UserRecommendationViewSet
+from accounts.api.views import FollowingViewSet, UserRecommendationViewSet, UserViewSet
 from feeds.api.views import ActionViewSet
 from reviews.api.views import ReviewViewSet
 from shops import views
 from shops.api.views import CoffeeBagViewSet, ShopLikesViewSet, ShopViewSet
 from shops.sitemap import ShopSitemap
+from chat.api.views import MessagesViewSet
 
 sitemaps = {
     "shops": ShopSitemap,
@@ -35,6 +36,7 @@ router.register(r"shops", ShopLikesViewSet, basename="shop")
 router.register(r"feed", ActionViewSet, basename="action")
 router.register(r"reviews", ReviewViewSet, basename="review")
 router.register(r"coffee-bags", CoffeeBagViewSet, basename="coffeebag")
+router.register(r"messages", MessagesViewSet, basename="messages")
 
 urlpatterns = [
     # Solve bug in rest-auth library
