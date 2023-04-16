@@ -25,8 +25,8 @@ const Feed = ({ openFeed, setOpenFeed }: FeedProps) => {
 
     return (
         <div className={`${styles.container} ${openFeed ? '' : styles.hidden}`}>
-            <h3>Feed</h3>
             <Cross show={openFeed} handleClick={setOpenFeed} />
+            <h3>Feed</h3>
             <div className={styles.user}>
                 {error ? <Error message={"We couldn't get your feed. Please try refreshing the page."} /> : null}
                 {isLoading ? <Loader /> : null}
