@@ -13,10 +13,12 @@ import { userDetail } from '@urls/index';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import RecommendedUsers from '@components/RecommendedUsers';
+import { useChatStore } from '@store/chatStore';
 
 const User = () => {
     const [openFollowers, setOpenFollowers] = useState<boolean>(false)
     const [openFollowing, setOpenFollowing] = useState<boolean>(false)
+    const openChat = useChatStore((state) => state.open)
     const router = useRouter()
     const { data: session, status } = useSession()
     const token = session?.user?.token
@@ -63,8 +65,14 @@ const User = () => {
                         height={120}
                         alt={`${username} profile picture`} />
                     <h2>{username}</h2>
-                    <FollowUnfollow followed={followed} user={username} />
-                    {session?.user?.username === username ? <Link className={styles.btnUpdate} href="/users/profile-update">Update profile</Link> : null}
+                    <div className={styles.btnsContainer}>
+                        <FollowUnfollow followed={followed} user={username} />
+                        {session?.user?.username === username ? (
+                            <Link className={styles.btnUpdate} href="/users/profile-update">Update profile</Link>)
+                            : (
+                                <button className={`${styles.btnMessage}`} onClick={() => openChat(username)}>Send message</button>
+                            )}
+                    </div>
                     <div className={styles.bio}>{bio}</div>
                     <div className={styles.social}>
                         <div onClick={() => { setOpenFollowing(true); setOpenFollowers(false) }}>
