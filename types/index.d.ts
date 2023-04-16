@@ -204,3 +204,42 @@ type ProfileForm = {
     bio: string;
     profile_picture?: FileList
 }
+
+type ChatProps = {
+    receiver: string;
+    sender: string;
+    ws: WebSocket | null;
+}
+
+type Message = {
+    message: string;
+    receiver: string;
+    sender: string;
+    timestamp: string;
+}
+
+type ChatMessageProps = {
+    content: Message['content'];
+    isSender: boolean;
+    timestamp: Message['timestamp'];
+}
+
+
+type ChatBoxState = {
+    user: string;
+    open: boolean;
+    conversation: Message[];
+    active: boolean;
+}
+
+type UserId = {
+    id: number;
+    username: string;
+}
+
+type MessageResponse = {
+    message: string;
+    receiver: UserId;
+    sender: UserId;
+    timestamp: string;
+}
