@@ -8,8 +8,11 @@ import { feedUrl } from '@urls/index';
 import { fetchGet } from '@fetchUtils/useFetch';
 import { useQuery } from 'react-query';
 import { useSession } from 'next-auth/react';
+import { useFeedStore } from '@store/feedbarStore'
 
-const Feed = ({ openFeed, setOpenFeed }: FeedProps) => {
+const Feed = () => {
+    const open = useFeedStore((state) => state.open)
+    const closeFeedbar = useFeedStore((state) => state.closeFeedbar)
     const { data: session, status } = useSession()
     const token = session?.user?.token
     const { data, error, isLoading } = useQuery({
@@ -24,8 +27,8 @@ const Feed = ({ openFeed, setOpenFeed }: FeedProps) => {
     }
 
     return (
-        <div className={`${styles.container} ${openFeed ? '' : styles.hidden}`}>
-            <Cross show={openFeed} handleClick={setOpenFeed} />
+        <div className={`${styles.container} ${open ? '' : styles.hidden}`}>
+            <Cross show={open} handleClick={closeFeedbar} />
             <h3>Feed</h3>
             <div className={styles.user}>
                 {error ? <Error message={"We couldn't get your feed. Please try refreshing the page."} /> : null}

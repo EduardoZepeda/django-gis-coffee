@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from '@styles/nav.module.css'
 import Menu from '@components/Menu'
 import Sidebar from '@components/Sidebar'
@@ -6,11 +6,7 @@ import Burguer from '@components/Burguer'
 import Link from 'next/link'
 
 const Nav = () => {
-    const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
-    const toggleMenu = (): void => {
-        setMenuOpen(!menuOpen)
-    }
 
     return (
         <nav className={styles.nav}>
@@ -18,8 +14,8 @@ const Nav = () => {
             <div className={styles.menu}>
                 <Menu />
             </div>
-            <Burguer show={menuOpen} handleClick={toggleMenu} />
-            <Sidebar show={menuOpen} handleClick={toggleMenu} />
+            <Burguer />
+            <Sidebar />
         </nav>
     )
 }
