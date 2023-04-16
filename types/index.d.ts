@@ -237,7 +237,7 @@ type UserId = {
     username: string;
 }
 
-type MessageResponse = {
+type ApiMessageResponse = {
     message: string;
     receiver: UserId;
     sender: UserId;
