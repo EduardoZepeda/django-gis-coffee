@@ -20,10 +20,10 @@ export const useChatStore = create<ChatState>()(
                 const chatToUpdate = state.chats.find(({ user }) => user === message.receiver)
                 // if found, update the conversation array with the new message
                 if (chatToUpdate) {
-                    return { chats: [{ ...chatToUpdate, conversation: [message, ...chatToUpdate.conversation] }, ...state.chats.filter(({ user }) => user !== message.receiver)] }
+                    return { chats: [{ ...chatToUpdate, conversation: [...chatToUpdate.conversation, message] }, ...state.chats.filter(({ user }) => user !== message.receiver)] }
                 }
                 // if not, return the same state
-                return { chats: [{ user: message.receiver, open: false, active: true, conversation: [message] }, ...state.chats] }
+                return { chats: [...state.chats, { user: message.receiver, open: false, active: true, conversation: [message] }] }
             }),
             // open a chat to a given user
             open: (receiver) => set((state) => {
