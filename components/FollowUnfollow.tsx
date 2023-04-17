@@ -6,7 +6,7 @@ import { followCreate, followDestroy } from '@urls/index';
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import { useSession } from 'next-auth/react';
-import ButtonLoader from './ButtonLoader';
+import ButtonLoader from '@components/ButtonLoader';
 
 const FollowUnfollow = ({ user, followed }: FollowUnfollowProps) => {
     const queryClient = useQueryClient();
