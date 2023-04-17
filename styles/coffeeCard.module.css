@@ -7,6 +7,7 @@
 .image {
     border-radius: 8px;
     transition: filter 0.5s ease-in-out;
+    object-fit: cover;
 }
 
 .image:hover {
@@ -14,5 +15,5 @@
 }
 
 .address {
-    color: var(--secondary-color);
+    color: var(--main-color-text);
 }

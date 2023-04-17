@@ -7,11 +7,11 @@
 }
 
 .icon {
-    color: var(--pink);
+    color: var(--red);
 }
 
 .author {
-    color: var(--secondary-color);
+    color: var(--main-color-text);
     display: flex;
     gap: var(--padding-1x);
 }

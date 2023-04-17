@@ -2,9 +2,11 @@
   --nav-height: 50px;
   --footer-height: 100px;
   --icon-padding: 0.5rem;
+  --padding-sm: 0.5rem;
   --padding-1x: 1rem;
   --padding-2x: 2rem;
   --padding-3x: 3rem;
+  --margin-sm: 0.5rem;
   --margin-1x: 1rem;
   --margin-2x: 2rem;
   --margin-3x: 3rem;
@@ -12,15 +14,21 @@
   --font-md: 1.1rem;
   --font-h1: 4rem;
   --font-h2: 2rem;
-  --orange: #D28537;
-  --red: #C03D29;
-  --pink: #FB6F92;
-  --green: #009456;
-  --button-radius: 20px;
+
+
+  --color-base: #FFFFFF;
+  --color-secondary: #4A2C1D;
+  --color-accent: #A77C58;
+  --color-highlight: #F7E6D1;
+  --color-neutral: #D8D8D8;
+  --red: #e5594c;
+  --pink: #D3B1A9;
+  --green: #007F5F;
+  --button-radius: 4px;
   --input-radius: 4px;
   --sidebar-bg: #141414;
-  --main-color: #212121;
-  --secondary-color: #3E3E3E;
+  --main-color: #4F4F4F;
+  --main-color-text: #4F4F4F;
   --light-gray: #d4d4d4;
   --white: #FFFFFF;
   --btn-h: 12px;
@@ -37,7 +45,8 @@ body {
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--white);
+  background-color: var(--color-base);
+  color: var(--main-color-text)
 }
 
 h1,

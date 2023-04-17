@@ -33,7 +33,22 @@
 .btnUpdate {
     text-align: center;
     padding: 0 var(--padding-2x);
-    background-color: var(--light-gray);
-    color: var(--secondary-color);
+    background-color: var(--color-accent);
+    color: var(--color-base);
     border-radius: 6px;
+}
+
+.btnMessage {
+    text-align: center;
+    padding: 0 var(--padding-2x);
+    background-color: var(--color-secondary);
+    color: var(--color-base);
+    border-radius: 6px;
+    border: 0;
+}
+
+.btnsContainer {
+    display: flex;
+    flex-direction: row;
+    gap: var(--padding-1x);
 }

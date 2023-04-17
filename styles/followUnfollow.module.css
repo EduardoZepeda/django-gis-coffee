@@ -2,15 +2,15 @@
     width: 100px;
     height: 30px;
     border: 0;
-    border-radius: var(--input-radius);
+    border-radius: var(--button-radius);
 }
 
 .follow {
-    background-color: var(--pink);
-    color: var(--white);
+    background-color: var(--color-secondary);
+    color: var(--color-base);
 }
 
 .unfollow {
-    background-color: var(--light-gray);
-    color: var(--main-color);
+    background-color: var(--color-neutral);
+    color: var(--color-secondary);
 }

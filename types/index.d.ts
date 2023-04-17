@@ -16,11 +16,6 @@ type NewUserType = {
     password2: string,
 }
 
-type sidebarProps = {
-    show?: boolean
-    handleClick: (show: boolean) => void
-}
-
 interface propsWithChildren {
     children: React.ReactNode
 }
@@ -88,7 +83,6 @@ type CustomMarkerProps = {
     roaster: Properties["roaster"]
     rating: Properties["rating"]
 }
-
 
 type Reviews = {
     count: number;
@@ -209,6 +203,7 @@ type ChatProps = {
     receiver: string;
     sender: string;
     ws: WebSocket | null;
+    fetched: boolean;
 }
 
 type Message = {
@@ -230,6 +225,7 @@ type ChatBoxState = {
     open: boolean;
     conversation: Message[];
     active: boolean;
+    fetched: boolean;
 }
 
 type UserId = {
