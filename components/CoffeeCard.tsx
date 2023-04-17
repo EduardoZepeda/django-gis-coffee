@@ -8,7 +8,7 @@ const CoffeeCard = ({ id, properties: { name, address } }: FeaturesEntity) => {
         <div className={styles.card}>
             <Link href={`/coffee-shops/${id}`}>
                 <div className={styles.a}>
-                    <Image className={styles.image} src={'/placeholder-coffee-shop.jpg'} height={300} width={300} alt={'Coffee shop photography'} />
+                    <Image className={styles.image} src={`/placeholder-coffee-shop-${Math.floor((Math.random() * 20) + 1).toString()}.jpg`} height={300} width={300} alt={'Coffee shop photography'} />
                     <div><strong>{name}</strong></div>
                     <div className={styles.address}><small>{address}</small></div>
                 </div>
