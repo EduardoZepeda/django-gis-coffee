@@ -8,7 +8,7 @@ const CoffeeDetailMap = ({ lat, lng }: LatLngLiteral) => {
 
     return (
         <MapContainer center={{ lat, lng }} zoom={16} scrollWheelZoom={true} style={{
-            height: "100%", width: "100%", minHeight: '400px'
+            height: "100%", width: "100%", minHeight: '400px', zIndex: "9"
         }}>
             <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

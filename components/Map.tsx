@@ -8,7 +8,7 @@ const Map = () => {
 
     return (
         <MapContainer center={GdlLocation} zoom={12} scrollWheelZoom={true} style={{
-            height: "100%", width: "100%", minHeight: '800px'
+            height: "100%", width: "100%", minHeight: '800px', zIndex: "9"
         }}>
             <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
