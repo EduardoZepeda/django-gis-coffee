@@ -57,7 +57,12 @@ const ChatBoxContainer = () => {
                 {/* render only chats that are open */}
                 {chats.
                     filter(({ open }) => open === true).
-                    map(({ user }, index) => <ChatBox key={`${chatId}-${index}`} ws={ws.current} sender={username} receiver={user} />)}
+                    map(({ user, fetched }, index) => <ChatBox
+                        key={`${chatId}-${index}`}
+                        ws={ws.current}
+                        sender={username}
+                        receiver={user}
+                        fetched={fetched} />)}
             </div>
         )
     }
