@@ -15,6 +15,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import dynamic from 'next/dynamic'
+
+// Prevents window not defined error 
+// See more here https://stackoverflow.com/questions/57704196/leaflet-with-next-js
+const CoffeeDetailMap = dynamic(
+    () => import('@components/CoffeeDetailMap'), // replace '@components/map' with your component's location
+    { ssr: false } // This line is important. It's what prevents server-side render
+)
+
 
 const CoffeeShop = () => {
     const router = useRouter()
@@ -41,7 +50,7 @@ const CoffeeShop = () => {
     }
 
     if (data) {
-        const { id, properties: { name, address, roaster, content, rating, likes, url, liked, reviewed } }: FeaturesEntity = data
+        const { id, geometry: { coordinates }, properties: { name, address, roaster, content, rating, likes, url, liked, reviewed } }: FeaturesEntity = data
         return (
             <section className={styles.detail}>
                 <Head>
@@ -77,6 +86,10 @@ const CoffeeShop = () => {
                     </div>
                 </div>
 
+                <div className={styles.map}>
+                    <h2>Coffee shop location</h2>
+                    <CoffeeDetailMap lat={coordinates[1]} lng={coordinates[0]} />
+                </div>
 
                 {/* Premium review */}
                 {content ? (
