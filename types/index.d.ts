@@ -1,19 +1,18 @@
-
 type resetPasswordType = {
-    email: string,
+    email: string;
 }
 
 type reviewSchemaType = {
-    recommended: boolean,
-    content: string,
-    shop: string
+    recommended: boolean;
+    content: string;
+    shop: string;
 }
 
 type NewUserType = {
     username: string
-    email: string,
-    password1: string,
-    password2: string,
+    email: string;
+    password1: string;
+    password2: string;
 }
 
 interface propsWithChildren {
@@ -154,7 +153,7 @@ type FollowingEntityOrFollowersEntity = {
 }
 
 type djError = {
-    message: string,
+    message: string;
     cause: {
         [key: string]: any;
     }
@@ -233,9 +232,15 @@ type UserId = {
     username: string;
 }
 
+
 type ApiMessageResponse = {
     message: string;
     receiver: UserId;
     sender: UserId;
     timestamp: string;
+}
+
+type crossProps = {
+    show: boolean;
+    handleClick: () => void;
 }
