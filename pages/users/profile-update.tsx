@@ -14,7 +14,7 @@ import { useSession } from 'next-auth/react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeEvent } from 'react';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 // 5 MB max size
 const MAX_FILE_SIZE = 500000;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
