@@ -4,13 +4,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* preconnect to open map cdn */}
-        <link rel="preconnect" href="https://c.tile.openstreetmap.org" />
-        <link rel="dns-prefetch" href="https://c.tile.openstreetmap.org" />
-        {/* preconnect to open unpkg cdn */}
-        <link rel="preconnect" href="https://unpkg.com" />
-        <link rel="dns-prefetch" href="https://unpkg.com" />
-        {/* preconnect to google fonts cdn */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='' />
         <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200&display=swap" rel="stylesheet" />
