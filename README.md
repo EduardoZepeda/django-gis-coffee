@@ -1,6 +1,8 @@
 # Tamper
 
-This project serves as a [demo project](https://django-gis-coffee.fly.dev/) that looks for speciality coffee nearby user's location, the scope of this project is limited to Guadalajara, México.
+This project serves as a [demo project](https://django-gis-coffee.vercel.app/) that looks for speciality coffee shops nearby user's location, the scope of this project is limited to Guadalajara, México. Furthermore can follow-unfollow users, like and review shops, and chat in real time (powered by websockets) with any user that follows you.
+
+The simplified stack is DRF for the backend and nextjs for the frontend.
 
 ## Coffee shops nearby Guadalajara
 
@@ -10,7 +12,7 @@ The user location is obtained from the geolocation API in the browser.
 
 ## Development settings
 
-### Install dependencies
+### Install the required dependencies
 
 To start developing, first install the basic dependencies
 
@@ -25,7 +27,7 @@ sudo apt install binutils libproj-dev
 
 ### Environmental variables
 
-The project requires the following environmental variables to work
+The project requires the following environmental variables to work for the backend
 
 ```bash
 SECRET_KEY=yoursecretkey
@@ -37,13 +39,21 @@ DB_PORT=5432
 DATABASE=database_name
 ```
 
+And the following for the frontend
+
+```bash
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=yoursupersecretkeyhere=
+NEXT_PUBLIC_BACKEND_API=http://127.0.0.1:8000
+```
+
 ## Django's GiS Usage
 
 An external database available is required and is taken for granted. The required postgres' documentation is out of the scope of this readme.
 
 ### Install django GIS
 
-First of all, remember to add the gis package from django to installed apps.
+If you're going to take this project as a template for your project, remember to add the gis package from django to installed apps.
 
 ```python
 INSTALLED_APPS = [
