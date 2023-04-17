@@ -7,6 +7,10 @@ export default function Document() {
         {/* preconnect to open map cdn */}
         <link rel="preconnect" href="https://c.tile.openstreetmap.org" />
         <link rel="dns-prefetch" href="https://c.tile.openstreetmap.org" />
+        <link rel="preconnect" href="https://b.tile.openstreetmap.org" />
+        <link rel="dns-prefetch" href="https://b.tile.openstreetmap.org" />
+        <link rel="preconnect" href="https://a.tile.openstreetmap.org" />
+        <link rel="dns-prefetch" href="https://a.tile.openstreetmap.org" />
         {/* preconnect to open unpkg cdn */}
         <link rel="preconnect" href="https://unpkg.com" />
         <link rel="dns-prefetch" href="https://unpkg.com" />
