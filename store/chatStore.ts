@@ -17,13 +17,14 @@ export const useChatStore = create<ChatState>()(
             // update a chat with a new message
             update: (message) => set((state) => {
                 // find the chat which message belongs to
-                const chatToUpdate = state.chats.find(({ user }) => user === message.receiver)
+                const chatIndex = state.chats.findIndex(({ user }) => user === message.receiver)
                 // if found, update the conversation array with the new message
-                if (chatToUpdate) {
-                    return { chats: [{ ...chatToUpdate, conversation: [...chatToUpdate.conversation, message] }, ...state.chats.filter(({ user }) => user !== message.receiver)] }
+                if (chatIndex >= 0) {
+                    state.chats[chatIndex].conversation = [...state.chats[chatIndex].conversation, message]
+                    return { chats: [...state.chats] }
                 }
                 // if not, return the same state
-                return { chats: [...state.chats, { user: message.receiver, open: false, active: true, conversation: [message] }] }
+                return { chats: [...state.chats, { user: message.receiver, open: false, active: true, fetched: false, conversation: [message] }] }
             }),
             // open a chat to a given user
             open: (receiver) => set((state) => {
@@ -33,7 +34,7 @@ export const useChatStore = create<ChatState>()(
                     // change open to true
                     return { chats: [{ ...existentClosedChat, open: true }, ...state.chats.filter(({ user }) => receiver !== user)] }
                 }
-                return { chats: [{ user: receiver, open: true, conversation: [], active: true }, ...state.chats.filter(({ user }) => receiver !== user)] }
+                return { chats: [{ user: receiver, open: true, conversation: [], active: true, fetched: false }, ...state.chats.filter(({ user }) => receiver !== user)] }
             }),
             close: (receiver) => set((state) => {
                 const existentOpenChat = state.chats.find(({ user, open }) => user === receiver && open === true)
@@ -49,10 +50,11 @@ export const useChatStore = create<ChatState>()(
                 const chatToUpdate = state.chats.find(({ user }) => user === receiver)
                 // if found, update the conversation array with the new message
                 if (chatToUpdate) {
-                    return { chats: [{ ...chatToUpdate, conversation: [...messages] }, ...state.chats.filter(({ user }) => user !== receiver)] }
+                    // mark chat as fetched to prevent further refetches in useQuery's enabled
+                    return { chats: [{ ...chatToUpdate, conversation: [...messages], fetched: true }, ...state.chats.filter(({ user }) => user !== receiver)] }
                 }
                 // if not, return the same state
-                return { chats: [{ user: receiver, open: true, active: true, conversation: [...messages] }, ...state.chats] }
+                return { chats: [{ user: receiver, open: true, active: true, fetched: false, conversation: [...messages] }, ...state.chats] }
             }),
         }),
         {
