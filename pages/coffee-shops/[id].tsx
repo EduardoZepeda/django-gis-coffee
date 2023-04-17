@@ -50,7 +50,7 @@ const CoffeeShop = () => {
                 <h2>{name}</h2>
                 <div className={styles.info}>
                     <div>
-                        <Image className={styles.image} src={'/placeholder-coffee-shop.jpg'} height={300} width={300} alt={'Coffee shop photography'} />
+                        <Image className={styles.image} src={'/placeholder-coffee-shop-1.jpg'} height={300} width={300} alt={'Coffee shop photography'} />
                     </div>
                     <div>
                         {/* Likes */}
