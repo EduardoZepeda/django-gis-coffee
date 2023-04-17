@@ -1,5 +1,10 @@
 const base = process.env.NEXT_PUBLIC_BACKEND_API
 
+// social
+export const facebookUrl = new URL('https://facebook.com/latteporlaciudad')
+export const tiktokUrl = new URL('https://facebook.com/latteporlaciudad')
+export const instagramUrl = new URL('https://facebook.com/latte.porlaciudad')
+
 // Authentication
 export const shopsByLocation = new URL(`${base}/api/v1/shops/`)
 export const loginUrl = new URL(`${base}/api/v1/authentication/login/`)

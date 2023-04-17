@@ -3,7 +3,7 @@ import styles from '@styles/footer.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
-
+import { facebookUrl, instagramUrl, tiktokUrl } from '@urls/index'
 const Footer = () => {
     const size = 'xl'
 
@@ -18,9 +18,10 @@ const Footer = () => {
                 </div>
             </div>
             <div className={styles.social}>
-                <FontAwesomeIcon size={size} icon={faFacebook} />
-                <FontAwesomeIcon size={size} icon={faInstagram} />
-                <FontAwesomeIcon size={size} icon={faTiktok} />
+
+                <Link href={facebookUrl}><FontAwesomeIcon size={size} icon={faFacebook} /></Link>
+                <Link href={instagramUrl}><FontAwesomeIcon size={size} icon={faInstagram} /></Link>
+                <Link href={tiktokUrl}><FontAwesomeIcon size={size} icon={faTiktok} /></Link>
             </div>
             <div className={styles.legal}>
                 <Link href="/cookies">Cookies Policy</Link>
