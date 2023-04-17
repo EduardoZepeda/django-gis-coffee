@@ -2,12 +2,12 @@ import ChatBox from '@components/ChatBox';
 import styles from '@styles/chatBox.module.css';
 import { useChatStore } from '@store/chatStore';
 import { useSession } from 'next-auth/react';
+import { webSocketUrl } from '@urls/index';
 import React, {
     useId,
     useEffect,
     useRef,
 } from 'react';
-
 
 const ChatBoxContainer = () => {
     // For this project, create a SINGLE websocket to serve all interaction between user and server
@@ -25,7 +25,7 @@ const ChatBoxContainer = () => {
         // token is needed for ws authentication
         if (token === undefined) { return }
         // Create socket connection, WebSocket only exists on loaded DOM, hence it should initialize only inside useEffect
-        ws.current = new WebSocket('ws://' + '127.0.0.1:8000' + '/ws/chat/' + `?token=${token}`)
+        ws.current = new WebSocket(webSocketUrl({ token: token }))
 
         const wsCurrent = ws.current
         // If component is destroyed, close web socket

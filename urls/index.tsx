@@ -1,4 +1,16 @@
 const base = process.env.NEXT_PUBLIC_BACKEND_API
+const wsBase = process.env.NEXT_PUBLIC_WS_API
+
+//ws
+export function webSocketUrl(searchParams: object | undefined): URL {
+    const url = new URL(`${wsBase}`)
+    if (searchParams) {
+        for (const [key, value] of Object.entries(searchParams)) {
+            url.searchParams.append(key, value)
+        }
+    }
+    return url
+}
 
 // social
 export const facebookUrl = new URL('https://facebook.com/latteporlaciudad')
