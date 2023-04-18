@@ -21,14 +21,23 @@ export const useChatStore = create<ChatState>()(
                 chatIndex = state.chats.findIndex(({ user }) => user === message.receiver)
                 // if found, update that conversation array with the new message
                 if (chatIndex >= 0) {
-                    state.chats[chatIndex].conversation = [...state.chats[chatIndex].conversation, message]
-                    return { chats: [...state.chats] }
+                    return {
+                        chats:
+                            // Keep all arrays whose index is different than chatIndex
+                            [...state.chats.filter((_, index) => { index !== chatIndex }),
+                            // use chat index and override conversation
+                            { ...state.chats[chatIndex], conversation: [...state.chats[chatIndex].conversation, message] }]
+                    }
                 } else {
                     // If not, check if we need to update current user's chat
                     chatIndex = state.chats.findIndex(({ user }) => user === message.sender)
                     if (chatIndex >= 0) {
-                        state.chats[chatIndex].conversation = [...state.chats[chatIndex].conversation, message]
-                        return { chats: [...state.chats] }
+                        return {
+                            chats:
+                                // see above explanation
+                                [...state.chats.filter((_, index) => { index !== chatIndex }),
+                                { ...state.chats[chatIndex], conversation: [...state.chats[chatIndex].conversation, message] }]
+                        }
                     }
                 }
                 return { chats: [...state.chats] }
