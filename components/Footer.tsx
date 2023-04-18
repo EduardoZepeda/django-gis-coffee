@@ -18,10 +18,9 @@ const Footer = () => {
                 </div>
             </div>
             <div className={styles.social}>
-
-                <Link href={facebookUrl}><FontAwesomeIcon size={size} icon={faFacebook} /></Link>
-                <Link href={instagramUrl}><FontAwesomeIcon size={size} icon={faInstagram} /></Link>
-                <Link href={tiktokUrl}><FontAwesomeIcon size={size} icon={faTiktok} /></Link>
+                <Link aria-label="facebook link" href={facebookUrl}><FontAwesomeIcon size={size} icon={faFacebook} /></Link>
+                <Link aria-label="instagram link" href={instagramUrl}><FontAwesomeIcon size={size} icon={faInstagram} /></Link>
+                <Link aria-label="tiktok link" href={tiktokUrl}><FontAwesomeIcon size={size} icon={faTiktok} /></Link>
             </div>
             <div className={styles.legal}>
                 <Link href="/cookies">Cookies Policy</Link>
