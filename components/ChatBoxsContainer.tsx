@@ -60,11 +60,6 @@ const ChatBoxContainer = () => {
 
     }, [status])
 
-    useEffect(() => {
-        if (!ws.current) return
-    })
-
-
     if (username) {
         return (
             <div className={styles.container}>

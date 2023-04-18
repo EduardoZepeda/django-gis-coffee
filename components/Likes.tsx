@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from '@styles/likes.module.css';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
@@ -35,8 +35,6 @@ const Likes = ({ liked, likes, id }: LikesProps) => {
             queryClient.invalidateQueries({ queryKey: ['coffeeShops'] })
         },
     })
-
-    useEffect(() => { }, [userLikedShop, likesNumber])
 
     return (
         <>

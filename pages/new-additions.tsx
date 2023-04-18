@@ -5,7 +5,7 @@ import Loader from '@components/Loader';
 import styles from '@styles/newestAdditions.module.css';
 import { coffeeList } from '@urls/index';
 import { fetchGet } from '@fetchUtils/useFetch';
-import { useId, useState, useEffect } from 'react';
+import { useId, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useSession } from 'next-auth/react';
 import Pagination from '@components/Pagination';
@@ -30,8 +30,6 @@ export default function NewestAdditions() {
         queryFn: () => fetchGet(coffeeList({ "page": currentPage }), token),
         enabled: status !== 'loading' && router.isReady
     })
-
-    useEffect(() => { }, [page])
 
     if (error) {
         return <Error message={"Error"} />

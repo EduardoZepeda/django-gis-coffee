@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Likes from '@components/Likes';
 import Loader from '@components/Loader';
-import React, { useEffect } from 'react';
+import React from 'react';
 import RenderStars from '@components/RenderStars';
 import ReviewForm from '@components/ReviewForm';
 import Reviews from '@components/Reviews';
