@@ -62,3 +62,32 @@
     /* this margin allow us to scroll automatically until the last message is seen on the screen */
     margin-top: 20px;
 }
+
+.statusContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.status {
+    font-size: var(--font-sm);
+    border-radius: 16px;
+    width: min-content;
+    padding: 0 var(--padding-1x);
+}
+
+.open {}
+
+.connecting {
+    background-color: var(--green);
+    color: var(--white);
+}
+
+.closing {
+    background-color: var(--color-accent);
+    color: var(--white);
+}
+
+.closed {
+    background-color: var(--red);
+    color: var(--white);
+}

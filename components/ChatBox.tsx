@@ -103,6 +103,25 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
         anchorScroll.current?.scrollIntoView({ behavior: "smooth" })
     })
 
+    let socketStatus
+    switch (ws?.readyState) {
+        case 0:
+            socketStatus = styles.connecting
+        case 1:
+            socketStatus = styles.open
+        case 2:
+            socketStatus = styles.closing
+        case 3:
+            socketStatus = styles.closed
+    }
+
+    const socketStatuses: socketStatuses = {
+        0: 'connecting',
+        1: 'open',
+        2: 'closing',
+        3: 'closed'
+    }
+
     if (conversation) {
         return (
             <div className={styles.chatWindow}>
@@ -125,6 +144,9 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
                     />)}
                     {/* Dummy scroll that exists for scrolling to it when a new message arrives */}
                     <div ref={anchorScroll} className={styles.dummyDivForScroll}></div>
+                </div>
+                <div className={styles.statusContainer}>
+                    <div className={`${styles.status} ${socketStatus}`}>{ws?.readyState !== 1 && typeof ws?.readyState === 'number' ? socketStatuses[ws?.readyState] : null}</div>
                 </div>
                 <div className={styles.message}>
                     <input

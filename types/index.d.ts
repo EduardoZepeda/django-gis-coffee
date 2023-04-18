@@ -244,3 +244,7 @@ type crossProps = {
     show: boolean;
     handleClick: () => void;
 }
+
+interface socketStatuses {
+    [index: number]: string;
+}
