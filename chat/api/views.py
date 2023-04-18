@@ -19,11 +19,12 @@ class MessagesViewSet(
         """Filter messages by receiver username otherwise return"""
         username = self.request.query_params.get("username")
         # Return any message that has been sent by the current user or has been received by the current user
+        # order them by descendant timestamp, will require reverse array in the frontend
         if username:
             return Message.objects.filter(
                 Q(receiver__username=username, sender__id=self.request.user.id)
                 | Q(receiver__id=self.request.user.id, sender__username=username)
-            ).order_by("timestamp")
+            ).order_by("-timestamp")
         return Message.objects.none()
 
     @extend_schema(
