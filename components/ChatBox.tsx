@@ -42,7 +42,7 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
         queryFn: () => fetchGet(messageList({ "username": receiver }), token),
         enabled: status !== 'loading' && status !== 'unauthenticated' && !fetched,
         onSuccess: (data) => {
-            setConversation(receiver, convertApiResponseToConversation(data.results))
+            setConversation(receiver, convertApiResponseToConversation(data.results.reverse()))
         }
     })
 
