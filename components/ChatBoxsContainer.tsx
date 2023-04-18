@@ -21,13 +21,34 @@ const ChatBoxContainer = () => {
     const token = session?.user?.token
     const username = session?.user?.username
 
+    function connectWs(): WebSocket {
+        ws.current = new WebSocket(webSocketUrl({ token: token }))
+        // on new message received update messages
+        ws.current.onmessage = function (e) {
+            const data: Message = JSON.parse(e.data)
+            if (data) {
+                updateMessages(data)
+            }
+        }
+        // onclose try to connect again
+        ws.current.onclose = function (e) {
+            setTimeout(function () {
+                connectWs();
+            }, 2000);
+        }
+        // on error, close the socket which triggers a new reconnection
+        ws.current.onerror = function (err) {
+            ws.current?.close();
+        }
+        return ws.current
+    }
+
     useEffect(() => {
         // token is needed for ws authentication
-        if (token === undefined) { return }
+        if (token === undefined || ws.current) { return }
         // Create socket connection, WebSocket only exists on loaded DOM, hence it should initialize only inside useEffect
-        ws.current = new WebSocket(webSocketUrl({ token: token }))
+        const wsCurrent = connectWs()
 
-        const wsCurrent = ws.current
         // If component is destroyed, close web socket
         return (() => {
             // check if socket connection was successful before closing it
@@ -41,13 +62,6 @@ const ChatBoxContainer = () => {
 
     useEffect(() => {
         if (!ws.current) return
-        // Everytime a message is received, updateMessages
-        ws.current.onmessage = function (e) {
-            const data: Message = JSON.parse(e.data)
-            if (data) {
-                updateMessages(data)
-            }
-        }
     })
 
 
