@@ -1,16 +1,18 @@
+import ButtonLoader from '@components/ButtonLoader';
 import Link from 'next/link';
 import styles from '@styles/forms.module.css';
 import Success from '@components/Success';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
+import { fetchPost } from '@fetchUtils/useFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { reviewCreate } from '@urls/index';
 import { useMutation } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { useSession } from 'next-auth/react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { fetchPost } from '@fetchUtils/useFetch';
-import { reviewCreate } from '@urls/index';
-import { useQueryClient } from 'react-query';
+
 
 const reviewSchema = z.object({
     content: z.string().min(10).max(255),
@@ -128,8 +130,7 @@ const ReviewForm = ({ id }: ReviewFormProps) => {
                         })}
                 />
                 <span className={styles.inputErrorMessage}>{errors.shop?.message}{registerError?.cause?.shop}</span>
-
-                <button className={styles.submit} type="submit" disabled={isLoading} >Send review</button>
+                <button className={styles.submit} type="submit" disabled={isLoading} >{isLoading ? <ButtonLoader /> : "Send review"}</button>
             </form>
         </div>
     )
