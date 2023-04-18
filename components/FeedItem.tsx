@@ -10,8 +10,11 @@ const FeedItem = ({ user: { username: user, profile_picture }, action, target: {
                 <img src={profile_picture} className={styles.img} alt={`feed profile picture`} />
             </div>
             <div className={styles.action}>
-                <Link href={`/${action === 'followed' ? `users/${username}` : `coffee-shops/${id?.toString()}`}`}>
-                    {`${user} ${action} ${username ? username : name}`}
+                <Link href={`/users/${user}`}>
+                    {`${user} ${action} `}
+                </Link>
+                <Link href={`/${action === 'followed' ? `/users/${username}` : `/coffee-shops/${id?.toString()}`}`}>
+                    {`${username ? username : name}`}
                 </Link>
                 <div className={styles.time}>
                     <small>{format(created)}</small>
