@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from '@styles/pages.module.css'
 import Head from 'next/head'
+import Image from 'next/image'
 
 const V60 = () => {
     return (
@@ -12,6 +13,7 @@ const V60 = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <h2>The v60 brewing method</h2>
+            <Image alt='v60 picture' src='/v60.jpg' width={300} height={300} />
             <p>The V60 coffee method is a popular pour-over coffee technique that was invented by the Japanese company Hario in 2004. This brewing method is known for producing a clean and crisp cup of coffee, highlighting the subtle flavors and aromas of the coffee beans. If you're a coffee enthusiast looking to up your brewing game, the V60 method is definitely worth trying.</p>
             <p>To get started with the V60 method, you'll need a few key items, including a V60 dripper, V60 paper filters, a kettle for heating water, and freshly roasted coffee beans. You'll also need a coffee grinder to grind the beans just before brewing, as this will help to preserve the flavor and aroma of the coffee.</p>
             <p>The V60 method involves placing a paper filter in the V60 dripper and rinsing it with hot water to remove any papery taste. Then, you add the freshly ground coffee to the filter and pour hot water over the coffee in a slow, circular motion, allowing the water to fully saturate the coffee and extract the flavor from the beans.</p>

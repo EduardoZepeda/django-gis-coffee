@@ -1,6 +1,7 @@
-import React from 'react'
-import styles from '@styles/pages.module.css'
-import Head from 'next/head'
+import Head from 'next/head';
+import Image from 'next/image';
+import React from 'react';
+import styles from '@styles/pages.module.css';
 
 const FrenchPress = () => {
     return (
@@ -12,6 +13,7 @@ const FrenchPress = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <h2>The french press method</h2>
+            <Image alt='french press picture' src='/french-press.jpg' width={300} height={300} />
             <p>The French press, also known as a press pot or plunger pot, is a classic brewing method that has been around since the early 20th century. It is a simple and easy-to-use brewing method that produces a rich, full-bodied cup of coffee that is loved by many coffee enthusiasts.</p>
             <p>The French press brewing method involves combining coarsely ground coffee and hot water in a cylindrical carafe and allowing the coffee to steep for several minutes. Then, a plunger with a mesh filter is pressed down to separate the coffee grounds from the brewed coffee, resulting in a smooth and flavorful cup of coffee.</p>
             <p>One of the benefits of the French press method is that it allows you to control the brewing process, so you can adjust the strength and flavor of your coffee to suit your taste. For example, if you prefer a stronger cup of coffee, you can use more coffee grounds or steep for a longer time.</p>
