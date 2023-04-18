@@ -1,15 +1,15 @@
-import React, { useId } from 'react'
-import styles from '@styles/reviews.module.css'
-import { useQuery } from 'react-query'
-import { useRouter } from 'next/router'
-import Loader from '@components/Loader'
-import Error from '@components/Error'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons'
-import Link from 'next/link'
-import { fetchGet } from '@fetchUtils/useFetch'
-import { reviewList } from '@urls/index'
-import { useSession } from 'next-auth/react'
+import Error from '@components/Error';
+import Link from 'next/link';
+import Loader from '@components/Loader';
+import React, { useId } from 'react';
+import styles from '@styles/reviews.module.css';
+import { faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
+import { fetchGet } from '@fetchUtils/useFetch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { reviewList } from '@urls/index';
+import { useQuery } from 'react-query';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 
 const Reviews = () => {
     const router = useRouter()
