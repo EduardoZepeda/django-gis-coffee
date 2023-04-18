@@ -13,7 +13,7 @@ const FeedItem = ({ user: { username: user, profile_picture }, action, target: {
                 <Link href={`/users/${user}`}>
                     {`${user} ${action} `}
                 </Link>
-                <Link href={`/${action === 'followed' ? `/users/${username}` : `/coffee-shops/${id?.toString()}`}`}>
+                <Link href={`${action === 'followed' ? `/users/${username}` : `/coffee-shops/${id?.toString()}`}`}>
                     {`${username ? username : name}`}
                 </Link>
                 <div className={styles.time}>
