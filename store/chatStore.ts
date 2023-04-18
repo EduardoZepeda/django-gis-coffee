@@ -16,15 +16,22 @@ export const useChatStore = create<ChatState>()(
             chats: [],
             // update a chat with a new message
             update: (message) => set((state) => {
+                let chatIndex: number
                 // find the chat which message belongs to
-                const chatIndex = state.chats.findIndex(({ user }) => user === message.receiver)
-                // if found, update the conversation array with the new message
+                chatIndex = state.chats.findIndex(({ user }) => user === message.receiver)
+                // if found, update that conversation array with the new message
                 if (chatIndex >= 0) {
                     state.chats[chatIndex].conversation = [...state.chats[chatIndex].conversation, message]
                     return { chats: [...state.chats] }
+                } else {
+                    // If not, check if we need to update current user's chat
+                    chatIndex = state.chats.findIndex(({ user }) => user === message.sender)
+                    if (chatIndex >= 0) {
+                        state.chats[chatIndex].conversation = [...state.chats[chatIndex].conversation, message]
+                        return { chats: [...state.chats] }
+                    }
                 }
-                // if not, return the same state
-                return { chats: [...state.chats, { user: message.receiver, open: false, active: true, fetched: false, conversation: [message] }] }
+                return { chats: [...state.chats] }
             }),
             // open a chat to a given user
             open: (receiver) => set((state) => {
