@@ -25,7 +25,5 @@ INSTALLED_APPS += [
     "cloudinary",
 ]
 
-DJANGO_VITE_DEV_MODE = DEBUG
-
 MEDIA_URL = "/media/"
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
