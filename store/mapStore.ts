@@ -27,7 +27,7 @@ export const useMapStore = create<MapState>()(
             setCoffeeShops: (results) => set(() => ({ coffeeShops: results }))
         }),
         {
-            name: 'feedbar-storage',
+            name: 'map-storage',
         }
     )
 )
