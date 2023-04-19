@@ -150,7 +150,7 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
                 </div>
                 <div className={styles.message}>
                     <input
-                        disabled={ws?.readyState !== 1}
+                        disabled={ws?.readyState !== 1 || isLoading}
                         value={message}
                         onChange={handleChange}
                         id="message"
