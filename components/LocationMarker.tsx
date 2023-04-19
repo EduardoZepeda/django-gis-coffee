@@ -1,23 +1,36 @@
-import { Marker, Popup, useMapEvents } from 'react-leaflet'
-import { useState, useEffect, useRef, useMemo, useCallback, useId } from 'react'
+import { Marker, Popup, useMapEvents, Tooltip } from 'react-leaflet'
+import { useRef, useMemo, useEffect, useId } from 'react'
 import { LatLngLiteral, LocationEvent, Marker as MarkerType } from 'leaflet'
-import { GdlLocation } from '@components/GuadalajaraLocation';
 import { CustomMarker } from '@components/CustomMarker';
-import { shopsByLocation } from '@urls/index'
-import Link from 'next/link'
+import { useMapStore } from '@store/mapStore';
+import { fetchGet } from '@fetchUtils/useFetch';
+import { useQuery } from 'react-query';
+import { coffeeList } from '@urls/index';
+import ButtonLoader from '@components/ButtonLoader';
+import Error from '@components/Error';
 
 export const LocationMarker = () => {
     // If map clicked, won't ask for location again
-    const [firstClick, setFirstClick] = useState<boolean>(true)
+    const isFirstClick = useMapStore((state) => state.isFirstClick)
+    const setFirstClick = useMapStore((state) => state.setFirstClick)
+    const position = useMapStore((state) => state.position)
+    const setPosition = useMapStore((state) => state.setPosition)
+    const isDraggable = useMapStore((state) => state.isDraggable)
+    const toggleIsDraggable = useMapStore((state) => state.toggleIsDraggable)
+    const coffeeShops = useMapStore((state) => state.coffeeShops)
+    const setCoffeeShops = useMapStore((state) => state.setCoffeeShops)
     // Position is set when clicked, drag a marker or accepted location request
-    const [position, setPosition] = useState<LatLngLiteral>(GdlLocation)
-    const [coffeeShops, setCoffeeShops] = useState<CoffeeShops | undefined>()
     // Disables or activates marker draggable status
-    const [draggable, setDraggable] = useState<boolean>(true)
     const markerRef = useRef<MarkerType | null>(null)
 
-    useEffect(() => { }, [position])
-
+    const { error, isLoading, refetch } = useQuery({
+        queryKey: ["map", position.lng, position.lat],
+        queryFn: () => fetchGet(coffeeList({ "latitude": position.lat, "longitude": position.lng }), undefined),
+        enabled: !isFirstClick,
+        onSuccess: (data: CoffeeShops) => {
+            setCoffeeShops(data?.results.features)
+        }
+    })
 
     const eventHandlers = useMemo(
         () => ({
@@ -26,71 +39,63 @@ export const LocationMarker = () => {
                 const marker: MarkerType | null = markerRef.current
                 if (marker != null) {
                     setPosition(marker.getLatLng())
-                    fetchCoffeeShopsData(marker.getLatLng())
                 }
             },
         }),
         [],
     )
 
-    // Toggle between draggable status, taken from docs
-    const toggleDraggable = useCallback(() => {
-        setDraggable((d) => !d)
-    }, [])
-
-    // Search coffee shops by latitude and longitude
-    const fetchCoffeeShopsData = async ({ lat, lng }: LatLngLiteral) => {
-        const response = await fetch(shopsByLocation + `?longitude=${lng}&latitude=${lat}`);
-        const coffeeShops = await response.json();
-        setCoffeeShops(coffeeShops)
-    }
-
     const map = useMapEvents({
         // if clicked for the first time, ask for location
         // otherwise take clicked point as the location to search nearest coffee shops
         click(e) {
-            if (firstClick) {
+            if (isFirstClick) {
                 setPosition(e.latlng)
-                setFirstClick(false)
+                setFirstClick()
                 map.locate()
             } else {
                 setPosition(e.latlng)
-                fetchCoffeeShopsData(e.latlng)
                 map.flyTo(e.latlng, map.getZoom())
             }
         },
         // if user accepts location request, take the clicked point as the location to search nearest coffee shops
         locationfound(e: LocationEvent) {
             setPosition(e.latlng)
-            fetchCoffeeShopsData(e.latlng)
             map.flyTo(e.latlng, map.getZoom())
         },
         locationerror(e) {
-            fetchCoffeeShopsData(position)
+            refetch()
         }
     })
     const marker = useId()
+
+    useEffect(() => {
+        if (!isFirstClick) { refetch() }
+    }, [position])
+
     return (
         <>
             {/* if coffee shops render them otherwise set draggable marker */}
-            {coffeeShops?.results?.features ? coffeeShops?.results?.features?.map(({ geometry: { coordinates }, properties, id }, index) => {
+            {coffeeShops?.map(({ geometry: { coordinates }, properties, id }, index) => {
                 const formatedCoordinates: LatLngLiteral = { lat: coordinates[1], lng: coordinates[0] }
                 return (
                     <CustomMarker key={`${marker}-${index}`} coordinates={formatedCoordinates} {...properties} id={id} />
                 )
-            }) : (null)
-            }
+            })}
             <Marker
+                draggable={isDraggable}
                 eventHandlers={eventHandlers}
                 position={position}
                 ref={markerRef}>
                 <Popup minWidth={90}>
-                    <span onClick={toggleDraggable}>
-                        {draggable
+                    <span onClick={toggleIsDraggable}>
+                        {isDraggable
                             ? 'Marker is draggable'
                             : 'Click here to make marker draggable'}
                     </span>
                 </Popup>
+                {isLoading ? <Tooltip direction="bottom" offset={[0, 20]} opacity={0.8} permanent><ButtonLoader /></Tooltip> : null}
+                {error ? <Tooltip direction="bottom" offset={[0, 20]} opacity={0.8} permanent><Error message='There was an error' /></Tooltip> : null}
             </Marker>
         </>
     )
