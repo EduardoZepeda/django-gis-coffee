@@ -207,8 +207,8 @@ type ChatProps = {
 
 type Message = {
     message: string;
-    receiver: string;
-    sender: string;
+    receiver: userId;
+    sender: userId;
     timestamp: string;
 }
 
@@ -247,4 +247,24 @@ type crossProps = {
 
 interface socketStatuses {
     [index: number]: string;
+}
+
+
+type Chat = {
+    count: number;
+    next: string;
+    previous?: null;
+    results?: (ChatResultsEntity)[] | null;
+}
+
+type ChatResultsEntity = {
+    message: string;
+    sender: SenderOrReceiver;
+    receiver: SenderOrReceiver;
+    active: boolean;
+    timestamp: string;
+}
+type SenderOrReceiver = {
+    id: number;
+    username: string;
 }

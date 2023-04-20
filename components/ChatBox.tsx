@@ -16,15 +16,16 @@ import { fetchGet } from '@fetchUtils/useFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { messageList } from '@urls/index';
 import { useChatStore } from '@store/chatStore';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { useSession } from 'next-auth/react';
+import { InView } from 'react-intersection-observer';
+import ButtonLoader from './ButtonLoader';
 
 const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
     // State store
     const chats = useChatStore((state) => state.chats)
     const close = useChatStore((state) => state.close)
     const setConversation = useChatStore((state) => state.setConversation)
-
     // controlled input
     const [message, setMessage] = useState<string>('')
 
@@ -37,25 +38,25 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
     const token = session?.user?.token
 
     // Retrieve past chat messages
-    const { data, error, isLoading } = useQuery({
+    const { data, isLoading, isSuccess, error, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
         queryKey: ["messages", receiver],
-        queryFn: () => fetchGet(messageList({ "username": receiver }), token),
+        queryFn: ({ pageParam = 1 }) => fetchGet(messageList({ "username": receiver, "page": pageParam }), token),
         enabled: status !== 'loading' && status !== 'unauthenticated' && !fetched,
+        getNextPageParam: (lastPage, allPages) => {
+            let nextPage: number | undefined
+            if (lastPage.next) {
+                nextPage = allPages.length + 1
+            }
+            return nextPage
+        },
         onSuccess: (data) => {
-            setConversation(receiver, convertApiResponseToConversation(data.results.reverse()))
+            // data.pages is an array of responses
+            // we get the results property of each response and end up with an array of conversations
+            // we flatten it and reverse it to have the conversation in the correct chronological order
+            setConversation(receiver, [...data.pages.map(({ results }) => results).flat().reverse()])
         }
     })
 
-    const convertApiResponseToConversation = useCallback(function convertApiResponseToConversation(results: ApiMessageResponse[]): Message[] {
-        return results.map(({ message, receiver, sender, timestamp }) => {
-            return {
-                "message": message,
-                "receiver": receiver.username,
-                "timestamp": timestamp,
-                "sender": sender.username
-            }
-        })
-    }, [])
 
     // Check message is a valid message, for now only checks if it is non empty
     const validateMessage = useCallback(function validateMessage(text: string): boolean {
@@ -71,8 +72,6 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
     }
 
     const username = sender
-
-
 
     // Send message that contains message, receiver and sender (sender is ignored by the server and assigned to current user)
     function sendMessage(): void {
@@ -125,7 +124,7 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
     if (conversation) {
         return (
             <div className={styles.chatWindow}>
-                <div className={styles.border}>
+                <div onClick={() => fetchNextPage()} className={styles.border}>
                     <div>
                         <strong>
                             <Link href={`/users/${receiver}`}>{receiver}</Link>
@@ -136,12 +135,20 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
                 <div className={styles.messages}>
                     {!!error && <Error message="There was an error loading the chat, please try again later" />}
                     {isLoading && <Loader />}
-                    {conversation && conversation.map(({ sender, message, timestamp }, index: number) => <ChatMessage
-                        key={`${chatId}-${index}`}
-                        isSender={sender === username}
-                        content={message}
-                        timestamp={timestamp}
-                    />)}
+                    {!isLoading &&
+                        !isFetchingNextPage &&
+                        hasNextPage &&
+                        (<InView as="div" style={{ textAlign: 'center' }} onChange={(inView, entry) => { if (inView) { fetchNextPage() } }}>
+                            <ButtonLoader />
+                        </InView>)}
+                    {chats.find(({ user }) => user === receiver)?.conversation.map(({ sender, message, timestamp }, index: number) => {
+                        return <ChatMessage
+                            key={`${chatId}-${index}`}
+                            isSender={sender.username === username}
+                            content={message}
+                            timestamp={timestamp}
+                        />
+                    })}
                     {/* Dummy scroll that exists for scrolling to it when a new message arrives */}
                     <div ref={anchorScroll} className={styles.dummyDivForScroll}></div>
                 </div>
