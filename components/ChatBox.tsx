@@ -38,7 +38,7 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
     const token = session?.user?.token
 
     // Retrieve past chat messages
-    const { data, isLoading, isSuccess, error, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+    const { isLoading, error, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery<Chat>({
         queryKey: ["messages", receiver],
         queryFn: ({ pageParam = 1 }) => fetchGet(messageList({ "username": receiver, "page": pageParam }), token),
         enabled: status !== 'loading' && status !== 'unauthenticated' && !fetched,
@@ -53,7 +53,10 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
             // data.pages is an array of responses
             // we get the results property of each response and end up with an array of conversations
             // we flatten it and reverse it to have the conversation in the correct chronological order
-            setConversation(receiver, [...data.pages.map(({ results }) => results).flat().reverse()])
+            const orderedMessages = [...data.pages.map(({ results }) => results || []).flat().reverse()].
+                map((message) => ({ ...message, sender: message?.sender.username, receiver: message?.receiver.username }))
+            setConversation(receiver, orderedMessages)
+
         }
     })
 
@@ -96,8 +99,6 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
         }
     }
 
-    const conversation = chats.find(({ user }) => user === receiver)?.conversation
-
     useEffect(() => {
         anchorScroll.current?.scrollIntoView({ behavior: "smooth" })
     })
@@ -121,6 +122,7 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
         3: 'closed'
     }
 
+    const conversation = chats.find(({ user }) => user === receiver)?.conversation
     if (conversation) {
         return (
             <div className={styles.chatWindow}>
@@ -141,10 +143,10 @@ const ChatBox = ({ sender, receiver, ws, fetched }: ChatProps) => {
                         (<InView as="div" style={{ textAlign: 'center' }} onChange={(inView, entry) => { if (inView) { fetchNextPage() } }}>
                             <ButtonLoader />
                         </InView>)}
-                    {chats.find(({ user }) => user === receiver)?.conversation.map(({ sender, message, timestamp }, index: number) => {
+                    {conversation.map(({ sender, message, timestamp }, index: number) => {
                         return <ChatMessage
                             key={`${chatId}-${index}`}
-                            isSender={sender.username === username}
+                            isSender={sender === username}
                             content={message}
                             timestamp={timestamp}
                         />
