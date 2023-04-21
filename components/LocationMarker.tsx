@@ -23,7 +23,7 @@ export const LocationMarker = () => {
     // Disables or activates marker draggable status
     const markerRef = useRef<MarkerType | null>(null)
 
-    const { error, isLoading, refetch } = useQuery({
+    const { error, isLoading, refetch } = useQuery<CoffeeShops>({
         queryKey: ["map", position.lng, position.lat],
         queryFn: () => fetchGet(coffeeList({ "latitude": position.lat, "longitude": position.lng }), undefined),
         enabled: !isFirstClick,
