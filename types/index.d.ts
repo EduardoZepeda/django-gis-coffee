@@ -19,27 +19,33 @@ interface propsWithChildren {
     children: React.ReactNode
 }
 
-type CoffeeShops = {
+interface ApiResponse {
     count: number;
-    next: string;
-    previous?: null;
-    results: Results;
+    next: string | null;
+    previous: string | null;
 }
-type Results = {
+
+interface CoffeeShopsResponse extends ApiResponse {
+    results: CoffeeShops;
+}
+
+type CoffeeShops = {
     type: string;
-    features?: (FeaturesEntity)[] | null;
+    features?: (CoffeeShopEntity)[] | null;
 }
-type FeaturesEntity = {
+
+type CoffeeShopEntity = {
     id: number;
     type: string;
     geometry: Geometry;
-    properties: Properties;
+    properties: CoffeeShopProperties;
 }
+
 type Geometry = {
     type: string;
     coordinates: [number, number];
 }
-type Properties = {
+type CoffeeShopProperties = {
     name: string;
     address: string;
     city: string;
@@ -63,32 +69,30 @@ type MessageProp = {
 }
 
 type RenderStarsProps = {
-    rating: Properties["rating"]
+    rating: CoffeeShopProperties["rating"]
 }
 
 type LikesProps = {
-    likes: Properties["likes"]
-    id: FeaturesEntity["id"]
-    liked: Properties["liked"]
+    likes: CoffeeShopProperties["likes"]
+    id: CoffeeShopEntity["id"]
+    liked: CoffeeShopProperties["liked"]
 }
 
-type LikeCoffeeShopType = FeaturesEntity["id"]
+type LikeCoffeeShopType = CoffeeShopEntity["id"]
 
 type CustomMarkerProps = {
     id: number
     coordinates: LatLngExpression
-    name: Properties["name"]
-    address: Properties["address"]
-    roaster: Properties["roaster"]
-    rating: Properties["rating"]
+    name: CoffeeShopProperties["name"]
+    address: CoffeeShopProperties["address"]
+    roaster: CoffeeShopProperties["roaster"]
+    rating: CoffeeShopProperties["rating"]
 }
 
-type Reviews = {
-    count: number;
-    next: string;
-    previous?: null;
-    results?: (ReviewResultsEntity)[] | null;
+interface Reviews extends ApiResponse {
+    results: (ReviewResultsEntity)[] | null;
 }
+
 type ReviewResultsEntity = {
     content: string;
     recommended: boolean;
@@ -98,6 +102,7 @@ type ReviewResultsEntity = {
     modified_date: string;
     url: string;
 }
+
 type ReviewUser = {
     username: string;
     url: string;
@@ -108,7 +113,7 @@ type ReviewUser = {
     reviews_count: number;
 }
 
-type ReviewPostUpdate = {
+type ReviewPostUpdateRequest = {
     content: string;
     recommended: boolean;
     shop: string
@@ -128,6 +133,10 @@ type OverlayProps = {
     setOpenModal: (value: boolean) => void;
 }
 
+interface RecommendedUsers extends ApiResponse {
+    results: FollowingOrFollowersEntity[]
+}
+
 type FollowUnfollowProps = {
     followed: boolean;
     user: string;
@@ -138,13 +147,13 @@ type Profile = {
     username: string;
     profile_picture?: string | null;
     bio?: string | null;
-    following: FollowingEntityOrFollowersEntity[];
-    followers: FollowingEntityOrFollowersEntity[];
+    following: FollowingOrFollowersEntity[];
+    followers: FollowingOrFollowersEntity[];
     followed: boolean;
     reviews_count: number;
 }
 
-type FollowingEntityOrFollowersEntity = {
+type FollowingOrFollowersEntity = {
     username: string;
     url: string;
     id: number;
@@ -250,10 +259,7 @@ interface socketStatuses {
 }
 
 
-type Chat = {
-    count: number;
-    next: string;
-    previous?: null;
+interface Chat extends ApiResponse {
     results?: (ChatResultsEntity)[] | null;
 }
 
@@ -264,6 +270,7 @@ type ChatResultsEntity = {
     active: boolean;
     timestamp: string;
 }
+
 type SenderOrReceiver = {
     id: number;
     username: string;

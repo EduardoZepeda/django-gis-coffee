@@ -25,7 +25,7 @@ export default function NewestAdditions() {
     const { data: session, status } = useSession()
     const token = session?.user?.token
 
-    const { data, error, isLoading } = useQuery({
+    const { data, error, isLoading } = useQuery<CoffeeShopsResponse>({
         queryKey: ["coffeeShops", currentPage],
         queryFn: () => fetchGet(coffeeList({ "page": currentPage }), token),
         enabled: status !== 'loading' && router.isReady
@@ -51,7 +51,7 @@ export default function NewestAdditions() {
                 </Head>
                 <h2>Newest coffee shops</h2>
                 <section className={styles.container}>
-                    {data.results.features.map(({ id, properties, type, geometry }: FeaturesEntity) =>
+                    {data.results.features?.map(({ id, properties, type, geometry }: CoffeeShopEntity) =>
                         <CoffeeCard
                             id={id}
                             properties={properties}

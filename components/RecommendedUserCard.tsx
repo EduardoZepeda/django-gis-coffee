@@ -3,7 +3,7 @@ import styles from '@styles/recommendedUsers.module.css';
 import FollowUnfollow from './FollowUnfollow';
 import Link from 'next/link';
 
-const RecommendedUserCard = ({ username, followed, profile_picture }: FollowingEntityOrFollowersEntity) => {
+const RecommendedUserCard = ({ username, followed, profile_picture }: FollowingOrFollowersEntity) => {
     return (
         <div className={styles.card}>
             <Link className={styles.card} href={`/users/${username}`}>

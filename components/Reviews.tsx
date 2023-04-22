@@ -17,7 +17,7 @@ const Reviews = () => {
     const { data: session, status } = useSession()
     const token = session?.user?.token
     const keyId = useId()
-    const { data, error, isLoading } = useQuery({
+    const { data, error, isLoading } = useQuery<Reviews>({
         queryKey: ["coffeeShops", "reviews", id],
         queryFn: () => fetchGet(reviewList({ "shop_id": id }), token),
         enabled: router.isReady && status !== 'loading' && !!session
@@ -39,7 +39,7 @@ const Reviews = () => {
         return (
             <div className={styles.container}>
                 <h2>Reviews</h2>
-                {data.results.map(({ content, recommended, user: { username, profile_picture } }: ReviewResultsEntity, index: number) => (
+                {data.results?.map(({ content, recommended, user: { username, profile_picture } }: ReviewResultsEntity, index: number) => (
                     <div key={`${keyId}-${index}`} className={styles.review}>
                         <Link href={`/users/${username}`}>
                             <div className={styles.author}>

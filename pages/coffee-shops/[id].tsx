@@ -30,7 +30,7 @@ const CoffeeShop = () => {
     const { id } = router.query
     const { data: session, status } = useSession()
     const token = session?.user?.token
-    const { data, error, isLoading } = useQuery({
+    const { data, error, isLoading } = useQuery<CoffeeShopEntity>({
         queryKey: ["coffeeShops", id],
         queryFn: () => fetchGet(coffeeDetail(id, {}), token),
         enabled: router.isReady && status !== 'loading'
@@ -50,7 +50,7 @@ const CoffeeShop = () => {
     }
 
     if (data) {
-        const { id, geometry: { coordinates }, properties: { name, address, roaster, content, rating, likes, url, liked, reviewed } }: FeaturesEntity = data
+        const { id, geometry: { coordinates }, properties: { name, address, roaster, content, rating, likes, url, liked, reviewed } }: CoffeeShopEntity = data
         return (
             <section className={styles.detail}>
                 <Head>

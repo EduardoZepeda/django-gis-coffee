@@ -3,7 +3,7 @@ import styles from '@styles/coffeeCard.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const CoffeeCard = ({ id, properties: { name, address } }: FeaturesEntity) => {
+const CoffeeCard = ({ id, properties: { name, address } }: CoffeeShopEntity) => {
     return (
         <div className={styles.card}>
             <Link href={`/coffee-shops/${id}`}>

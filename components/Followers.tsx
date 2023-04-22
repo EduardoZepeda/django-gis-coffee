@@ -18,7 +18,7 @@ const Followers = ({ openModal, setOpenModal, username }: OverlayProps) => {
                     <h3>Followers</h3>
                     <div className={styles.cross} onClick={() => { setOpenModal(false) }}></div>
                     <div>
-                        {followers.length !== 0 ? followers.map(({ username, profile_picture, followed }: FollowingEntityOrFollowersEntity, index: number) => {
+                        {followers.length !== 0 ? followers.map(({ username, profile_picture, followed }: FollowingOrFollowersEntity, index: number) => {
                             return (
                                 <div key={`${keyId}-${index}`} className={styles.account}>
                                     <Link onClick={() => setOpenModal(false)} href={`/users/${username}`}>

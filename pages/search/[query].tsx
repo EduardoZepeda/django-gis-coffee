@@ -24,7 +24,7 @@ export default function SearchCoffeeShops() {
         intPage = 1
     }
     const [currentPage, setPage] = useState<number>(intPage)
-    const { data, error, isLoading } = useQuery({
+    const { data, error, isLoading } = useQuery<CoffeeShopsResponse>({
         queryKey: ["coffeeShops", "search", query, currentPage],
         queryFn: () => fetchGet(coffeeList({ "query": query, "page": currentPage }), token),
         enabled: router.isReady && status !== 'loading'
@@ -49,7 +49,7 @@ export default function SearchCoffeeShops() {
                 </Head>
                 <h2>Coffee Shops that contains: {query}</h2>
                 <div className={styles.container}>
-                    {data.count > 0 ? data.results.features.map(({ id, properties, type, geometry }: FeaturesEntity) =>
+                    {data.count > 0 ? data.results.features?.map(({ id, properties, type, geometry }: CoffeeShopEntity) =>
                         <CoffeeCard
                             id={id}
                             properties={properties}

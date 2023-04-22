@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 const RecommendedUsers = () => {
     const { data: session, status } = useSession()
     const token = session?.user?.token
-    const { data, error, isLoading } = useQuery({
+    const { data, error, isLoading } = useQuery<RecommendedUsers>({
         queryKey: ["recommended-users", session?.user?.username],
         queryFn: () => fetchGet(recommendedUsersList, token),
         enabled: status !== 'loading' && status !== 'unauthenticated'
@@ -30,7 +30,7 @@ const RecommendedUsers = () => {
             <>
                 <h3>Other people you may know</h3>
                 <div className={styles.container}>
-                    {data?.results?.map((user: FollowingEntityOrFollowersEntity, index: number) => <RecommendedUserCard key={`${userKey}-${index}`} {...user} />)}
+                    {data?.results?.map((user: FollowingOrFollowersEntity, index: number) => <RecommendedUserCard key={`${userKey}-${index}`} {...user} />)}
                 </div>
             </>
         )

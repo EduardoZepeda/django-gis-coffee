@@ -7,11 +7,11 @@ interface MapState {
     isFirstClick: boolean
     position: LatLngLiteral
     isDraggable: boolean
-    coffeeShops: FeaturesEntity[] | null | undefined
+    coffeeShops: CoffeeShopEntity[] | null | undefined
     setFirstClick: () => void
     setPosition: (position: LatLngLiteral) => void
     toggleIsDraggable: () => void
-    setCoffeeShops: (results: FeaturesEntity[] | null | undefined) => void
+    setCoffeeShops: (results: CoffeeShopEntity[] | null | undefined) => void
 }
 
 export const useMapStore = create<MapState>()(
