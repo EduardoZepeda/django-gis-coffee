@@ -1,6 +1,6 @@
+import dynamic from 'next/dynamic';
 import Error from '@components/Error';
 import Head from 'next/head';
-import Image from 'next/image';
 import Likes from '@components/Likes';
 import Loader from '@components/Loader';
 import React from 'react';
@@ -15,8 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import dynamic from 'next/dynamic'
-
+import Gallery from '@components/Gallery';
 // Prevents window not defined error 
 // See more here https://stackoverflow.com/questions/57704196/leaflet-with-next-js
 const CoffeeDetailMap = dynamic(
@@ -58,9 +57,7 @@ const CoffeeShop = () => {
                 </Head>
                 <h2>{name}</h2>
                 <div className={styles.info}>
-                    <div>
-                        <Image className={styles.image} src={'/placeholder-coffee-shop-1.jpg'} height={300} width={300} alt={'Coffee shop photography'} />
-                    </div>
+                    <Gallery />
                     <div>
                         {/* Likes */}
                         <Likes liked={liked} likes={likes} id={id} />
