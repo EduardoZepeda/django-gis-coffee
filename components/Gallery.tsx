@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useId } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
@@ -19,10 +19,11 @@ const placeholderImages = [
 ]
 
 export default function Gallery() {
+    const imageId = useId()
     return (
         <>
             <Swiper pagination={true} modules={[Pagination]} className={styles.swiperContainer}>
-                {placeholderImages.map(image => <SwiperSlide>
+                {placeholderImages.map((image, index) => <SwiperSlide key={`${imageId} ${index}`}>
                     <img src={image} alt="place holder example image" />
                 </SwiperSlide>)}
             </Swiper>

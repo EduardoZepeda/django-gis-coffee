@@ -38,7 +38,7 @@ const Likes = ({ liked, likes, id }: LikesProps) => {
 
     return (
         <>
-            {likes ? <div onClick={() => { mutate() }} className={styles.likes}>
+            {likes ? <div onClick={isLoading ? () => { } : () => { mutate() }} className={styles.likes}>
                 <FontAwesomeIcon size={'lg'} icon={userLikedShop ? faHeart : faEmptyHeart} />
                 {" "}<strong>{likesNumber}
                 </strong>
