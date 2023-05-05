@@ -4,5 +4,4 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--padding-1x);
-    margin: var(--margin-2x);
 }

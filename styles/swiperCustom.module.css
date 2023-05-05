@@ -3,3 +3,11 @@
     height: 400px;
     border-radius: 4px;
 }
+
+@media (max-width:768px) {
+    .swiperContainer {
+        width: 300px;
+        height: 300px;
+        border-radius: 4px;
+    }
+}
