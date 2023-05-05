@@ -27,6 +27,7 @@ class ShopSerializer(GeoFeatureModelSerializer):
         fields = [
             "id",
             "name",
+            "created_date",
             "location",
             "address",
             "city",

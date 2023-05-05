@@ -55,6 +55,7 @@ class ShopViewSet(viewsets.ReadOnlyModelViewSet):
                     ),
                 ),
             )
+            .order_by("-created_date")
         )
         # try to convert latitude, longitude to float
         # otherwise ignore the query and return all coffee shops
