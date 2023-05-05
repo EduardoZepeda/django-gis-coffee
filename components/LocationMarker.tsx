@@ -1,13 +1,23 @@
-import { Marker, Popup, useMapEvents, Tooltip } from 'react-leaflet'
-import { useRef, useMemo, useEffect, useId } from 'react'
-import { LatLngLiteral, LocationEvent, Marker as MarkerType } from 'leaflet'
-import { CustomMarker } from '@components/CustomMarker';
-import { useMapStore } from '@store/mapStore';
-import { fetchGet } from '@fetchUtils/useFetch';
-import { useQuery } from 'react-query';
-import { coffeeList } from '@urls/index';
 import ButtonLoader from '@components/ButtonLoader';
 import Error from '@components/Error';
+import { coffeeList } from '@urls/index';
+import { CustomMarker } from '@components/CustomMarker';
+import { fetchGet } from '@fetchUtils/useFetch';
+import { LatLngLiteral, LocationEvent, Marker as MarkerType } from 'leaflet';
+import {
+    Marker,
+    Popup,
+    Tooltip,
+    useMapEvents
+} from 'react-leaflet';
+import {
+    useEffect,
+    useId,
+    useMemo,
+    useRef
+} from 'react';
+import { useMapStore } from '@store/mapStore';
+import { useQuery } from 'react-query';
 
 export const LocationMarker = () => {
     // If map clicked, won't ask for location again
