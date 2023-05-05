@@ -1,9 +1,10 @@
-import React from 'react'
-import styles from '@styles/footer.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook, faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
-import Link from 'next/link'
-import { facebookUrl, instagramUrl, tiktokUrl } from '@urls/index'
+import Link from 'next/link';
+import React from 'react';
+import styles from '@styles/footer.module.css';
+import { facebookUrl, instagramUrl, tiktokUrl } from '@urls/index';
+import { faFacebook, faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 const Footer = () => {
     const size = 'xl'
 
