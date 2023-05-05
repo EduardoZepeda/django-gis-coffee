@@ -3,16 +3,19 @@ import { devtools } from 'zustand/middleware'
 
 interface ChatState {
     chats: ChatBoxState[]
+    openRecentConversations: boolean
     update: (message: Message) => void
     open: (receiver: Message["receiver"]) => void
     close: (receiver: Message["receiver"]) => void
     setConversation: (receiver: Message["receiver"], messages: Message[]) => void
+    setOpenRecentConversations: (value: boolean) => void
 }
 
 
 export const useChatStore = create<ChatState>()(
     devtools(
         (set) => ({
+            openRecentConversations: false,
             chats: [],
             // update a chat with a new message
             update: (message) => set((state) => {
@@ -72,7 +75,9 @@ export const useChatStore = create<ChatState>()(
                 // if not, return the same state
                 return { chats: [{ user: receiver, open: true, active: true, fetched: false, conversation: [...messages] }, ...state.chats] }
             }),
+            setOpenRecentConversations: (value) => set((state) => { return { openRecentConversations: value } })
         }),
+
         {
             name: 'chat-storage',
         }

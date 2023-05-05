@@ -1,0 +1,9 @@
+.messageItem {
+    padding: var(--padding-1x) 0;
+    border-bottom: 1px solid var(--color-secondary);
+    cursor: pointer;
+}
+
+.messageTimestamp {
+    color: var(--color-neutral);
+}
