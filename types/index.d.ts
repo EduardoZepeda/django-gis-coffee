@@ -264,12 +264,16 @@ interface Chat extends ApiResponse {
     results?: (ChatResultsEntity)[] | null;
 }
 
-type ChatResultsEntity = {
+interface ChatResultsEntity {
     message: string;
     sender: SenderOrReceiver;
     receiver: SenderOrReceiver;
     active: boolean;
     timestamp: string;
+}
+
+interface ChatResultsEntityPlusCurrentUser extends ChatResultsEntity {
+    currentUser: string;
 }
 
 type SenderOrReceiver = {
