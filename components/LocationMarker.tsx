@@ -39,6 +39,7 @@ export const LocationMarker = () => {
                 const marker: MarkerType | null = markerRef.current
                 if (marker != null) {
                     setPosition(marker.getLatLng())
+                    refetch()
                 }
             },
         }),
@@ -90,7 +91,7 @@ export const LocationMarker = () => {
                 <Popup minWidth={90}>
                     <span onClick={toggleIsDraggable}>
                         {isDraggable
-                            ? 'Marker is draggable'
+                            ? 'Drag me'
                             : 'Click here to make marker draggable'}
                     </span>
                 </Popup>

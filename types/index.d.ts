@@ -49,6 +49,7 @@ type CoffeeShopProperties = {
     name: string;
     address: string;
     city: string;
+    created_date: string;
     roaster: boolean;
     rating: number;
     likes?: (LikesEntity | null)[] | null;

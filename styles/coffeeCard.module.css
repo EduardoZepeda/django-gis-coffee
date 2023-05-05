@@ -17,3 +17,11 @@
 .address {
     color: var(--main-color-text);
 }
+
+.newAddition {
+    background-color: var(--green);
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    padding: 0 var(--padding-sm);
+}
