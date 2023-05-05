@@ -36,6 +36,7 @@ export const LocationMarker = () => {
         () => ({
             // If marker is dragged, search coffee shops where drags end
             dragend() {
+                setFirstClick()
                 const marker: MarkerType | null = markerRef.current
                 if (marker != null) {
                     setPosition(marker.getLatLng())
