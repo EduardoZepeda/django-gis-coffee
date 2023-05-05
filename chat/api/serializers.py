@@ -11,7 +11,15 @@ from accounts.api.serializers import FeedUserSerializer
 class MessageSerializer(serializers.ModelSerializer):
     sender = FeedUserSerializer(many=False, read_only=True)
     receiver = FeedUserSerializer(many=False, read_only=True)
+    conversation = serializers.CharField(allow_null=True)
 
     class Meta:
         model = Message
-        fields = ["message", "sender", "receiver", "active", "timestamp"]
+        fields = [
+            "message",
+            "sender",
+            "receiver",
+            "active",
+            "timestamp",
+            "conversation",
+        ]

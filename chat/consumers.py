@@ -41,7 +41,7 @@ class ChatConsumer(WebsocketConsumer):
             new_message = Message(
                 sender=data["sender"], receiver=receiver, message=data["message"]
             )
-            # new_message.save()
+            new_message.save()
             # Send the new message to the corresponding user
             message = {
                 "message": data["message"],
