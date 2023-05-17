@@ -10,7 +10,6 @@
 
 .item {
     padding: 0 var(--padding-1x);
-    margin: 0 var(--margin-1x);
 }
 
 @media (max-width: 768px) {
