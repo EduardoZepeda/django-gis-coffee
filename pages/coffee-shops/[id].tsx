@@ -32,7 +32,9 @@ const CoffeeShop = () => {
     const { data, error, isLoading } = useQuery<CoffeeShopEntity>({
         queryKey: ["coffeeShops", id],
         queryFn: () => fetchGet(coffeeDetail(id, {}), token),
-        enabled: router.isReady && status !== 'loading'
+        enabled: router.isReady && status !== 'loading',
+        // cache results since coffee shops aren't updated often
+        staleTime: 3600 * 1000, // only prefetch if older than 1 hour
     })
 
 

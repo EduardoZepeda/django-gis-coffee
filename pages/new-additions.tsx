@@ -28,7 +28,9 @@ export default function NewestAdditions() {
     const { data, error, isLoading } = useQuery<CoffeeShopsResponse>({
         queryKey: ["coffeeShops", currentPage],
         queryFn: () => fetchGet(coffeeList({ "page": currentPage }), token),
-        enabled: status !== 'loading' && router.isReady
+        enabled: status !== 'loading' && router.isReady,
+        // cache results since coffee shops aren't updated often
+        staleTime: 3600 * 1000
     })
 
     if (error) {

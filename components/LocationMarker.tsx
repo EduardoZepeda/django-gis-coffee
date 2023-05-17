@@ -1,6 +1,6 @@
 import ButtonLoader from '@components/ButtonLoader';
 import Error from '@components/Error';
-import { coffeeList } from '@urls/index';
+import { coffeeList, coffeeDetail } from '@urls/index';
 import { CustomMarker } from '@components/CustomMarker';
 import { fetchGet } from '@fetchUtils/useFetch';
 import { LatLngLiteral, LocationEvent, Marker as MarkerType } from 'leaflet';
@@ -17,9 +17,19 @@ import {
     useRef
 } from 'react';
 import { useMapStore } from '@store/mapStore';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
+
+// const prefetchTodos = async () => {
+//     // The results of this query will be cached like a normal query
+//     await queryClient.prefetchQuery({
+//       queryKey: ['todos'],
+//       queryFn: fetchTodos,
+//     })
+//   }
+
 
 export const LocationMarker = () => {
+    const queryClient = useQueryClient()
     // If map clicked, won't ask for location again
     const isFirstClick = useMapStore((state) => state.isFirstClick)
     const setFirstClick = useMapStore((state) => state.setFirstClick)
@@ -39,6 +49,14 @@ export const LocationMarker = () => {
         enabled: !isFirstClick,
         onSuccess: (data: CoffeeShopsResponse) => {
             setCoffeeShops(data?.results.features)
+            data?.results.features?.map(async ({ id }) => {
+                await queryClient.prefetchQuery({
+                    queryKey: ["coffeeShops", id.toString()],
+                    queryFn: () => fetchGet(coffeeDetail(id.toString(), {}), undefined),
+                    // cache results since coffee shops aren't updated often
+                    staleTime: 3600 * 1000, // only prefetch if older than 1 hour
+                })
+            })
         }
     })
 
