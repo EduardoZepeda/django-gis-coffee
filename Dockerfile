@@ -27,5 +27,5 @@ RUN python3 manage.py collectstatic --noinput
 
 EXPOSE 8080
 
-CMD ["gunicorn", "nearbyshops.asgi", "--workers", "2", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", ":8080"]
+CMD ["gunicorn", "nearbyshops.asgi", "--workers", "1", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", ":8080"]
 
