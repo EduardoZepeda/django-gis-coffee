@@ -5,7 +5,7 @@ import { loginUrl, getCurrentUserUrl } from '@urls/index'
 const credtest: NextApiHandler<User> = async (request: NextApiRequest, response: NextApiResponse) => {
     // Only POST method is valid
     if (request.method !== 'POST') {
-        response.status(405).end()
+        response.status(405).send({})
         return
     }
     try {
@@ -15,13 +15,11 @@ const credtest: NextApiHandler<User> = async (request: NextApiRequest, response:
             headers: new Headers({ 'content-type': 'application/json' })
         })
         const data = await result.json()
-        response.json({ "data": data, "status": "ok" })
-        response.status(result.status).end
-        return result
+        response.status(result.status).send({ "data": data, "status": "ok" })
+        return
     }
     catch (e) {
-        response.json({ "error": e })
-        response.status(500).end()
+        response.status(500).send({ "errorMsg": e, "error": JSON.stringify(e) })
         return
     }
 

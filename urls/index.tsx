@@ -26,9 +26,6 @@ export const registerUserUrl = new URL(`${base}/api/v1/registration/`)
 export const resetPasswordUrl = new URL(`${base}/api/v1/authentication/password/reset/`)
 // end Authentication
 
-// Login frontend
-export const loginFrontend = `${authBase}/api/auth/credentials`
-
 // Feed
 export const feedUrl = new URL(`${base}/api/v1/feed/`)
 

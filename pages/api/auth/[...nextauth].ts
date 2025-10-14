@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials"
-import { loginFrontend } from "@urls/index";
+import { loginUrl, getCurrentUserUrl } from '@urls/index'
 
 const options: NextAuthOptions = {
     debug: true,
@@ -20,17 +20,39 @@ const options: NextAuthOptions = {
             }
         },
         async authorize(credentials, req) {
-            const res = await fetch(loginFrontend, {
-                method: 'POST',
-                body: JSON.stringify(credentials),
-                headers: new Headers({ 'content-type': 'application/json' })
-            })
-            const user = await res.json()
-            // TODO Temporary solution, since api always return 200 checking the username property instead 
-            // of checking the http status 
-            // Please see: https://github.com/vercel/next.js/issues/46621
-            if (res.ok && user && 'username' in user) {
-                return user
+            // Only POST method is valid
+            if (req.method !== 'POST') {
+                return null
+            }
+            try {
+                const loginRequest = await fetch(loginUrl, {
+                    method: 'POST',
+                    body: JSON.stringify(req.body),
+                    headers: new Headers({ 'content-type': 'application/json' })
+                })
+                // TODO Temporary solution, since api always return 200 checking the username property instead 
+                // of checking the http status 
+                // Please see: https://github.com/vercel/next.js/issues/46621
+                // It's supposed to be fixed but I keep seeing the same error
+                // Valid credentials
+                if (loginRequest.ok) {
+                    const { key } = await loginRequest.json()
+                    // If user managed to login in server, get its current data from this endpoint using newly adquired token
+                    const currentUser = await fetch(getCurrentUserUrl, {
+                        method: 'GET',
+                        // This route is only for authenticated users, add token to headers
+                        headers: new Headers({ 'content-type': 'application/json', 'Authorization': `Token ${key}` },)
+                    })
+                    const userData = await currentUser.json()
+                    return { ...userData, "token": key }
+                }
+                // Invalid credentials
+                if (loginRequest.status === 400) {
+                    const data = await loginRequest.json()
+                    return null
+                }
+            } catch (err) {
+                return null
             }
             return null
         },
