@@ -48,6 +48,7 @@ const credentials: NextApiHandler<User> = async (request: NextApiRequest, respon
     } catch (err) {
         response.json(err);
         response.status(500).end();
+        return
     }
 }
 
