@@ -27,7 +27,7 @@ const options: NextAuthOptions = {
             try {
                 const loginRequest = await fetch(loginUrl, {
                     method: 'POST',
-                    body: JSON.stringify(req.body),
+                    body: JSON.stringify(credentials),
                     headers: new Headers({ 'content-type': 'application/json' })
                 })
                 // TODO Temporary solution, since api always return 200 checking the username property instead 
