@@ -1,6 +1,5 @@
 import { User } from 'next-auth'
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next'
-import fetch from 'isomorphic-fetch'
 import { loginUrl, getCurrentUserUrl } from '@urls/index'
 
 const credentials: NextApiHandler<User> = async (request: NextApiRequest, response: NextApiResponse) => {

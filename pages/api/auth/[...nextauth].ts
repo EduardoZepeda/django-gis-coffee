@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials"
-import fetch from 'isomorphic-fetch'
 import { loginFrontend } from "@urls/index";
 
 const options: NextAuthOptions = {
