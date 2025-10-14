@@ -4,6 +4,7 @@ import { loginUrl, getCurrentUserUrl } from '@urls/index'
 
 const credentials: NextApiHandler<User> = async (request: NextApiRequest, response: NextApiResponse) => {
     const invalidCredentials = { "message": "invalid credentials" }
+    const apiError = { "message": "Something went wrong while trying to login. Please try again later" }
     // Only POST method is valid
     if (request.method !== 'POST') {
         response.status(405).end()
@@ -15,21 +16,12 @@ const credentials: NextApiHandler<User> = async (request: NextApiRequest, respon
             body: JSON.stringify(request.body),
             headers: new Headers({ 'content-type': 'application/json' })
         })
-        console.log("## Cred", loginRequest)
-        const data = await loginRequest.json()
-        console.log("## Cred", data)
-        response.json({ "request": loginRequest, "data": data })
-        response.status(loginRequest.status).end()
-        return
-        // Invalid credentials
-        if (loginRequest.status !== 200) {
-            //TODO Bug, always returns 200 see https://github.com/vercel/next.js/issues/46621
-            response.json(invalidCredentials)
-            response.status(loginRequest.status).end()
-            return
-        }
+        // TODO Temporary solution, since api always return 200 checking the username property instead 
+        // of checking the http status 
+        // Please see: https://github.com/vercel/next.js/issues/46621
+        // It's supposed to be fixed but I keep seeing the same error
         // Valid credentials
-        if (loginRequest.status === 200) {
+        if (loginRequest.ok) {
             const { key } = await loginRequest.json()
             // If user managed to login in server, get its current data from this endpoint using newly adquired token
             const currentUser = await fetch(getCurrentUserUrl, {
@@ -42,6 +34,17 @@ const credentials: NextApiHandler<User> = async (request: NextApiRequest, respon
             response.status(200).end()
             return
         }
+        // Invalid credentials
+        if (loginRequest.status === 400) {
+            const data = await loginRequest.json()
+            response.json({ "message": data?.non_field_errors.join(", ") })
+            response.status(400).end()
+            return
+        }
+        // Default for non-ok and non-400 errors
+        response.json(apiError)
+        response.status(loginRequest.status).end()
+        return
     } catch (err) {
         response.json(err);
         response.status(500).end();
