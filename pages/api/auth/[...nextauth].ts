@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials"
 import fetch from 'isomorphic-fetch'
-
+import { loginFrontend } from "@urls/index";
 
 const options: NextAuthOptions = {
     debug: true,
@@ -21,7 +21,7 @@ const options: NextAuthOptions = {
             }
         },
         async authorize(credentials, req) {
-            const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/credentials`, {
+            const res = await fetch(loginFrontend, {
                 method: 'POST',
                 body: JSON.stringify(credentials),
                 headers: new Headers({ 'content-type': 'application/json' })

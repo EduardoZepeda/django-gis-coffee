@@ -1,5 +1,6 @@
 const base = process.env.NEXT_PUBLIC_BACKEND_API
 const wsBase = process.env.NEXT_PUBLIC_WS_API
+const authBase = process.env.NEXTAUTH_URL
 
 //ws
 export function webSocketUrl(searchParams: object | undefined): URL {
@@ -25,6 +26,8 @@ export const registerUserUrl = new URL(`${base}/api/v1/registration/`)
 export const resetPasswordUrl = new URL(`${base}/api/v1/authentication/password/reset/`)
 // end Authentication
 
+// Login frontend
+export const loginFrontend = new URL(`${authBase}/api/auth/credentials`)
 
 // Feed
 export const feedUrl = new URL(`${base}/api/v1/feed/`)
