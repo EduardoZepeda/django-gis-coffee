@@ -11,7 +11,9 @@ RUN apt-get update && apt-get install -y \
     gdal-bin \ 
     libgdal-dev \
     python3-gdal \
+    postgis \
     binutils \
+    postgresql-postgis \
     libproj-dev
 
 RUN mkdir app
