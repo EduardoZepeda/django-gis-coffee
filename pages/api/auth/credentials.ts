@@ -15,6 +15,9 @@ const credentials: NextApiHandler<User> = async (request: NextApiRequest, respon
             body: JSON.stringify(request.body),
             headers: new Headers({ 'content-type': 'application/json' })
         })
+        console.log("## Cred", loginRequest)
+        const data = await loginRequest.json()
+        console.log("## Cred", data)
         // Invalid credentials
         if (loginRequest.status !== 200) {
             //TODO Bug, always returns 200 see https://github.com/vercel/next.js/issues/46621

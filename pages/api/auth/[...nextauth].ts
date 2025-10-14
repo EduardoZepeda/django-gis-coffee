@@ -25,7 +25,10 @@ const options: NextAuthOptions = {
                 body: JSON.stringify(credentials),
                 headers: new Headers({ 'content-type': 'application/json' })
             })
+            console.log("## [NextAuth]", res)
             const user = await res.json()
+            console.log("## [NextAuth]", user, res.body)
+
             // TODO Temporary solution, since api always return 200 checking the username property instead 
             // of checking the http status 
             // Please see: https://github.com/vercel/next.js/issues/46621
