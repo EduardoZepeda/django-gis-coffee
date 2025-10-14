@@ -9,7 +9,6 @@ const Signin = ({ csrfToken, providers }: InferGetServerSidePropsType<typeof get
     const router = useRouter()
     const { error, registration } = router.query
 
-    if (error) console.log(error, registration);
     return (
         <>
             <Head>
