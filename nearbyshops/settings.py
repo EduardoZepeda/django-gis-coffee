@@ -3,7 +3,7 @@ from .base_settings import *
 DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["https://*.fly.dev"]
+CSRF_TRUSTED_ORIGINS = ["https://*.fly.dev", "https://*.netlify.app"]
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
