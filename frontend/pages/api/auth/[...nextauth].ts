@@ -7,6 +7,7 @@ const options: NextAuthOptions = {
     debug: true,
     session: {},
     jwt: {},
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [Credentials({
         name: 'credentials',
         credentials: {

@@ -13,13 +13,12 @@ const credtest: NextApiHandler<User> = async (request: NextApiRequest, response:
     }
     try {
         const result = await fetchPost(loginUrl, request.body, undefined)
-        const data = await result.json()
-        response.status(result.status).send({ "data": data, "status": "ok" })
+        response.status(200).send({ "data": result, "status": "ok" })
         return
     }
     catch (e) {
         if (e instanceof Error) {
-            response.status(500).send({ "error": { "cause": e?.cause, "message": e?.message } })
+            response.status(500).send({ "error": { "cause": e?.cause, "message": e?.message, "url": loginUrl.hostname + loginUrl.pathname } })
         }
         return
     }
