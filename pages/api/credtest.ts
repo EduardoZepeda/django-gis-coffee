@@ -3,6 +3,7 @@
 import { User } from 'next-auth'
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next'
 import { loginUrl, getCurrentUserUrl } from '@urls/index'
+import { fetchPost } from '@fetchUtils/useFetch'
 
 const credtest: NextApiHandler<User> = async (request: NextApiRequest, response: NextApiResponse) => {
     // Only POST method is valid
@@ -11,11 +12,7 @@ const credtest: NextApiHandler<User> = async (request: NextApiRequest, response:
         return
     }
     try {
-        const result = await fetch(loginUrl, {
-            method: 'POST',
-            body: JSON.stringify(request.body),
-            headers: new Headers({ 'content-type': 'application/json' })
-        })
+        const result = await fetchPost(loginUrl, request.body, undefined)
         const data = await result.json()
         response.status(result.status).send({ "data": data, "status": "ok" })
         return

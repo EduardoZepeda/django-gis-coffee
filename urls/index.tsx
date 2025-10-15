@@ -20,7 +20,7 @@ export const instagramUrl = new URL('https://facebook.com/latte.porlaciudad')
 
 // Authentication
 export const shopsByLocation = new URL(`${base}/api/v1/shops/`)
-export const loginUrl = `${base}/api/v1/authentication/login/`
+export const loginUrl = new URL(`${base}/api/v1/authentication/login/`)
 export const getCurrentUserUrl = new URL(`${base}/api/v1/authentication/user/`)
 export const registerUserUrl = new URL(`${base}/api/v1/registration/`)
 export const resetPasswordUrl = new URL(`${base}/api/v1/authentication/password/reset/`)
