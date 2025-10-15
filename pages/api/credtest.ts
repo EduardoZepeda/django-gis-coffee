@@ -1,3 +1,5 @@
+"use server"
+
 import { User } from 'next-auth'
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next'
 import { loginUrl, getCurrentUserUrl } from '@urls/index'
@@ -19,7 +21,9 @@ const credtest: NextApiHandler<User> = async (request: NextApiRequest, response:
         return
     }
     catch (e) {
-        response.status(500).send({ "error": { "cause": e?.cause, "message": e?.message } })
+        if (e instanceof Error) {
+            response.status(500).send({ "error": { "cause": e?.cause, "message": e?.message } })
+        }
         return
     }
 
