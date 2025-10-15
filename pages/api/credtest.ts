@@ -19,7 +19,7 @@ const credtest: NextApiHandler<User> = async (request: NextApiRequest, response:
         return
     }
     catch (e) {
-        response.status(500).send({ "errorMsg": e, "error": JSON.stringify(e) })
+        response.status(500).send({ "error": { "cause": e?.cause, "message": e?.message } })
         return
     }
 
