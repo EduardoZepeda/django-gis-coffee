@@ -2,13 +2,15 @@
 
 This project serves as a [demo project](https://django-gis-coffee.vercel.app/) that looks for speciality coffee shops nearby user's location, the scope of this project is limited to Guadalajara, México. Furthermore can follow-unfollow users, like and review shops, and chat in real time (powered by websockets) with any user that follows you.
 
-The simplified stack is DRF for the backend and nextjs for the frontend.
+Don't expect an outstanding performance because I'm using free tier for everything as this is only a demo project.
+
+The simplified stack is DRF for the backend and nextjs for the frontend, websockets are served using django-channels, even though I should have used something more powerful, maybe go, but for demo projects I'm on a budget.
 
 ## Coffee shops nearby Guadalajara
 
 Tamper uses postgres gis extension to calculate closest coffee shops using user's coordinates. 
 
-The user location is obtained from the geolocation API in the browser.
+The user location is obtained from the geolocation API available in all major browsers.
 
 ## Development settings
 
@@ -45,6 +47,21 @@ And the following for the frontend
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=yoursupersecretkeyhere=
 NEXT_PUBLIC_BACKEND_API=http://127.0.0.1:8000
+```
+
+Remember to switch your localhost variables for absolute urls for production environments
+
+### Running backend
+
+``` bash
+python manage.py runserver [--settings=dev_settings.py]
+```
+
+### Running frontend
+
+``` bash
+cd frontend/
+npm run dev
 ```
 
 ## Django's GiS Usage
